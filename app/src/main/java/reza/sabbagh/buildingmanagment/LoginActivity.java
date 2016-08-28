@@ -1,0 +1,149 @@
+package reza.sabbagh.buildingmanagment;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class LoginActivity extends AppCompatActivity {
+
+    private Button Button_Login;
+    private Typeface bhomaFont;
+    private MaterialEditText Text_UserName,Text_Password;
+    private CheckBox Login_checkBox;
+    private TextView tv_register;
+    private database db;
+    public static String res="";
+    private int count=0;
+    private Timer tm;
+    private ProgressDialog pd;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        Initiate();
+
+        Button_Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Text_UserName.getText().toString().equals("") | Text_Password.getText().toString().equals("")){
+                    Toast.makeText(LoginActivity.this, "لطفا تمام فیلدها را پر کنید.", Toast.LENGTH_LONG).show();
+                }else{
+                    Login("http://192.168.43.69/login.php",Text_UserName.getText().toString(),Text_Password.getText().toString());
+                }
+            }
+        });
+        tv_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(LoginActivity.this,RegisterUserActivity.class);
+                startActivity(in);
+                finish();
+            }
+        });
+
+
+    }
+
+    private void Initiate(){
+        Button_Login =(Button) findViewById(R.id.LoginActivity_Button_Login);
+        bhomaFont = Typeface.createFromAsset(getAssets(),"BHoma.ttf");
+        Text_UserName =(MaterialEditText) findViewById(R.id.LoginActivity_Text_UserName);
+        Text_Password =(MaterialEditText) findViewById(R.id.LoginActivity_Text_Password);
+        Login_checkBox=(CheckBox) findViewById(R.id.Login_Activity_checkBox);
+        tv_register = (TextView) findViewById(R.id.LoginActivity_tv_register);
+        Text_UserName.setTypeface(bhomaFont);
+        Text_Password.setTypeface(bhomaFont);
+        Login_checkBox.setTypeface(bhomaFont);
+        Button_Login.setTypeface(bhomaFont);
+        Login_checkBox.setTypeface(bhomaFont);
+        tv_register.setTypeface(bhomaFont);
+        db = new database(this);
+    }
+
+    private void Login(String link, final String username, final String password){
+
+        new ServerConnectorLogin(link,username,password).execute();
+        pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Loging in...");
+        pd.setCancelable(false);
+        pd.show();
+
+        tm =new Timer();
+        tm.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        count++;
+                        if(count == 6){
+                            pd.cancel();
+                            tm.cancel();
+                            Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
+                            count = 0;
+                        }else if(res.equals("not founded")){
+                            tm.cancel();
+                            pd.cancel();
+                            res = "";
+                            Toast.makeText(getApplicationContext(),"نام کاربری یا رمز عبور اشتباه است!",Toast.LENGTH_LONG).show();
+                        }else if(!res.equals("")){
+                            tm.cancel();
+                            pd.cancel();
+                            if(!Login_checkBox.isChecked()){
+                                db.open();
+                                db.updateUsers("Username","-");
+                                db.updateUsers("Password","-");
+                                db.updateUsers("UniqueBN","-");
+                                db.close();
+                                res = "";
+                                Intent in = new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(in);
+                                finish();
+                            }else if(Login_checkBox.isChecked()){
+                                db.open();
+                                db.updateUsers("Username",username);
+                                db.updateUsers("Password",password);
+                                db.updateUsers("UniqueBN",res);
+                                db.close();
+                                res = "";
+                                Intent in = new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(in);
+                                finish();
+                            }
+                        }
+                    }
+                });
+            }
+        }, 1, 1000);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        System.exit(0);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
+}

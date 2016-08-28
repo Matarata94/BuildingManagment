@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/login_bg"
+        tools:context=".RegisterUserActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RegisterActivity_tv_registerTitle"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:text="ثبت نام"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_Fname"
+            android:layout_below="@+id/RegisterActivity_tv_registerTitle"
+            android:hint="نام"
+            android:inputType="text"
+            app:met_floatingLabel="highlight"
+            android:textSize="16dp"
+            app:met_floatingLabelTextSize="13dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_Lname"
+            android:hint="نام خانوادگی"
+            android:inputType="text"
+            app:met_floatingLabel="highlight"
+            android:textSize="16dp"
+            app:met_floatingLabelTextSize="13dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/RegisterActivity_Text_Fname"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_namekarbari"
+            android:hint="نام کاربری"
+            android:inputType="text"
+            android:textSize="16dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="13dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/RegisterActivity_Text_Lname"/>
+        />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_Pass"
+            android:hint="رمز عبور"
+            android:textSize="16dp"
+            android:inputType="textWebPassword"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="13dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/RegisterActivity_Text_namekarbari"
+            />
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_RepeatPass"
+            android:hint="تکرار رمز"
+            android:inputType="textWebPassword"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="13dp"
+            android:textSize="16dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/RegisterActivity_Text_Pass"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_PhoneNum"
+            android:hint="شماره همراه"
+            android:inputType="phone"
+            android:textSize="16dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="13dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/RegisterActivity_Text_RepeatPass"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ثبت نام به عنوان :"
+            android:id="@+id/RegisterActivity_tv_registerAs"
+            android:layout_below="@+id/RegisterActivity_Text_PhoneNum"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:textSize="16dp"
+            android:gravity="right"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RegisterActivity_rb_registerAsAdmin"
+            android:text=""
+            android:checked="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/RegisterActivity_tv_registerAs"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RegisterActivity_tv_registerAsAdmin"
+            android:text="مدیر ساختمان"
+            android:textSize="16dp"
+            android:layout_marginRight="3dp"
+            android:layout_toLeftOf="@+id/RegisterActivity_rb_registerAsAdmin"
+            android:layout_below="@+id/RegisterActivity_tv_registerAs"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RegisterActivity_rb_registerAsUser"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/RegisterActivity_rb_registerAsAdmin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RegisterActivity_tv_registerAsUser"
+            android:text="کاربر"
+            android:textSize="16dp"
+            android:layout_marginRight="3dp"
+            android:layout_toLeftOf="@+id/RegisterActivity_rb_registerAsUser"
+            android:layout_below="@+id/RegisterActivity_tv_registerAsAdmin"
+            android:layout_marginTop="5dp"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_NumberBuilding"
+            android:hint="شماره ساختمان"
+            android:inputType="number"
+            android:textSize="16dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="13dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/RegisterActivity_rb_registerAsUser"
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/RegisterActivity_Text_NumberOfUnit"
+            android:hint="شماره واحد"
+            android:inputType="number"
+            android:textSize="16dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="13dp"
+            android:gravity="right"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="#000000"
+            app:met_errorColor="#000000"
+            app:met_textColor="#000000"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/RegisterActivity_Text_NumberBuilding"
+            />
+
+        <com.andexert.library.RippleView
+            android:id="@+id/RegisterActivity_ripple_btnregister"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            app:rv_rippleDuration="200"
+            rv_centered="true"
+            android:layout_marginTop="18dp"
+            android:textSize="20sp"
+            android:layout_below="@+id/RegisterActivity_Text_NumberOfUnit"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/RegisterActivity_btn_register"
+                android:background="#1E88E5"
+                android:text="ثبت"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:elevation="6dp"
+                />
+
+        </com.andexert.library.RippleView>
+
+        <com.romainpiel.shimmer.ShimmerTextView
+            android:id="@+id/RegisterActivity_shtv_alreadyRegistered"
+            android:text="قبلا ثبت نام کرده اید؟ ورود"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            app:reflectionColor="#0fdb00"
+            android:layout_below="@id/RegisterActivity_ripple_btnregister"/>
+
+        <View
+            android:id="@+id/RegisterActivity_view1"
+            android:layout_width="150dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/RegisterActivity_shtv_alreadyRegistered"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="10dp"
+            android:background="#444"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>
+

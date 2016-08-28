@@ -1,0 +1,243 @@
+package reza.sabbagh.buildingmanagment;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener {
+
+    private Typeface bhomaFont;
+    private FragmentManager fragmentManager;
+    private ContextMenuDialogFragment mMenuDialogFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        bhomaFont = Typeface.createFromAsset(getAssets(),"DastNevis.otf");
+
+        fragmentManager = getSupportFragmentManager();
+        initToolbar();
+        initMenuFragment();
+        addFragment(new BuildingInformationFragment(), true, R.id.container);
+
+        /*mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                mDrawerLayout.closeDrawers();
+                switch (menuItem.getItemId()){
+                    case R.id.nav_item_InformationBuild:
+                        Intent intent1 = new Intent(MainActivity.this,MainActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_item_InformationUser:
+                        Intent intent2 = new Intent(MainActivity.this,UserInformationActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_item_InformationUnit:
+                        Intent intent3 = new Intent(MainActivity.this,UnitInformationActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.nav_item_InformationCharge:
+                        Intent intent4 = new Intent(MainActivity.this,ChargeInformationActivity.class);
+                        startActivity(intent4);
+                        break;
+                    case R.id.nav_item_calculateCharge:
+                        Intent intent5 = new Intent(MainActivity.this,ChargeCalculateActivity.class);
+                        startActivity(intent5);
+                        break;
+                    case R.id.nav_item_ListCharge:
+                        Intent intent6 = new Intent(MainActivity.this,ChargeListActivity.class);
+                        startActivity(intent6);
+                        break;
+                    case R.id.nav_item_meetings:
+                        Intent intent7 = new Intent(MainActivity.this,MeetingsActivity.class);
+                        startActivity(intent7);
+                        break;
+                    case R.id.nav_item_contactus:
+                        Intent intent8 = new Intent(MainActivity.this,AboutUsActivity.class);
+                        startActivity(intent8);
+                        break;
+                }
+                return false;
+            }
+
+        });*/
+
+    }
+
+    private void initMenuFragment() {
+        MenuParams menuParams = new MenuParams();
+        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+        menuParams.setMenuObjects(getMenuObjects());
+        menuParams.setClosableOutside(true);
+        menuParams.setAnimationDuration(65);
+        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+        mMenuDialogFragment.setItemClickListener(this);
+        mMenuDialogFragment.setItemLongClickListener(this);
+    }
+
+    private List<MenuObject> getMenuObjects() {
+        // You can use any [resource, bitmap, drawable, color] as image:
+        // item.setResource(...)
+        // item.setBitmap(...)
+        // item.setDrawable(...)
+        // item.setColor(...)
+        // You can set image ScaleType:
+        // item.setScaleType(ScaleType.FIT_XY)
+        // You can use any [resource, drawable, color] as background:
+        // item.setBgResource(...)
+        // item.setBgDrawable(...)
+        // item.setBgColor(...)
+        // You can use any [color] as text color:
+        // item.setTextColor(...)
+        // You can set any [color] as divider color:
+        // item.setDividerColor(...)
+
+        List<MenuObject> menuObjects = new ArrayList<>();
+
+        MenuObject close = new MenuObject();
+        close.setResource(R.drawable.contactus);
+
+        MenuObject building_info = new MenuObject("اطلاعات ساختمان");
+        building_info.setResource(R.drawable.contactus);
+
+        MenuObject users_info = new MenuObject("اطلاعات مالکین و ساکنین");
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.contactus);
+        users_info.setBitmap(b);
+
+        MenuObject units_info = new MenuObject("اطلاعات واحدها");
+        BitmapDrawable bd = new BitmapDrawable(getResources(),
+                BitmapFactory.decodeResource(getResources(), R.drawable.contactus));
+        units_info.setDrawable(bd);
+
+        MenuObject charge_info = new MenuObject("اطلاعات شارژ ماهیانه");
+        charge_info.setResource(R.drawable.contactus);
+
+        MenuObject charge_calculate = new MenuObject("محاسبه شارژ");
+        charge_calculate.setResource(R.drawable.contactus);
+
+        MenuObject charge_list = new MenuObject("لیست شارژ");
+        charge_list.setResource(R.drawable.contactus);
+
+        MenuObject meetings = new MenuObject("جلسات");
+        meetings.setResource(R.drawable.contactus);
+
+        MenuObject about_us = new MenuObject("درباره ما");
+        about_us.setResource(R.drawable.contactus);
+
+        menuObjects.add(close);
+        menuObjects.add(building_info);
+        menuObjects.add(users_info);
+        menuObjects.add(units_info);
+        menuObjects.add(charge_info);
+        menuObjects.add(charge_calculate);
+        menuObjects.add(charge_list);
+        menuObjects.add(meetings);
+        menuObjects.add(about_us);
+        return menuObjects;
+    }
+
+    private void initToolbar() {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+        mToolBarTextView.setText("مدیریت مجتمع");
+        mToolBarTextView.setTextColor(Color.parseColor("#ffffff"));
+        mToolBarTextView.setTypeface(bhomaFont);
+    }
+
+    protected void addFragment(Fragment fragment, boolean addToBackStack, int containerId) {
+        invalidateOptionsMenu();
+        String backStackName = fragment.getClass().getName();
+        boolean fragmentPopped = fragmentManager.popBackStackImmediate(backStackName, 0);
+        if (!fragmentPopped) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(containerId, fragment, backStackName)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            if (addToBackStack)
+                transaction.addToBackStack(backStackName);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.context_menu:
+                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
+                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mMenuDialogFragment != null && mMenuDialogFragment.isAdded()) {
+            mMenuDialogFragment.dismiss();
+        } else {
+            finish();
+        }
+    }
+
+    @Override
+    public void onMenuItemClick(View clickedView, int position) {
+        switch (position){
+            case 1:
+                addFragment(new BuildingInformationFragment(), true, R.id.container);
+                break;
+            case 2:
+                addFragment(new UsersInformationFragment(), true, R.id.container);
+                break;
+            case 3:
+                addFragment(new UnitsInformationFragment(), true, R.id.container);
+                break;
+        }
+    }
+
+    @Override
+    public void onMenuItemLongClick(View clickedView, int position) {
+    }
+}
+

@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#e0e0e0">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/usersInfoFrag_rv"
+        />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/usersInfoFrag_fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        app:menu_fab_size="normal"
+        android:elevation="6dp"
+        fab:menu_colorNormal="@color/colorAccent"
+        fab:menu_colorPressed="#9e9d24"
+        fab:menu_colorRipple="#90FFFFFF"
+        fab:menu_animationDelayPerItem="50"
+        fab:menu_icon="@drawable/fab_add"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:menu_labels_padding="8dp"
+        fab:menu_labels_textColor="#000000"
+        fab:menu_labels_textSize="14sp"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_colorNormal="#fff"
+        fab:menu_labels_colorPressed="#fff"
+        fab:menu_labels_colorRipple="#66FFFFFF"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="true"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_position="left"
+        fab:menu_openDirection="up"
+        fab:menu_backgroundColor="@android:color/transparent"
+        fab:menu_fab_show_animation="@anim/fab_slide_in_from_right"
+        fab:menu_fab_hide_animation="@anim/fab_slide_out_to_right">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/usersInfoFrag_fab_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_to_app_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="خروج"
+            fab:fab_colorNormal="#e91e63"
+            fab:fab_colorPressed="#80deea"
+            fab:fab_colorRipple="#80deea"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/usersInfoFrag_fab_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_remove_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="حذف"
+            fab:fab_colorNormal="#00bcd4"
+            fab:fab_colorPressed="#80deea"
+            fab:fab_colorRipple="#80deea"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/usersInfoFrag_fab_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="ویرایش"
+            fab:fab_colorNormal="#03a9f4"
+            fab:fab_colorPressed="#80deea"
+            fab:fab_colorRipple="#80deea"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/usersInfoFrag_fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="ثبت"
+            fab:fab_colorNormal="#2196f3"
+            fab:fab_colorPressed="#80deea"
+            fab:fab_colorRipple="#80deea"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>

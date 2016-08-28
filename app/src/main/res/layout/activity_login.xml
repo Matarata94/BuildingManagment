@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/login_bg"
+    tools:context="reza.sabbagh.buildingmanagment.LoginActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/LoginActivity_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/avatar"
+        app:civ_border_width="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/LoginActivity_Text_UserName"
+        android:hint="نام کاربری"
+        android:inputType="text"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextSize="16dp"
+        android:gravity="right"
+        app:met_baseColor="#000000"
+        app:met_primaryColor="#000000"
+        app:met_errorColor="#e91e63"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/LoginActivity_image"
+        android:drawableRight="@drawable/account"
+        />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/LoginActivity_Text_Password"
+        android:hint="رمز عبور"
+        android:inputType="text"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextSize="16dp"
+        android:gravity="right"
+        app:met_baseColor="#000000"
+        app:met_primaryColor="#000000"
+        app:met_errorColor="#e91e63"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/LoginActivity_Text_UserName"
+        android:drawableRight="@drawable/lock"
+        />
+
+
+    <com.andexert.library.RippleView
+        android:id="@+id/LoginActivity_ripple_edit"
+        android:layout_width="196dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/LoginActivity_Text_Password"
+        app:rv_rippleDuration="200"
+        android:layout_marginTop="18dp"
+        rv_centered="true"
+        >
+
+        <Button
+            android:hint="ورود"
+            android:id="@+id/LoginActivity_Button_Login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="#ffffff"
+            android:textSize="22sp"
+            android:background="#1E88E5"
+            android:gravity="center"
+            />
+
+    </com.andexert.library.RippleView>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="مرا به خاطر بسپار"
+        android:id="@+id/Login_Activity_checkBox"
+        android:layout_below="@+id/LoginActivity_ripple_edit"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:layout_marginTop="18dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LoginActivity_tv_register"
+        android:text="ثبت نام در برنامه"
+        android:textColor="#0097a7"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/Login_Activity_checkBox"
+        android:layout_marginTop="5dp"
+        android:textSize="18dp"
+        android:clickable="true"
+        />
+
+    <View
+        android:layout_width="110dp"
+        android:layout_height="1dp"
+        android:background="#0097a7"
+        android:layout_below="@+id/LoginActivity_tv_register"
+        android:layout_centerHorizontal="true">
+
+    </View>
+
+</RelativeLayout>

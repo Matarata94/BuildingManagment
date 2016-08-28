@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Building">
+        <menu>
+            <item android:title="اطلاعات ساختمان"
+                android:id="@+id/nav_item_InformationBuild"
+                android:icon="@drawable/buildings64"/>
+
+            <item android:title="اطلاعات ساکنین و مالکین"
+                android:id="@+id/nav_item_InformationUser"
+                android:icon="@drawable/infouser"/>
+
+            <item android:title="اطلاعات واحدها"
+                android:id="@+id/nav_item_InformationUnit"
+                android:icon="@drawable/infounit"/>
+        </menu>
+    </item>
+
+    <item android:title="Charge">
+        <menu>
+            <item
+                android:title="اطلاعات شارژ ماهیانه"
+                android:id="@+id/nav_item_InformationCharge"
+                android:icon="@drawable/infocharg"/>
+            <item
+                android:title="محاصبه شارژ"
+                android:id="@+id/nav_item_calculateCharge"
+                android:icon="@drawable/calendar"/>
+            <item
+                android:title="لیست شارژ"
+                android:id="@+id/nav_item_ListCharge"
+                android:icon="@drawable/listcharge"
+                />
+        </menu>
+    </item>
+
+
+            <item
+                android:title="جلسات"
+                android:id="@+id/nav_item_meetings"
+                android:icon="@drawable/meetings" />
+            <item
+                android:title="درباره ما"
+                android:id="@+id/nav_item_contactus"
+                android:icon="@drawable/contactus"/>
+
+
+
+
+</menu>
