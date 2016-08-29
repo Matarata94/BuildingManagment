@@ -35,7 +35,7 @@ public class ServerConnectorLogin extends AsyncTask{
 			while((line=reader.readLine()) != null){
 				sb.append(line);
 			}
-			LoginActivity.res = sb.toString();
+			LoginActivity.resLogin = sb.toString();
 		}catch(Exception e){
 			
 		}

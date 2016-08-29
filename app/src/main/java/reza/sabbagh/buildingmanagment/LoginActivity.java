@@ -3,7 +3,6 @@ package reza.sabbagh.buildingmanagment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Timer;
@@ -27,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox Login_checkBox;
     private TextView tv_register;
     private database db;
-    public static String res="";
+    public static String resLogin ="";
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
@@ -45,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(Text_UserName.getText().toString().equals("") | Text_Password.getText().toString().equals("")){
                     Toast.makeText(LoginActivity.this, "لطفا تمام فیلدها را پر کنید.", Toast.LENGTH_LONG).show();
                 }else{
-                    Login("http://192.168.43.69/login.php",Text_UserName.getText().toString(),Text_Password.getText().toString());
+                    Login("http://192.168.1.5/login.php",Text_UserName.getText().toString(),Text_Password.getText().toString());
                 }
             }
         });
@@ -77,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         db = new database(this);
     }
 
-    private void Login(String link, final String username, final String password){
+    private void Login(String link, String username, String password){
 
         new ServerConnectorLogin(link,username,password).execute();
         pd = new ProgressDialog(LoginActivity.this);
@@ -97,31 +94,27 @@ public class LoginActivity extends AppCompatActivity {
                             tm.cancel();
                             Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
                             count = 0;
-                        }else if(res.equals("not founded")){
+                        }else if(resLogin.equals("not founded")){
                             tm.cancel();
                             pd.cancel();
-                            res = "";
+                            resLogin = "";
                             Toast.makeText(getApplicationContext(),"نام کاربری یا رمز عبور اشتباه است!",Toast.LENGTH_LONG).show();
-                        }else if(!res.equals("")){
+                        }else if(!resLogin.equals("")){
                             tm.cancel();
                             pd.cancel();
                             if(!Login_checkBox.isChecked()){
                                 db.open();
-                                db.updateUsers("Username","-");
-                                db.updateUsers("Password","-");
-                                db.updateUsers("UniqueBN","-");
+                                db.updateInfo("Registered","no");
                                 db.close();
-                                res = "";
+                                resLogin = "";
                                 Intent in = new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(in);
                                 finish();
                             }else if(Login_checkBox.isChecked()){
                                 db.open();
-                                db.updateUsers("Username",username);
-                                db.updateUsers("Password",password);
-                                db.updateUsers("UniqueBN",res);
+                                db.updateInfo("Registered","yes");
                                 db.close();
-                                res = "";
+                                resLogin = "";
                                 Intent in = new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(in);
                                 finish();

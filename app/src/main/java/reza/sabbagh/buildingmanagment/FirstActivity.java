@@ -1,6 +1,5 @@
 package reza.sabbagh.buildingmanagment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -12,9 +11,6 @@ import android.os.Bundle;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class FirstActivity extends AppCompatActivity {
 
@@ -38,12 +34,12 @@ public class FirstActivity extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     db.open();
-                    if(!db.queryUsers(1).equals("-")){
+                    if(db.queryInfo(1).equals("yes")){
                         Intent in = new Intent(FirstActivity.this,MainActivity.class);
                         startActivity(in);
                         db.close();
                         finish();
-                    }else{
+                    }else if(db.queryInfo(1).equals("no")){
                         Intent in = new Intent(FirstActivity.this,LoginActivity.class);
                         startActivity(in);
                         db.close();

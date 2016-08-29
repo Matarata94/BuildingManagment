@@ -70,16 +70,16 @@ public class database extends SQLiteOpenHelper {
 		mydb.close();
 	}
 
-	public String queryUsers(int fild){
-		Cursor cu = mydb.rawQuery("SELECT * FROM Users WHERE UserID=1", null);
+	public String queryInfo(int fild){
+		Cursor cu = mydb.rawQuery("SELECT * FROM Info WHERE Id=1", null);
 		cu.moveToFirst();
 		String result = cu.getString(fild);
 		return result;
 	}
-	public void updateUsers(String field, String value){
+	public void updateInfo(String field, String value){
 		ContentValues cv = new ContentValues();
 		cv.put(field, value);
-		mydb.update("Users", cv, "UserID=1", null);
+		mydb.update("Info", cv, "Id=1", null);
 	}
 	public Integer count(String table){
 		Cursor cu = mydb.query(table, null, null, null, null, null, null);
