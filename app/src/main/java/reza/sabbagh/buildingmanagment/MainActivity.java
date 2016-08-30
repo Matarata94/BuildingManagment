@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -124,34 +125,58 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         List<MenuObject> menuObjects = new ArrayList<>();
 
         MenuObject close = new MenuObject();
-        close.setResource(R.drawable.contactus);
+        close.setResource(R.drawable.close);
+        close.setBgResource(android.R.color.transparent);
+        close.setDividerColor(android.R.color.transparent);
+        close.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject building_info = new MenuObject("اطلاعات ساختمان");
-        building_info.setResource(R.drawable.contactus);
+        building_info.setResource(R.drawable.domain);
+        building_info.setBgResource(android.R.color.transparent);
+        building_info.setDividerColor(Color.parseColor("#e91e63"));
+        building_info.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject users_info = new MenuObject("اطلاعات مالکین و ساکنین");
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.contactus);
-        users_info.setBitmap(b);
+        users_info.setResource(R.drawable.humans);
+        users_info.setBgResource(android.R.color.transparent);
+        users_info.setDividerColor(Color.parseColor("#2196f3"));
+        users_info.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject units_info = new MenuObject("اطلاعات واحدها");
-        BitmapDrawable bd = new BitmapDrawable(getResources(),
-                BitmapFactory.decodeResource(getResources(), R.drawable.contactus));
-        units_info.setDrawable(bd);
+        units_info.setResource(R.drawable.home);
+        units_info.setBgResource(android.R.color.transparent);
+        units_info.setDividerColor(Color.parseColor("#673ab7"));
+        units_info.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject charge_info = new MenuObject("اطلاعات شارژ ماهیانه");
-        charge_info.setResource(R.drawable.contactus);
+        charge_info.setResource(R.drawable.charge_info);
+        charge_info.setBgResource(android.R.color.transparent);
+        charge_info.setDividerColor(Color.parseColor("#009688"));
+        charge_info.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject charge_calculate = new MenuObject("محاسبه شارژ");
-        charge_calculate.setResource(R.drawable.contactus);
+        charge_calculate.setResource(R.drawable.calculator);
+        charge_calculate.setBgResource(android.R.color.transparent);
+        charge_calculate.setDividerColor(Color.parseColor("#00bcd4"));
+        charge_calculate.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject charge_list = new MenuObject("لیست شارژ");
-        charge_list.setResource(R.drawable.contactus);
+        charge_list.setResource(R.drawable.charge_list);
+        charge_list.setBgResource(android.R.color.transparent);
+        charge_list.setDividerColor(Color.parseColor("#cddc39"));
+        charge_list.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject meetings = new MenuObject("جلسات");
-        meetings.setResource(R.drawable.contactus);
+        meetings.setResource(R.drawable.meetings);
+        meetings.setBgResource(android.R.color.transparent);
+        meetings.setDividerColor(Color.parseColor("#8bc34a"));
+        meetings.setScaleType(ImageView.ScaleType.CENTER);
 
         MenuObject about_us = new MenuObject("درباره ما");
-        about_us.setResource(R.drawable.contactus);
+        about_us.setResource(R.drawable.aboutus);
+        about_us.setBgResource(android.R.color.transparent);
+        about_us.setDividerColor(Color.parseColor("#ff9800"));
+        about_us.setScaleType(ImageView.ScaleType.CENTER);
 
         menuObjects.add(close);
         menuObjects.add(building_info);

@@ -81,14 +81,14 @@ public class RegisterUserActivity extends AppCompatActivity {
                     Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
                 }else{
                     String link = "http://192.168.1.5/register.php";
-                    String registerAs = "";
+                    String registerAs = "admin";
                     if(rb_registerAsAdmin.isChecked()){
                         registerAs = "admin";
                     }else if(rb_registerAsUser.isChecked()){
                         registerAs = "user";
                     }
                     String username = text_namekarbari.getText().toString();
-                    String password = Text_Pass.getText().toString();
+                    String password = md5(Text_Pass.getText().toString());
                     String fname = text_Fname.getText().toString();
                     String lname = text_Lname.getText().toString();
                     String phonenumber = Text_Mobile.getText().toString();
@@ -174,11 +174,12 @@ public class RegisterUserActivity extends AppCompatActivity {
                 ButtonRegistration.setText("ویرایش");
                 Register_shtv_alreadyRegistered.setVisibility(View.INVISIBLE);
                 bottomView.setVisibility(View.GONE);
+
             }
         }
     }
 
-    private void Register(String link,String registerAs, String username, String password, String fname, String lname, String phonenumber,
+    private void Register(String link, String registerAs, final String username, String password, String fname, String lname, String phonenumber,
                           String homenumber, String email, String buildingnumber, String unitnumber, String adminusername){
         new ServerConnectorRegister(link,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,adminusername).execute();
         pd = new ProgressDialog(RegisterUserActivity.this);
@@ -224,6 +225,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                             resRegister = "";
                             db.open();
                             db.updateInfo("Registered","yes");
+                            db.updateInfo("Username",username);
                             db.close();
                             Intent in = new Intent(RegisterUserActivity.this,MainActivity.class);
                             startActivity(in);

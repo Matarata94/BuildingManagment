@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(Text_UserName.getText().toString().equals("") | Text_Password.getText().toString().equals("")){
                     Toast.makeText(LoginActivity.this, "لطفا تمام فیلدها را پر کنید.", Toast.LENGTH_LONG).show();
                 }else{
-                    Login("http://192.168.1.5/login.php",Text_UserName.getText().toString(),Text_Password.getText().toString());
+                    Login("http://192.168.1.5/login.php",Text_UserName.getText().toString(),RegisterUserActivity.md5(Text_Password.getText().toString()));
                 }
             }
         });
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         db = new database(this);
     }
 
-    private void Login(String link, String username, String password){
+    private void Login(String link, final String username, String password){
 
         new ServerConnectorLogin(link,username,password).execute();
         pd = new ProgressDialog(LoginActivity.this);
@@ -94,12 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             tm.cancel();
                             Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
                             count = 0;
-                        }else if(resLogin.equals("not founded")){
-                            tm.cancel();
-                            pd.cancel();
-                            resLogin = "";
-                            Toast.makeText(getApplicationContext(),"نام کاربری یا رمز عبور اشتباه است!",Toast.LENGTH_LONG).show();
-                        }else if(!resLogin.equals("")){
+                        }else if(resLogin.contains("isAdmin")){
                             tm.cancel();
                             pd.cancel();
                             if(!Login_checkBox.isChecked()){
@@ -113,12 +108,20 @@ public class LoginActivity extends AppCompatActivity {
                             }else if(Login_checkBox.isChecked()){
                                 db.open();
                                 db.updateInfo("Registered","yes");
+                                db.updateInfo("Username",username);
                                 db.close();
                                 resLogin = "";
                                 Intent in = new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(in);
                                 finish();
                             }
+                        }else if(resLogin.contains("isUser")){
+                            //Should go to his panel (panle not created)
+                        }else if(resLogin.equals("not admin-not user")){
+                            tm.cancel();
+                            pd.cancel();
+                            resLogin = "";
+                            Toast.makeText(getApplicationContext(),"نام کاربری یا رمز عبور اشتباه است!",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
