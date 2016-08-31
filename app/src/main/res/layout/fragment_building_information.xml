@@ -20,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="8dp"
             android:textColor="#444"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:reflectionColor="#9000ff"
             />
 
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#444"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="12dp"
             app:reflectionColor="#ff0022"
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#444"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="12dp"
             app:reflectionColor="#ffc800"
@@ -145,7 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#444"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="12dp"
             app:reflectionColor="#7bff00"
@@ -187,7 +187,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#444"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="12dp"
             app:reflectionColor="#ff006f"
@@ -229,14 +229,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#444"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="12dp"
             app:reflectionColor="#db0007"
             android:layout_below="@id/BuildingInfoFrag_view5"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="200dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/BuildingInfoFrag_shimtv_Text_Adrress"
             android:hint="---"
@@ -261,7 +261,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/BuildingInfoFrag_shimtv_Adrress"
             android:layout_marginTop="50dp"
-            app:rv_rippleDuration="200"
+            app:rv_rippleDuration="160"
             rv_centered="true">
 
             <Button
@@ -270,7 +270,7 @@
                 android:id="@+id/buildinginformation_btn_edit"
                 android:background="#1E88E5"
                 android:text="ثبت"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:textColor="#ffffff"
                 android:elevation="6dp"
                 />

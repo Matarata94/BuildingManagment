@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(Text_UserName.getText().toString().equals("") | Text_Password.getText().toString().equals("")){
                     Toast.makeText(LoginActivity.this, "لطفا تمام فیلدها را پر کنید.", Toast.LENGTH_LONG).show();
                 }else{
-                    Login("http://192.168.1.5/login.php",Text_UserName.getText().toString(),RegisterUserActivity.md5(Text_Password.getText().toString()));
+                    Login("http://192.168.43.69/login.php",Text_UserName.getText().toString(),RegisterUserActivity.md5(Text_Password.getText().toString()));
                 }
             }
         });
@@ -98,10 +98,10 @@ public class LoginActivity extends AppCompatActivity {
                             tm.cancel();
                             pd.cancel();
                             if(!Login_checkBox.isChecked()){
-                                db.open();
-                                db.updateInfo("Registered","no");
-                                db.close();
                                 resLogin = "";
+                                db.open();
+                                db.updateInfo("Username",username);
+                                db.close();
                                 Intent in = new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(in);
                                 finish();
@@ -117,6 +117,24 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }else if(resLogin.contains("isUser")){
                             //Should go to his panel (panle not created)
+                            tm.cancel();
+                            pd.cancel();
+                            if(!Login_checkBox.isChecked()){
+                                resLogin = "";
+                                Intent in = new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(in);
+                                finish();
+                            }else if(Login_checkBox.isChecked()){
+                                db.open();
+                                db.updateInfo("Registered","yes");
+                                db.updateInfo("Username",username);
+                                //AdminUsername not inserted here.should be insert if needed in future!
+                                db.close();
+                                resLogin = "";
+                                Intent in = new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(in);
+                                finish();
+                            }
                         }else if(resLogin.equals("not admin-not user")){
                             tm.cancel();
                             pd.cancel();

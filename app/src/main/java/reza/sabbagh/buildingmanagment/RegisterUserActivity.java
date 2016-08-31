@@ -80,7 +80,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 }else if(rb_registerAsUser.isChecked() && text_adminUsername.getText().toString().equals("")){
                     Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
                 }else{
-                    String link = "http://192.168.1.5/register.php";
+                    String link = "http://192.168.43.69/register.php";
                     String registerAs = "admin";
                     if(rb_registerAsAdmin.isChecked()){
                         registerAs = "admin";
@@ -180,7 +180,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     private void Register(String link, String registerAs, final String username, String password, String fname, String lname, String phonenumber,
-                          String homenumber, String email, String buildingnumber, String unitnumber, String adminusername){
+                          String homenumber, String email, String buildingnumber, String unitnumber, final String adminusername){
         new ServerConnectorRegister(link,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,adminusername).execute();
         pd = new ProgressDialog(RegisterUserActivity.this);
         pd.setMessage("Registering...");
@@ -197,18 +197,18 @@ public class RegisterUserActivity extends AppCompatActivity {
                         if(count == 6){
                             pd.cancel();
                             tm.cancel();
-                            Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید."+ resRegister,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
                             count = 0;
                         }else if(resRegister.contains("username founded")){
                             tm.cancel();
                             pd.cancel();
                             resRegister = "";
-                            Toast.makeText(getApplicationContext(),"نام کاربری دیگری انتخاب کنید!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"این نام کاربری قبلا ثبت گردیده است!",Toast.LENGTH_LONG).show();
                         }else if(resRegister.contains("email founded")){
                             tm.cancel();
                             pd.cancel();
                             resRegister = "";
-                            Toast.makeText(getApplicationContext(),"ایمیل تکراری است!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"این ایمیل قبلا ثبت گردیده است!",Toast.LENGTH_LONG).show();
                         }else if(resRegister.contains("adminUsername not founded")){
                             tm.cancel();
                             pd.cancel();
@@ -226,6 +226,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                             db.open();
                             db.updateInfo("Registered","yes");
                             db.updateInfo("Username",username);
+                            db.updateInfo("AdminUsername",adminusername);
                             db.close();
                             Intent in = new Intent(RegisterUserActivity.this,MainActivity.class);
                             startActivity(in);
