@@ -1,8 +1,8 @@
 package reza.sabbagh.buildingmanagment;
 
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
