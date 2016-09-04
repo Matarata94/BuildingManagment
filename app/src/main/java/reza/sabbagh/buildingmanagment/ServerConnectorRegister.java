@@ -12,11 +12,12 @@ import java.net.URLEncoder;
 @SuppressWarnings("rawtypes")
 public class ServerConnectorRegister extends AsyncTask{
 
-	private String Link,RegisterAs,Username,Password,Fname,Lname,PhoneNumber,HomeNumber,Email,BuildingNumber,UnitNumber,AdminUsername;
+	private String Link,RequestType,RegisterAs,Username,Password,Fname,Lname,PhoneNumber,HomeNumber,Email,BuildingNumber,UnitNumber,OldUnitNumber,AdminUsername;
 
-	public ServerConnectorRegister(String link, String registeras, String username, String password, String fname, String lname, String phonenumber,
-								   String homenumber, String email, String buildingnumber, String unitnumber, String adminusername){
+	public ServerConnectorRegister(String link, String requesttype, String registeras, String username, String password, String fname, String lname, String phonenumber,
+								   String homenumber, String email, String buildingnumber, String unitnumber, String oldunitnumber, String adminusername){
 		Link = link;
+		RequestType = requesttype;
 		RegisterAs = registeras;
 		Username = username;
 		Password = password;
@@ -27,11 +28,13 @@ public class ServerConnectorRegister extends AsyncTask{
 		Email = email;
 		BuildingNumber = buildingnumber;
 		UnitNumber = unitnumber;
+		OldUnitNumber = oldunitnumber;
 		AdminUsername = adminusername;
 	}
 	protected String doInBackground(Object... params) {
 		try{
-			String data = URLEncoder.encode("registeras","UTF8") + "=" + URLEncoder.encode(RegisterAs,"UTF8");
+			String data = URLEncoder.encode("requesttype","UTF8") + "=" + URLEncoder.encode(RequestType,"UTF8");
+			data += "&" + URLEncoder.encode("registeras","UTF8") + "=" + URLEncoder.encode(RegisterAs,"UTF8");
 			data += "&" + URLEncoder.encode("username","UTF8") + "=" + URLEncoder.encode(Username,"UTF8");
 			data += "&" + URLEncoder.encode("password","UTF8") + "=" + URLEncoder.encode(Password,"UTF8");
 			data += "&" + URLEncoder.encode("fname","UTF8") + "=" + URLEncoder.encode(Fname,"UTF8");
@@ -41,6 +44,7 @@ public class ServerConnectorRegister extends AsyncTask{
 			data += "&" + URLEncoder.encode("email","UTF8") + "=" + URLEncoder.encode(Email,"UTF8");
 			data += "&" + URLEncoder.encode("buildingnumber","UTF8") + "=" + URLEncoder.encode(BuildingNumber,"UTF8");
 			data += "&" + URLEncoder.encode("unitnumber","UTF8") + "=" + URLEncoder.encode(UnitNumber,"UTF8");
+			data += "&" + URLEncoder.encode("oldunitnumber","UTF8") + "=" + URLEncoder.encode(OldUnitNumber,"UTF8");
 			data += "&" + URLEncoder.encode("adminusername","UTF8") + "=" + URLEncoder.encode(AdminUsername,"UTF8");
 			URL mylink = new URL(Link);
 			URLConnection connect = mylink.openConnection();

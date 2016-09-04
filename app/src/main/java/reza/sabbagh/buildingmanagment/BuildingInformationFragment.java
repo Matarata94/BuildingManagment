@@ -33,7 +33,7 @@ public class BuildingInformationFragment extends Fragment {
     private Timer tm;
     private ProgressDialog pd;
     private database db;
-    private String link = "http://192.168.1.5/BuildingInfo.php";
+    private String link = FirstActivity.globalLink + "BuildingInfo.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

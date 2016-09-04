@@ -32,23 +32,20 @@ import java.util.TimerTask;
 public class UsersInformationFragment extends Fragment{
 
     private FloatingActionMenu fabmenu;
-    private FloatingActionButton subFabExit,subFabRemove,subFabEdit,subFabAdd;
+    private FloatingActionButton subFabExit,subFabRemove,subFabAdd;
     private EditText searchET;
     private Button search_btn;
     private RecyclerView rv;
     private UsersInformationAdapter uia;
     public static String resUsersInfo ="";
-    private int count=0;
+    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000,selectedItemSearchPostion=10000;
     private Timer tm;
     private ProgressDialog pd;
     private database db;
-    private String link = "http://192.168.1.5/UsersInfo.php";
-    private int listCount;
+    private String link = FirstActivity.globalLink + "UsersInfo.php",completeProfile="",completeProfileTitle="";
     private String[][] dataList,dataListSearch;
-    private int stringIndexHolder[] = new int[8];
-    private int rowArray = 0;
-    private String completeProfile="",completeProfileTitle="";
     private Typeface iransans;
+    private Bundle bundle = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,16 +63,79 @@ public class UsersInformationFragment extends Fragment{
         rv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        completeProfileTitle = dataList[position][0] + " " + dataList[position][1];
-                        completeProfile = "شماره همراه: " + dataList[position][2] +"\n\n"+"شماره منزل: "+ dataList[position][3] +"\n\n"+"ایمیل: "+ dataList[position][4] +"\n\n"+
-                                "شماره ساختمان: "+ dataList[position][5] +"\n\n"+"شماره واحد: "+ dataList[position][6];
-                        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                                .title(completeProfileTitle)
-                                .content(completeProfile)
-                                .positiveText("تایید")
-                                .typeface(iransans,iransans)
-                                .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
-                                .show();
+                        if(uia.getItemCount() != listCount){
+                            selectedItemSearchPostion = position;
+                            completeProfileTitle = dataListSearch[position][0] + " " + dataListSearch[position][1];
+                            completeProfile = "شماره همراه: " + dataListSearch[position][2] +"\n\n"+"شماره منزل: "+ dataListSearch[position][3] +"\n\n"+"ایمیل: "+ dataListSearch[position][4] +"\n\n"+
+                                    "شماره ساختمان: "+ dataListSearch[position][5] +"\n\n"+"شماره واحد: "+ dataListSearch[position][6];
+                            MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                                    .title(completeProfileTitle)
+                                    .content(completeProfile)
+                                    .positiveText("تایید")
+                                    .negativeText("ویرایش")
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                            in.putExtra("key1","edit_user");
+                                            if(selectedItemPosition != 10000){
+                                                String[] data = new String[7];
+                                                for(int i=0;i < 7;i++){
+                                                    data[i] = dataList[selectedItemPosition][i];
+                                                }
+                                                bundle.putStringArray("keyData",data);
+                                            }else if(selectedItemSearchPostion != 10000){
+                                                String[] data = new String[7];
+                                                for(int i=0;i < 7;i++){
+                                                    data[i] = dataListSearch[selectedItemSearchPostion][i];
+                                                }
+                                                bundle.putStringArray("keyData",data);
+                                            }
+                                            in.putExtras(bundle);
+                                            startActivity(in);
+                                            selectedItemSearchPostion = 10000;
+                                        }
+                                    })
+                                    .typeface(iransans,iransans)
+                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                    .show();
+                        }else{
+                            selectedItemPosition = position;
+                            completeProfileTitle = dataList[position][0] + " " + dataList[position][1];
+                            completeProfile = "شماره همراه: " + dataList[position][2] +"\n\n"+"شماره منزل: "+ dataList[position][3] +"\n\n"+"ایمیل: "+ dataList[position][4] +"\n\n"+
+                                    "شماره ساختمان: "+ dataList[position][5] +"\n\n"+"شماره واحد: "+ dataList[position][6];
+                            MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                                    .title(completeProfileTitle)
+                                    .content(completeProfile)
+                                    .positiveText("تایید")
+                                    .negativeText("ویرایش")
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                            in.putExtra("key1","edit_user");
+                                            if(selectedItemPosition != 10000){
+                                                String[] data = new String[7];
+                                                for(int i=0;i < 7;i++){
+                                                    data[i] = dataList[selectedItemPosition][i];
+                                                }
+                                                bundle.putStringArray("keyData",data);
+                                            }else if(selectedItemSearchPostion != 10000){
+                                                String[] data = new String[7];
+                                                for(int i=0;i < 7;i++){
+                                                    data[i] = dataListSearch[selectedItemSearchPostion][i];
+                                                }
+                                                bundle.putStringArray("keyData",data);
+                                            }
+                                            in.putExtras(bundle);
+                                            startActivity(in);
+                                            selectedItemPosition = 10000;
+                                        }
+                                    })
+                                    .typeface(iransans,iransans)
+                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                    .show();
+                        }
                     }
                 })
         );
@@ -83,11 +143,12 @@ public class UsersInformationFragment extends Fragment{
         fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.usersInfoFrag_fab_menu);
         subFabExit = (FloatingActionButton) rootView.findViewById(R.id.usersInfoFrag_fab_exit);
         subFabRemove = (FloatingActionButton) rootView.findViewById(R.id.usersInfoFrag_fab_remove);
-        subFabEdit = (FloatingActionButton) rootView.findViewById(R.id.usersInfoFrag_fab_edit);
         subFabAdd = (FloatingActionButton) rootView.findViewById(R.id.usersInfoFrag_fab_add);
         searchET = (EditText) rootView.findViewById(R.id.fragment_usersInfo_et_search);
         search_btn = (Button) rootView.findViewById(R.id.fragment_usersInfo_btn_search);
-        iransans = Typeface.createFromAsset(getContext().getAssets(),"iraniansans.ttf");
+        iransans = Typeface.createFromAsset(getContext().getAssets(),"BHoma.ttf");
+        searchET.setTypeface(iransans);
+        search_btn.setTypeface(iransans);
         fabmenu.setClosedOnTouchOutside(true);
         subFabExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,15 +173,8 @@ public class UsersInformationFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                startActivity(in);
-            }
-        });
-        subFabEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in = new Intent(getContext(),RegisterUserActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("key1","edit");
+                bundle.putString("key1","add_user");
                 in.putExtras(bundle);
                 startActivity(in);
             }
@@ -256,5 +310,6 @@ public class UsersInformationFragment extends Fragment{
             }
         }, 1, 1000);
     }
+
 
 }

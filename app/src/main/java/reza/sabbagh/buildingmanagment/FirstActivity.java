@@ -17,6 +17,7 @@ public class FirstActivity extends AppCompatActivity {
     private ConnectivityManager connectivityManager;
     private NetworkInfo activeNetworkInfo;
     private database db;
+    public static String globalLink="http://192.168.1.5/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class FirstActivity extends AppCompatActivity {
         db.databasecreate();
 
         if(isNetworkAvailable()){
-            new CountDownTimer(1000,1000){
+            new CountDownTimer(100,1000){
                 @Override
                 public void onTick(long l) {
                 }

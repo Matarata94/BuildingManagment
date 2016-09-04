@@ -20,17 +20,17 @@
                 android:id="@+id/fragment_usersInfo_et_search"
                 android:layout_alignParentLeft="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginRight="70dp"
+                android:layout_marginRight="75dp"
                 android:hint="Search"
                 android:drawableLeft="@drawable/search"
                 android:background="#fff"
                 android:textColor="#000000"
                 android:textColorHint="#757575"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <com.andexert.library.RippleView
                 android:id="@+id/fragment_usersInfo_rippleSearch"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerHorizontal="true"
@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColorHint="#ffffff"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:background="#1E88E5"
                     android:gravity="center"
                     />
@@ -114,17 +114,6 @@
             fab:fab_size="mini"
             fab:fab_label="حذف"
             fab:fab_colorNormal="#00bcd4"
-            fab:fab_colorPressed="#80deea"
-            fab:fab_colorRipple="#80deea"/>
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/usersInfoFrag_fab_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_create_white_24dp"
-            fab:fab_size="mini"
-            fab:fab_label="ویرایش"
-            fab:fab_colorNormal="#03a9f4"
             fab:fab_colorPressed="#80deea"
             fab:fab_colorRipple="#80deea"/>
 

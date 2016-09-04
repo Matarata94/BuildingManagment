@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
+    private String link = FirstActivity.globalLink + "login.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(Text_UserName.getText().toString().equals("") | Text_Password.getText().toString().equals("")){
                     Toast.makeText(LoginActivity.this, "لطفا تمام فیلدها را پر کنید.", Toast.LENGTH_LONG).show();
                 }else{
-                    Login("http://192.168.43.69/login.php",Text_UserName.getText().toString(),RegisterUserActivity.md5(Text_Password.getText().toString()));
+                    Login(link,Text_UserName.getText().toString(),RegisterUserActivity.md5(Text_Password.getText().toString()));
                 }
             }
         });

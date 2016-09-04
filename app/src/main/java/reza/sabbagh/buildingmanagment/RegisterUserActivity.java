@@ -35,6 +35,8 @@ public class RegisterUserActivity extends AppCompatActivity {
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
+    private String link = FirstActivity.globalLink + "register.php",requestType,registerAs="admin",username,password,fname,lname,phonenumber,homenumber
+    ,email,buildingnumber,unitnumber,oldunitnumber,adminusername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,50 +56,65 @@ public class RegisterUserActivity extends AppCompatActivity {
         ButtonRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (text_Fname.getText().toString().equals("") |
-                    text_Lname.getText().toString().equals("") |
-                    text_namekarbari.getText().toString().equals("") |
-                    Text_Mobile.getText().toString().equals("") |
-                    text_HomeNum.getText().toString().equals("") |
-                    Text_NumberBuilding.getText().toString().equals("") |
-                    Text_NumberOfUnit.getText().toString().equals("") |
-                    text_email.getText().toString().equals("") |
-                    Text_Pass.getText().toString().equals("") |
-                    RepeatPass.getText().toString().equals("")){
-                    Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
-                }else if(text_Fname.length() < 3){
-                    Toast.makeText(RegisterUserActivity.this,"نام باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
-                }else if(text_Lname.length() < 3){
-                    Toast.makeText(RegisterUserActivity.this,"نام خانوادگی باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
-                }else if(text_namekarbari.length() < 3){
-                    Toast.makeText(RegisterUserActivity.this,"نام کاربری باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
-                }else if(Text_Mobile.length() < 11){
-                    Toast.makeText(RegisterUserActivity.this,"شماره همراه اشتباه است!", Toast.LENGTH_LONG).show();
-                }else if(Text_Pass.length() < 5){
-                    Toast.makeText(RegisterUserActivity.this,"پسورد باید بیش از پنج حرف باشد!", Toast.LENGTH_LONG).show();
-                }else if(!Text_Pass.getText().toString().equals(RepeatPass.getText().toString())){
-                    Toast.makeText(RegisterUserActivity.this,"تکرار پسورد با پسورد متفاوت است!", Toast.LENGTH_LONG).show();
-                }else if(rb_registerAsUser.isChecked() && text_adminUsername.getText().toString().equals("")){
-                    Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
-                }else{
-                    String link = "http://192.168.43.69/register.php";
-                    String registerAs = "admin";
-                    if(rb_registerAsAdmin.isChecked()){
-                        registerAs = "admin";
-                    }else if(rb_registerAsUser.isChecked()){
-                        registerAs = "user";
+                if(ButtonRegistration.getText().toString().equals("ثبت")){
+                    if(checkIfAllFill("register")){
+                        requestType = "insert";
+                        if(rb_registerAsAdmin.isChecked()){
+                            registerAs = "admin";
+                        }else if(rb_registerAsUser.isChecked()){
+                            registerAs = "user";
+                        }
+                        username = text_namekarbari.getText().toString();
+                        password = md5(Text_Pass.getText().toString());
+                        fname = text_Fname.getText().toString();
+                        lname = text_Lname.getText().toString();
+                        phonenumber = Text_Mobile.getText().toString();
+                        homenumber = text_HomeNum.getText().toString();
+                        email = text_email.getText().toString();
+                        buildingnumber = Text_NumberBuilding.getText().toString();
+                        unitnumber = Text_NumberOfUnit.getText().toString();
+                        oldunitnumber = "";
+                        adminusername = text_adminUsername.getText().toString();
+                        Register(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
                     }
-                    String username = text_namekarbari.getText().toString();
-                    String password = md5(Text_Pass.getText().toString());
-                    String fname = text_Fname.getText().toString();
-                    String lname = text_Lname.getText().toString();
-                    String phonenumber = Text_Mobile.getText().toString();
-                    String homenumber = text_HomeNum.getText().toString();
-                    String email = text_email.getText().toString();
-                    String buildingnumber = Text_NumberBuilding.getText().toString();
-                    String unitnumber = Text_NumberOfUnit.getText().toString();
-                    String adminusername = text_adminUsername.getText().toString();
-                    Register(link,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,adminusername);
+                }
+                else if(ButtonRegistration.getText().toString().equals("افزودن کاربر")) {
+                    if(checkIfAllFill("add")){
+                        requestType = "insert";
+                        registerAs = "user";
+                        username = text_namekarbari.getText().toString();
+                        password = md5(Text_Pass.getText().toString());
+                        fname = text_Fname.getText().toString();
+                        lname = text_Lname.getText().toString();
+                        phonenumber = Text_Mobile.getText().toString();
+                        homenumber = text_HomeNum.getText().toString();
+                        email = text_email.getText().toString();
+                        buildingnumber = Text_NumberBuilding.getText().toString();
+                        unitnumber = Text_NumberOfUnit.getText().toString();
+                        oldunitnumber = "";
+                        db.open();
+                        adminusername = db.queryInfo(2);
+                        db.close();
+                        Register(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
+                    }
+                }else if(ButtonRegistration.getText().toString().equals("اعمال تغییرات")) {
+                    if(checkIfAllFill("edit")){
+                        requestType = "update";
+                        registerAs = "";
+                        username = text_namekarbari.getText().toString();
+                        password = md5(Text_Pass.getText().toString());
+                        fname = text_Fname.getText().toString();
+                        lname = text_Lname.getText().toString();
+                        phonenumber = Text_Mobile.getText().toString();
+                        homenumber = text_HomeNum.getText().toString();
+                        email = text_email.getText().toString();
+                        buildingnumber = Text_NumberBuilding.getText().toString();
+                        unitnumber = Text_NumberOfUnit.getText().toString();
+                        db.open();
+                        adminusername = db.queryInfo(2);
+                        db.close();
+                        Register(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
+                    }
                 }
             }
         });
@@ -169,19 +186,47 @@ public class RegisterUserActivity extends AppCompatActivity {
         db = new database(this);
 
         if(getIntent().getExtras() != null){
-            String bundle = getIntent().getExtras().getString("key1");
-            if(bundle.equals("edit")){
-                ButtonRegistration.setText("ویرایش");
+            String stringRecieved = getIntent().getExtras().getString("key1");
+            String[] arrayReceived = getIntent().getExtras().getStringArray("keyData");
+            if(stringRecieved.equals("add_user")){
+                ButtonRegistration.setText("افزودن کاربر");
                 Register_shtv_alreadyRegistered.setVisibility(View.INVISIBLE);
+                tv_registerAs.setVisibility(View.GONE);
+                tv_registerAsAdmin.setVisibility(View.GONE);
+                tv_registerAsUser.setVisibility(View.GONE);
+                tv_registerTitle.setText("ثبت کاربر جدید");
+                rb_registerAsAdmin.setVisibility(View.INVISIBLE);
+                rb_registerAsUser.setVisibility(View.GONE);
                 bottomView.setVisibility(View.GONE);
-
+            }else if(stringRecieved.equals("edit_user")){
+                ButtonRegistration.setText("اعمال تغییرات");
+                Register_shtv_alreadyRegistered.setVisibility(View.GONE);
+                tv_registerAs.setVisibility(View.GONE);
+                tv_registerAsAdmin.setVisibility(View.GONE);
+                tv_registerAsUser.setVisibility(View.GONE);
+                tv_registerTitle.setText("ویرایش اطلاعات کاربر");
+                rb_registerAsAdmin.setVisibility(View.INVISIBLE);
+                rb_registerAsUser.setVisibility(View.GONE);
+                Text_Pass.setVisibility(View.GONE);
+                RepeatPass.setVisibility(View.GONE);
+                bottomView.setVisibility(View.GONE);
+                text_namekarbari.setVisibility(View.GONE);
+                text_Fname.setText(arrayReceived[0]);
+                text_Lname.setText(arrayReceived[1]);
+                Text_Mobile.setText(arrayReceived[2]);
+                text_HomeNum.setText(arrayReceived[3]);
+                text_email.setText(arrayReceived[4]);
+                Text_NumberBuilding.setText(arrayReceived[5]);
+                Text_NumberOfUnit.setText(arrayReceived[6]);
+                text_Fname.requestFocus();
+                oldunitnumber = Text_NumberOfUnit.getText().toString();
             }
         }
     }
 
-    private void Register(String link, String registerAs, final String username, String password, String fname, String lname, String phonenumber,
-                          String homenumber, String email, String buildingnumber, String unitnumber, final String adminusername){
-        new ServerConnectorRegister(link,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,adminusername).execute();
+    private void Register(String link, String requestType, String registerAs, final String username, String password, String fname, String lname, String phonenumber,
+                          String homenumber, String email, String buildingnumber, String unitnumber, String oldunitnumber, final String adminusername){
+        new ServerConnectorRegister(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername).execute();
         pd = new ProgressDialog(RegisterUserActivity.this);
         pd.setMessage("Registering...");
         pd.setCancelable(false);
@@ -223,15 +268,22 @@ public class RegisterUserActivity extends AppCompatActivity {
                             tm.cancel();
                             pd.cancel();
                             resRegister = "";
-                            db.open();
-                            db.updateInfo("Registered","yes");
-                            db.updateInfo("Username",username);
-                            db.updateInfo("AdminUsername",adminusername);
-                            db.close();
+                            if(ButtonRegistration.getText().toString().equals("ثبت")){
+                                db.open();
+                                db.updateInfo("Registered","yes");
+                                db.updateInfo("Username",username);
+                                db.updateInfo("AdminUsername",adminusername);
+                                db.close();
+                            }
+                            Toast.makeText(getApplicationContext(),"انجام شد!",Toast.LENGTH_SHORT).show();
                             Intent in = new Intent(RegisterUserActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
-                            finish();
+                        }else if(resRegister.equals("update fail")){
+                            tm.cancel();
+                            pd.cancel();
+                            resRegister = "";
+                            Toast.makeText(getApplicationContext(),"خطا در ثبت اطلاعات",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -259,6 +311,104 @@ public class RegisterUserActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private boolean checkIfAllFill(String type){
+        if(type.equals("register")){
+            if (text_Fname.getText().toString().equals("") |
+                    text_Lname.getText().toString().equals("") |
+                    text_namekarbari.getText().toString().equals("") |
+                    Text_Mobile.getText().toString().equals("") |
+                    text_HomeNum.getText().toString().equals("") |
+                    Text_NumberBuilding.getText().toString().equals("") |
+                    Text_NumberOfUnit.getText().toString().equals("") |
+                    text_email.getText().toString().equals("") |
+                    Text_Pass.getText().toString().equals("") |
+                    RepeatPass.getText().toString().equals("")){
+                Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(text_Fname.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return  false;
+            }else if(text_Lname.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام خانوادگی باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(text_namekarbari.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام کاربری باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(Text_Mobile.length() < 11){
+                Toast.makeText(RegisterUserActivity.this,"شماره همراه اشتباه است!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(Text_Pass.length() < 5){
+                Toast.makeText(RegisterUserActivity.this,"پسورد باید بیش از پنج حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(!Text_Pass.getText().toString().equals(RepeatPass.getText().toString())){
+                Toast.makeText(RegisterUserActivity.this,"تکرار پسورد با پسورد متفاوت است!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(rb_registerAsUser.isChecked() && text_adminUsername.getText().toString().equals("")){
+                Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
+                return false;
+            }else{
+                return true;
+            }
+        }else if(type.equals("add")){
+            if (text_Fname.getText().toString().equals("") |
+                    text_Lname.getText().toString().equals("") |
+                    text_namekarbari.getText().toString().equals("") |
+                    Text_Mobile.getText().toString().equals("") |
+                    text_HomeNum.getText().toString().equals("") |
+                    Text_NumberBuilding.getText().toString().equals("") |
+                    Text_NumberOfUnit.getText().toString().equals("") |
+                    text_email.getText().toString().equals("") |
+                    Text_Pass.getText().toString().equals("") |
+                    RepeatPass.getText().toString().equals("")){
+                Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(text_Fname.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(text_Lname.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام خانوادگی باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(text_namekarbari.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام کاربری باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(Text_Mobile.length() < 11){
+                Toast.makeText(RegisterUserActivity.this,"شماره همراه اشتباه است!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(Text_Pass.length() < 5){
+                Toast.makeText(RegisterUserActivity.this,"پسورد باید بیش از پنج حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(!Text_Pass.getText().toString().equals(RepeatPass.getText().toString())){
+                Toast.makeText(RegisterUserActivity.this,"تکرار پسورد با پسورد متفاوت است!", Toast.LENGTH_LONG).show();
+                return false;
+            }else{
+                return true;
+            }
+        }else if(type.equals("edit")){
+            if (text_Fname.getText().toString().equals("") |
+                    text_Lname.getText().toString().equals("") |
+                    Text_Mobile.getText().toString().equals("") |
+                    text_HomeNum.getText().toString().equals("") |
+                    Text_NumberBuilding.getText().toString().equals("") |
+                    Text_NumberOfUnit.getText().toString().equals("") |
+                    text_email.getText().toString().equals("")){
+                Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(text_Fname.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(text_Lname.length() < 3){
+                Toast.makeText(RegisterUserActivity.this,"نام خانوادگی باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
+                return false;
+            }else if(Text_Mobile.length() < 11){
+                Toast.makeText(RegisterUserActivity.this,"شماره همراه اشتباه است!", Toast.LENGTH_LONG).show();
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
