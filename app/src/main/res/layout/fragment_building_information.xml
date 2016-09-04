@@ -11,6 +11,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
+
+
         <com.romainpiel.shimmer.ShimmerTextView
             android:id="@+id/BuildingInfoFrag_shimtv_numberBuilding"
             android:text="شماره ساختمان"

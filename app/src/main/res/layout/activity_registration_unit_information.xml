@@ -206,16 +206,14 @@
             rv_centered="true"
             android:layout_centerHorizontal="true">
 
-            <com.dd.CircularProgressButton
+            <Button
                 android:hint="ذخیره"
                 android:id="@+id/RegisterUnitActivity_Button_Register"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColorHint="#ffffff"
                 android:textSize="20sp"
-                app:cpb_cornerRadius="48dp"
                 android:background="#1E88E5"
-                app:cpb_colorProgress="#093085"
                 android:layout_centerHorizontal="true"
                 />
         </com.andexert.library.RippleView>

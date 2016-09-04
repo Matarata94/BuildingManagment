@@ -33,7 +33,7 @@ public class BuildingInformationFragment extends Fragment {
     private Timer tm;
     private ProgressDialog pd;
     private database db;
-    private String link = "http://192.168.43.69/BuildingInfo.php";;
+    private String link = "http://192.168.1.5/BuildingInfo.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,6 +104,7 @@ public class BuildingInformationFragment extends Fragment {
         new ServerConnectorBuildingInfo(link,requesttype,badminusername,bnumber,btype,bname,bunitscount,bplaque,baddress).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Loading...");
+        pd.setIndeterminate(false);
         pd.setCancelable(false);
         pd.show();
 
@@ -124,6 +125,7 @@ public class BuildingInformationFragment extends Fragment {
                             pd.cancel();
                             resBuildingInfo = "";
                             Toast.makeText(getContext(),"اطلاعاتی یافت نشد!",Toast.LENGTH_LONG).show();
+                            count = 0;
                         }else if(resBuildingInfo.contains("founded")){
                             tm.cancel();
                             pd.cancel();
@@ -142,23 +144,27 @@ public class BuildingInformationFragment extends Fragment {
                             btn_insert_edit.setText("ویرایش");
                             disableET(text_numberbuiding,text_typebuilding,text_namebuilding,text_numberofunit,text_plaque,text_address);
                             resBuildingInfo = "";
+                            count = 0;
                         }else if(resBuildingInfo.equals("insert fail")){
                             tm.cancel();
                             pd.cancel();
                             resBuildingInfo = "";
                             Toast.makeText(getContext(),"خطا در ثبت اطلاعات! لطفا زمان دیگری امتحان کنید!",Toast.LENGTH_LONG).show();
+                            count = 0;
                         }else if(resBuildingInfo.equals("inserted")){
                             tm.cancel();
                             pd.cancel();
                             resBuildingInfo = "";
                             Toast.makeText(getContext(),"اطلاعات با موفقیت ثبت گردید!",Toast.LENGTH_LONG).show();
                             btn_insert_edit.setText("ویرایش");
+                            count = 0;
                             disableET(text_numberbuiding,text_typebuilding,text_namebuilding,text_numberofunit,text_plaque,text_address);
                         }else if(resBuildingInfo.equals("update fail")){
                             tm.cancel();
                             pd.cancel();
                             resBuildingInfo = "";
                             Toast.makeText(getContext(),"خطا در ثبت اطلاعات! لطفا زمان دیگری امتحان کنید!",Toast.LENGTH_LONG).show();
+                            count = 0;
                         }else if(resBuildingInfo.equals("updated")){
                             tm.cancel();
                             pd.cancel();
@@ -166,6 +172,7 @@ public class BuildingInformationFragment extends Fragment {
                             Toast.makeText(getContext(),"اطلاعات با موفقیت ثبت گردید!",Toast.LENGTH_LONG).show();
                             btn_insert_edit.setText("ویرایش");
                             disableET(text_numberbuiding,text_typebuilding,text_namebuilding,text_numberofunit,text_plaque,text_address);
+                            count = 0;
                         }
                     }
                 });

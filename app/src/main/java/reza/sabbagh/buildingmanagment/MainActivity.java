@@ -49,49 +49,6 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         initMenuFragment();
         addFragment(new BuildingInformationFragment(), true, R.id.container);
 
-        /*mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                mDrawerLayout.closeDrawers();
-                switch (menuItem.getItemId()){
-                    case R.id.nav_item_InformationBuild:
-                        Intent intent1 = new Intent(MainActivity.this,MainActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.nav_item_InformationUser:
-                        Intent intent2 = new Intent(MainActivity.this,UserInformationActivity.class);
-                        startActivity(intent2);
-                        break;
-                    case R.id.nav_item_InformationUnit:
-                        Intent intent3 = new Intent(MainActivity.this,UnitInformationActivity.class);
-                        startActivity(intent3);
-                        break;
-                    case R.id.nav_item_InformationCharge:
-                        Intent intent4 = new Intent(MainActivity.this,ChargeInformationActivity.class);
-                        startActivity(intent4);
-                        break;
-                    case R.id.nav_item_calculateCharge:
-                        Intent intent5 = new Intent(MainActivity.this,ChargeCalculateActivity.class);
-                        startActivity(intent5);
-                        break;
-                    case R.id.nav_item_ListCharge:
-                        Intent intent6 = new Intent(MainActivity.this,ChargeListActivity.class);
-                        startActivity(intent6);
-                        break;
-                    case R.id.nav_item_meetings:
-                        Intent intent7 = new Intent(MainActivity.this,MeetingsActivity.class);
-                        startActivity(intent7);
-                        break;
-                    case R.id.nav_item_contactus:
-                        Intent intent8 = new Intent(MainActivity.this,AboutUsActivity.class);
-                        startActivity(intent8);
-                        break;
-                }
-                return false;
-            }
-
-        });*/
-
     }
 
     private void initMenuFragment() {

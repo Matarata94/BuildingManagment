@@ -1,6 +1,7 @@
 package reza.sabbagh.buildingmanagment;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import java.util.List;
 public class UsersInformationAdapter extends RecyclerView.Adapter<UsersInformationAdapter.UsersViewHolder> {
 
     private List<UsersInformationAdapterData> usersInfoData;
+    private Typeface iransans,bhoma;
 
     public UsersInformationAdapter(List<UsersInformationAdapterData> usersInfoData) {
         this.usersInfoData = usersInfoData;
@@ -29,6 +31,9 @@ public class UsersInformationAdapter extends RecyclerView.Adapter<UsersInformati
         usersViewHolder.vName.setText(ci.name);
         usersViewHolder.vBuildingNumber.setText(ci.building_number);
         usersViewHolder.vPhoneNumber.setText(ci.phone_number);
+        usersViewHolder.vName.setTypeface(bhoma);
+        usersViewHolder.vBuildingNumber.setTypeface(iransans);
+        usersViewHolder.vPhoneNumber.setTypeface(iransans);
         /*if(i%2 == 0){
             usersViewHolder.vCardView.setCardBackgroundColor(Color.parseColor("#4db6ac"));
         }else{
@@ -41,6 +46,8 @@ public class UsersInformationAdapter extends RecyclerView.Adapter<UsersInformati
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
                 inflate(R.layout.card_view_layout, viewGroup, false);
+        iransans = Typeface.createFromAsset(itemView.getContext().getAssets(),"iraniansans.ttf");
+        bhoma = Typeface.createFromAsset(itemView.getContext().getAssets(),"BHoma.ttf");
 
         return new UsersViewHolder(itemView);
     }

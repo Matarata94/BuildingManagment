@@ -12,17 +12,17 @@ import java.net.URLEncoder;
 @SuppressWarnings("rawtypes")
 public class ServerConnectorUsersInfo extends AsyncTask{
 
-	private String Link,RequestType,BAdminUsername;
+	private String Link,RequestType, AdminUsername;
 
-	public ServerConnectorUsersInfo(String link, String requesttype, String badminusername){
+	public ServerConnectorUsersInfo(String link, String requesttype, String adminusername){
 		Link = link;
 		RequestType = requesttype;
-		BAdminUsername = badminusername;
+		AdminUsername = adminusername;
 	}
 	protected String doInBackground(Object... params) {
 		try{
 			String data = URLEncoder.encode("requesttype","UTF8") + "=" + URLEncoder.encode(RequestType,"UTF8");
-			data += "&" + URLEncoder.encode("buildingadminusername","UTF8") + "=" + URLEncoder.encode(BAdminUsername,"UTF8");
+			data += "&" + URLEncoder.encode("adminusername","UTF8") + "=" + URLEncoder.encode(AdminUsername,"UTF8");
 			URL mylink = new URL(Link);
 			URLConnection connect = mylink.openConnection();
 			connect.setDoOutput(true);
@@ -35,7 +35,7 @@ public class ServerConnectorUsersInfo extends AsyncTask{
 			while((line=reader.readLine()) != null){
 				sb.append(line);
 			}
-			BuildingInformationFragment.resBuildingInfo = sb.toString();
+			UsersInformationFragment.resUsersInfo = sb.toString();
 		}catch(Exception e){
 			
 		}
