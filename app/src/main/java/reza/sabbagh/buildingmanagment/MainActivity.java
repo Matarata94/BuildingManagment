@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         if (mMenuDialogFragment != null && mMenuDialogFragment.isAdded()) {
             mMenuDialogFragment.dismiss();
         } else {
+            System.exit(0);
             finish();
         }
     }

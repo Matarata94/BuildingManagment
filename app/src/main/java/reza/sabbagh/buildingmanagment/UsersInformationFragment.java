@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -46,6 +48,8 @@ public class UsersInformationFragment extends Fragment{
     private String[][] dataList,dataListSearch;
     private Typeface iransans;
     private Bundle bundle = new Bundle();
+    private MaterialDialog dialog;
+    public static String showDialog="yes";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,12 +67,13 @@ public class UsersInformationFragment extends Fragment{
         rv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
+                    if(showDialog.equals("yes")){
                         if(uia.getItemCount() != listCount){
                             selectedItemSearchPostion = position;
                             completeProfileTitle = dataListSearch[position][0] + " " + dataListSearch[position][1];
                             completeProfile = "شماره همراه: " + dataListSearch[position][2] +"\n\n"+"شماره منزل: "+ dataListSearch[position][3] +"\n\n"+"ایمیل: "+ dataListSearch[position][4] +"\n\n"+
                                     "شماره ساختمان: "+ dataListSearch[position][5] +"\n\n"+"شماره واحد: "+ dataListSearch[position][6];
-                            MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                            dialog = new MaterialDialog.Builder(getActivity())
                                     .title(completeProfileTitle)
                                     .content(completeProfile)
                                     .positiveText("تایید")
@@ -104,7 +109,7 @@ public class UsersInformationFragment extends Fragment{
                             completeProfileTitle = dataList[position][0] + " " + dataList[position][1];
                             completeProfile = "شماره همراه: " + dataList[position][2] +"\n\n"+"شماره منزل: "+ dataList[position][3] +"\n\n"+"ایمیل: "+ dataList[position][4] +"\n\n"+
                                     "شماره ساختمان: "+ dataList[position][5] +"\n\n"+"شماره واحد: "+ dataList[position][6];
-                            MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                            dialog = new MaterialDialog.Builder(getActivity())
                                     .title(completeProfileTitle)
                                     .content(completeProfile)
                                     .positiveText("تایید")
@@ -136,6 +141,7 @@ public class UsersInformationFragment extends Fragment{
                                     .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
                                     .show();
                         }
+                    }
                     }
                 })
         );
@@ -182,7 +188,18 @@ public class UsersInformationFragment extends Fragment{
         subFabRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showDialog = "no";
+                Snackbar snackbar = Snackbar
+                        .make(view, "شما در حال حذف هستید!", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("انصراف", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Snackbar snackbar1 = Snackbar.make(view, "Message is restored!", Snackbar.LENGTH_SHORT);
+                                snackbar1.show();
+                            }
+                        });
 
+                snackbar.show();
             }
         });
         search_btn.setOnClickListener(new View.OnClickListener() {
@@ -204,7 +221,7 @@ public class UsersInformationFragment extends Fragment{
                             tempCounter++;
                         }
                     }
-                    uia = new UsersInformationAdapter(createList(tempCounter,dataListSearch));
+                    uia = new UsersInformationAdapter(getContext(),createList(tempCounter,dataListSearch));
                     rv.setAdapter(uia);
                     tempCounter = 0;
                     tempName = "";
@@ -301,7 +318,7 @@ public class UsersInformationFragment extends Fragment{
                             }
                             rowArray = 0;
                             resUsersInfo = "";
-                            uia = new UsersInformationAdapter(createList(listCount,dataList));
+                            uia = new UsersInformationAdapter(getContext(),createList(listCount,dataList));
                             rv.setAdapter(uia);
                             pd.cancel();
                         }

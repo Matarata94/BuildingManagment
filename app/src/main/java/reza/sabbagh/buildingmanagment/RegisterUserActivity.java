@@ -283,7 +283,15 @@ public class RegisterUserActivity extends AppCompatActivity {
                             tm.cancel();
                             pd.cancel();
                             resRegister = "";
-                            Toast.makeText(getApplicationContext(),"خطا در ثبت اطلاعات",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"خطا در ثبت اطلاعات. لطفا در زمان دیگری امتحان نمایید!",Toast.LENGTH_LONG).show();
+                        }else if(resRegister.equals("updated")){
+                            tm.cancel();
+                            pd.cancel();
+                            resRegister = "";
+                            Toast.makeText(getApplicationContext(),"انجام شد!",Toast.LENGTH_SHORT).show();
+                            Intent in = new Intent(RegisterUserActivity.this,MainActivity.class);
+                            startActivity(in);
+                            finish();
                         }
                     }
                 });

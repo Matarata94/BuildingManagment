@@ -1,5 +1,6 @@
 package reza.sabbagh.buildingmanagment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
@@ -7,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -15,9 +18,11 @@ public class UsersInformationAdapter extends RecyclerView.Adapter<UsersInformati
 
     private List<UsersInformationAdapterData> usersInfoData;
     private Typeface iransans,bhoma;
+    private Context context;
 
-    public UsersInformationAdapter(List<UsersInformationAdapterData> usersInfoData) {
+    public UsersInformationAdapter(Context mContext,List<UsersInformationAdapterData> usersInfoData) {
         this.usersInfoData = usersInfoData;
+        this.context = mContext;
     }
 
     @Override
