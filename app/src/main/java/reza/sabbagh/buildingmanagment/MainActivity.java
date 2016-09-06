@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         mToolBarTextView.setTypeface(bhomaFont);
     }
 
-    protected void addFragment(Fragment fragment, boolean addToBackStack, int containerId) {
+    public void addFragment(Fragment fragment, boolean addToBackStack, int containerId) {
         invalidateOptionsMenu();
         String backStackName = fragment.getClass().getName();
         boolean fragmentPopped = fragmentManager.popBackStackImmediate(backStackName, 0);

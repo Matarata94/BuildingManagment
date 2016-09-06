@@ -10,19 +10,21 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 @SuppressWarnings("rawtypes")
-public class ServerConnectorUsersInfo extends AsyncTask{
+public class ServerConnectorDeleteUser extends AsyncTask{
 
-	private String Link,RequestType,AdminUsername;
+	private String Link,RequestType,AdminUsername,UnitNumber;
 
-	public ServerConnectorUsersInfo(String link, String requesttype, String adminusername){
+	public ServerConnectorDeleteUser(String link, String requesttype, String adminusername, String unitnumber){
 		Link = link;
 		RequestType = requesttype;
 		AdminUsername = adminusername;
+		UnitNumber = unitnumber;
 	}
 	protected String doInBackground(Object... params) {
 		try{
 			String data = URLEncoder.encode("requesttype","UTF8") + "=" + URLEncoder.encode(RequestType,"UTF8");
 			data += "&" + URLEncoder.encode("adminusername","UTF8") + "=" + URLEncoder.encode(AdminUsername,"UTF8");
+			data += "&" + URLEncoder.encode("unitnumber","UTF8") + "=" + URLEncoder.encode(UnitNumber,"UTF8");
 			URL mylink = new URL(Link);
 			URLConnection connect = mylink.openConnection();
 			connect.setDoOutput(true);
@@ -35,7 +37,7 @@ public class ServerConnectorUsersInfo extends AsyncTask{
 			while((line=reader.readLine()) != null){
 				sb.append(line);
 			}
-			UsersInformationFragment.resUsersInfo = sb.toString();
+			UsersInformationFragment.resUsersInfoDelete = sb.toString();
 		}catch(Exception e){
 			
 		}

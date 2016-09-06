@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +36,13 @@ import java.util.TimerTask;
 public class UsersInformationFragment extends Fragment{
 
     private FloatingActionMenu fabmenu;
-    private FloatingActionButton subFabExit,subFabRemove,subFabAdd;
+    private FloatingActionButton subFabExit,subFabAdd;
     private EditText searchET;
     private Button search_btn;
     private RecyclerView rv;
     private UsersInformationAdapter uia;
-    public static String resUsersInfo ="";
-    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000,selectedItemSearchPostion=10000;
+    public static String resUsersInfo="",resUsersInfoDelete="";
+    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000,selectedItemSearchPostion=10000,upDataList=0;
     private Timer tm;
     private ProgressDialog pd;
     private database db;
@@ -49,7 +51,6 @@ public class UsersInformationFragment extends Fragment{
     private Typeface iransans;
     private Bundle bundle = new Bundle();
     private MaterialDialog dialog;
-    public static String showDialog="yes";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,80 +68,87 @@ public class UsersInformationFragment extends Fragment{
         rv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                    if(showDialog.equals("yes")){
-                        if(uia.getItemCount() != listCount){
-                            selectedItemSearchPostion = position;
-                            completeProfileTitle = dataListSearch[position][0] + " " + dataListSearch[position][1];
-                            completeProfile = "شماره همراه: " + dataListSearch[position][2] +"\n\n"+"شماره منزل: "+ dataListSearch[position][3] +"\n\n"+"ایمیل: "+ dataListSearch[position][4] +"\n\n"+
-                                    "شماره ساختمان: "+ dataListSearch[position][5] +"\n\n"+"شماره واحد: "+ dataListSearch[position][6];
-                            dialog = new MaterialDialog.Builder(getActivity())
-                                    .title(completeProfileTitle)
-                                    .content(completeProfile)
-                                    .positiveText("تایید")
-                                    .negativeText("ویرایش")
-                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                            in.putExtra("key1","edit_user");
-                                            if(selectedItemPosition != 10000){
-                                                String[] data = new String[7];
-                                                for(int i=0;i < 7;i++){
-                                                    data[i] = dataList[selectedItemPosition][i];
-                                                }
-                                                bundle.putStringArray("keyData",data);
-                                            }else if(selectedItemSearchPostion != 10000){
-                                                String[] data = new String[7];
-                                                for(int i=0;i < 7;i++){
-                                                    data[i] = dataListSearch[selectedItemSearchPostion][i];
-                                                }
-                                                bundle.putStringArray("keyData",data);
+                    if(uia.getItemCount() != listCount){
+                        //search position
+                        selectedItemSearchPostion = position;
+                        completeProfileTitle = dataListSearch[position][0] + " " + dataListSearch[position][1];
+                        completeProfile = "شماره همراه: " + dataListSearch[position][2] +"\n\n"+"شماره منزل: "+ dataListSearch[position][3] +"\n\n"+"ایمیل: "+ dataListSearch[position][4] +"\n\n"+
+                                "شماره ساختمان: "+ dataListSearch[position][5] +"\n\n"+"شماره واحد: "+ dataListSearch[position][6];
+                        dialog = new MaterialDialog.Builder(getActivity())
+                                .title(completeProfileTitle)
+                                .content(completeProfile)
+                                .neutralText("تایید")
+                                .positiveText("ویرایش")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                        in.putExtra("key1","edit_user");
+                                        if(selectedItemSearchPostion != 10000){
+                                            String[] data = new String[7];
+                                            for(int i=0;i < 7;i++){
+                                                data[i] = dataListSearch[selectedItemSearchPostion][i];
                                             }
-                                            in.putExtras(bundle);
-                                            startActivity(in);
-                                            selectedItemSearchPostion = 10000;
+                                            bundle.putStringArray("keyData",data);
                                         }
-                                    })
-                                    .typeface(iransans,iransans)
-                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
-                                    .show();
-                        }else{
-                            selectedItemPosition = position;
-                            completeProfileTitle = dataList[position][0] + " " + dataList[position][1];
-                            completeProfile = "شماره همراه: " + dataList[position][2] +"\n\n"+"شماره منزل: "+ dataList[position][3] +"\n\n"+"ایمیل: "+ dataList[position][4] +"\n\n"+
-                                    "شماره ساختمان: "+ dataList[position][5] +"\n\n"+"شماره واحد: "+ dataList[position][6];
-                            dialog = new MaterialDialog.Builder(getActivity())
-                                    .title(completeProfileTitle)
-                                    .content(completeProfile)
-                                    .positiveText("تایید")
-                                    .negativeText("ویرایش")
-                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                            in.putExtra("key1","edit_user");
-                                            if(selectedItemPosition != 10000){
-                                                String[] data = new String[7];
-                                                for(int i=0;i < 7;i++){
-                                                    data[i] = dataList[selectedItemPosition][i];
-                                                }
-                                                bundle.putStringArray("keyData",data);
-                                            }else if(selectedItemSearchPostion != 10000){
-                                                String[] data = new String[7];
-                                                for(int i=0;i < 7;i++){
-                                                    data[i] = dataListSearch[selectedItemSearchPostion][i];
-                                                }
-                                                bundle.putStringArray("keyData",data);
+                                        in.putExtras(bundle);
+                                        startActivity(in);
+                                        selectedItemSearchPostion = 10000;
+                                    }
+                                })
+                                .negativeText("حذف")
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        db.open();
+                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPostion][6],"s");
+                                        db.close();
+                                        upDataList = 1;
+                                    }
+                                })
+                                .typeface(iransans,iransans)
+                                .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                .show();
+                    }else if(uia.getItemCount() == listCount){
+                        //normal position
+                        selectedItemPosition = position;
+                        completeProfileTitle = dataList[position][0] + " " + dataList[position][1];
+                        completeProfile = "شماره همراه: " + dataList[position][2] +"\n\n"+"شماره منزل: "+ dataList[position][3] +"\n\n"+"ایمیل: "+ dataList[position][4] +"\n\n"+
+                                "شماره ساختمان: "+ dataList[position][5] +"\n\n"+"شماره واحد: "+ dataList[position][6];
+                        dialog = new MaterialDialog.Builder(getActivity())
+                                .title(completeProfileTitle)
+                                .content(completeProfile)
+                                .neutralText("تایید")
+                                .positiveText("ویرایش")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                        in.putExtra("key1","edit_user");
+                                        if(selectedItemPosition != 10000){
+                                            String[] data = new String[7];
+                                            for(int i=0;i < 7;i++){
+                                                data[i] = dataList[selectedItemPosition][i];
                                             }
-                                            in.putExtras(bundle);
-                                            startActivity(in);
-                                            selectedItemPosition = 10000;
+                                            bundle.putStringArray("keyData",data);
                                         }
-                                    })
-                                    .typeface(iransans,iransans)
-                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
-                                    .show();
-                        }
+                                        in.putExtras(bundle);
+                                        startActivity(in);
+                                        selectedItemPosition = 10000;
+                                    }
+                                })
+                                .negativeText("حذف")
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        db.open();
+                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataList[selectedItemPosition][6],"n");
+                                        db.close();
+                                    }
+                                })
+                                .typeface(iransans,iransans)
+                                .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                .show();
                     }
                     }
                 })
@@ -148,7 +156,6 @@ public class UsersInformationFragment extends Fragment{
 
         fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.usersInfoFrag_fab_menu);
         subFabExit = (FloatingActionButton) rootView.findViewById(R.id.usersInfoFrag_fab_exit);
-        subFabRemove = (FloatingActionButton) rootView.findViewById(R.id.usersInfoFrag_fab_remove);
         subFabAdd = (FloatingActionButton) rootView.findViewById(R.id.usersInfoFrag_fab_add);
         searchET = (EditText) rootView.findViewById(R.id.fragment_usersInfo_et_search);
         search_btn = (Button) rootView.findViewById(R.id.fragment_usersInfo_btn_search);
@@ -185,31 +192,20 @@ public class UsersInformationFragment extends Fragment{
                 startActivity(in);
             }
         });
-        subFabRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog = "no";
-                Snackbar snackbar = Snackbar
-                        .make(view, "شما در حال حذف هستید!", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("انصراف", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Snackbar snackbar1 = Snackbar.make(view, "Message is restored!", Snackbar.LENGTH_SHORT);
-                                snackbar1.show();
-                            }
-                        });
-
-                snackbar.show();
-            }
-        });
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(searchET.getText().length() < 0){
+                if(searchET.getText().length() == 0){
 
                 }else{
-                    String tempName,tempUnitNum;
+                    String tempName="",tempUnitNum="";
                     int tempCounter=0;
+                    if(upDataList == 1){
+                        db.open();
+                        serverWorking(link,"query",db.queryInfo(2));
+                        db.close();
+                        searchET.setText("");
+                    }
                     dataListSearch = new String[80][7];
                     for(int i=0;i < listCount;i++){
                         tempName = dataList[i][0] + " "+ dataList[i][1];
@@ -223,9 +219,6 @@ public class UsersInformationFragment extends Fragment{
                     }
                     uia = new UsersInformationAdapter(getContext(),createList(tempCounter,dataListSearch));
                     rv.setAdapter(uia);
-                    tempCounter = 0;
-                    tempName = "";
-                    tempUnitNum = "";
                 }
             }
         });
@@ -238,14 +231,14 @@ public class UsersInformationFragment extends Fragment{
         for (int i=0; i < size; i++) {
             UsersInformationAdapterData ci = new UsersInformationAdapterData();
             ci.name = UsersInformationAdapterData.NAME_PREFIX + data[i][0] + " " + data[i][1];
-            ci.phone_number = UsersInformationAdapterData.BUILDING_NUMBER_PREFIX + data[i][2];
-            ci.building_number = UsersInformationAdapterData.PHONE_PREFIX + data[i][5];
+            ci.phone_number = UsersInformationAdapterData.PHONE_PREFIX + data[i][2];
+            ci.building_number = UsersInformationAdapterData.BUILDING_NUMBER_PREFIX + data[i][5];
             result.add(ci);
         }
         return result;
     }
 
-    private void serverWorking(String link, final String requesttype, String badminusername){
+    private void serverWorking(String link, String requesttype, String badminusername){
         new ServerConnectorUsersInfo(link,requesttype,badminusername).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Loading...");
@@ -270,9 +263,11 @@ public class UsersInformationFragment extends Fragment{
                             tm.cancel();
                             pd.cancel();
                             resUsersInfo = "";
+                            count = 0;
                             Toast.makeText(getContext(),"اطلاعاتی یافت نشد!",Toast.LENGTH_LONG).show();
                         }else if(resUsersInfo.contains("founded")){
                             tm.cancel();
+                            count = 0;
                             listCount = Integer.parseInt(resUsersInfo.substring(resUsersInfo.indexOf("~") + 1,resUsersInfo.indexOf("!")));
                             dataList = new String[listCount][7];
                             for(int i=0;i < resUsersInfo.length();i++){
@@ -321,6 +316,53 @@ public class UsersInformationFragment extends Fragment{
                             uia = new UsersInformationAdapter(getContext(),createList(listCount,dataList));
                             rv.setAdapter(uia);
                             pd.cancel();
+                        }
+                    }
+                });
+            }
+        }, 1, 1000);
+    }
+
+    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, final String sORn){
+        new ServerConnectorDeleteUser(link,requesttype,adminusername,unitnumber).execute();
+        pd = new ProgressDialog(getContext());
+        pd.setMessage("Loading...");
+        pd.setIndeterminate(true);
+        pd.setCancelable(false);
+        pd.show();
+
+        tm =new Timer();
+        tm.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        count++;
+                        if(count == 6){
+                            pd.cancel();
+                            tm.cancel();
+                            Toast.makeText(getContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
+                            count = 0;
+                            fabmenu.setVisibility(View.GONE);
+                        }else if(resUsersInfoDelete.contains("delete fail")){
+                            tm.cancel();
+                            pd.cancel();
+                            resUsersInfoDelete = "";
+                            count = 0;
+                            Toast.makeText(getContext(),"خطا در حذف اطلاعات. لطفا در زمان دیگری امتحان کنید!",Toast.LENGTH_LONG).show();
+                        }else if(resUsersInfoDelete.contains("deleted")){
+                            tm.cancel();
+                            pd.cancel();
+                            resUsersInfoDelete = "";
+                            count = 0;
+                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
+                            if(sORn.equals("n")){
+                                uia = new UsersInformationAdapter(getContext(),createList(uia.getItemCount()-1,dataList));
+                                rv.setAdapter(uia);
+                            }else if(sORn.equals("s")){
+                                uia = new UsersInformationAdapter(getContext(),createList(uia.getItemCount()-1,dataListSearch));
+                                rv.setAdapter(uia);
+                            }
                         }
                     }
                 });
