@@ -5,6 +5,7 @@ package reza.sabbagh.buildingmanagment;
  */
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UnitsInformationAdapter extends RecyclerView.Adapter<UnitsInformationAdapter.UnitsViewHolder>{
 
     private List<UnitsInformationAdapterData> unitsInfoData;
+    private Typeface iransans,bhoma;
 
     public UnitsInformationAdapter(List<UnitsInformationAdapterData> unitsInfoData) {
         this.unitsInfoData = unitsInfoData;
@@ -29,14 +31,9 @@ public class UnitsInformationAdapter extends RecyclerView.Adapter<UnitsInformati
     @Override
     public void onBindViewHolder(UnitsViewHolder unitsViewHolder, int i) {
         UnitsInformationAdapterData ci = unitsInfoData.get(i);
-        unitsViewHolder.vName.setText(ci.unit_number);
-        unitsViewHolder.vBuildingNumber.setText(ci.username);
-        //unitsViewHolder.vPhoneNumber.setText(ci.phone_number);
-        /*if(i%2 == 0){
-            usersViewHolder.vCardView.setCardBackgroundColor(Color.parseColor("#4db6ac"));
-        }else{
-            usersViewHolder.vCardView.setCardBackgroundColor(Color.parseColor("#ffffff"));
-        }*/
+        unitsViewHolder.vResidentName.setText(ci.resident_name);
+        unitsViewHolder.vUnitNumber.setText(ci.unit_number);
+        unitsViewHolder.vResidenceDate.setText(ci.residence_date);
     }
 
     @Override
@@ -44,21 +41,23 @@ public class UnitsInformationAdapter extends RecyclerView.Adapter<UnitsInformati
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
                 inflate(R.layout.card_view_layout, viewGroup, false);
+        iransans = Typeface.createFromAsset(itemView.getContext().getAssets(),"iraniansans.ttf");
+        bhoma = Typeface.createFromAsset(itemView.getContext().getAssets(),"BHoma.ttf");
 
         return new UnitsViewHolder(itemView);
     }
 
     public static class UnitsViewHolder extends RecyclerView.ViewHolder {
-        protected TextView vName;
-        protected TextView vBuildingNumber;
-        protected TextView vPhoneNumber;
+        protected TextView vResidentName;
+        protected TextView vUnitNumber;
+        protected TextView vResidenceDate;
         public static CardView vCardView;
 
         public UnitsViewHolder(View v) {
             super(v);
-            vName =  (TextView) v.findViewById(R.id.cv_tv_username);
-            vBuildingNumber =  (TextView) v.findViewById(R.id.cv_tv_buildingNumber);
-            vPhoneNumber = (TextView)  v.findViewById(R.id.cv_tv_phoneNumber);
+            vResidentName =  (TextView) v.findViewById(R.id.cv_tv_username);
+            vUnitNumber =  (TextView) v.findViewById(R.id.cv_tv_buildingNumber);
+            vResidenceDate = (TextView)  v.findViewById(R.id.cv_tv_phoneNumber);
             vCardView = (CardView) v.findViewById(R.id.card_view);
         }
     }

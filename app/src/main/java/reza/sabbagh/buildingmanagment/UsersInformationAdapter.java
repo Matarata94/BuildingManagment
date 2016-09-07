@@ -18,11 +18,9 @@ public class UsersInformationAdapter extends RecyclerView.Adapter<UsersInformati
 
     private List<UsersInformationAdapterData> usersInfoData;
     private Typeface iransans,bhoma;
-    private Context context;
 
-    public UsersInformationAdapter(Context mContext,List<UsersInformationAdapterData> usersInfoData) {
+    public UsersInformationAdapter(List<UsersInformationAdapterData> usersInfoData) {
         this.usersInfoData = usersInfoData;
-        this.context = mContext;
     }
 
     @Override

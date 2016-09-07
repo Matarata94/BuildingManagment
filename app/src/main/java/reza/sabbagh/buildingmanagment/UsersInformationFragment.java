@@ -217,7 +217,7 @@ public class UsersInformationFragment extends Fragment{
                             tempCounter++;
                         }
                     }
-                    uia = new UsersInformationAdapter(getContext(),createList(tempCounter,dataListSearch));
+                    uia = new UsersInformationAdapter(createList(tempCounter,dataListSearch));
                     rv.setAdapter(uia);
                 }
             }
@@ -313,7 +313,7 @@ public class UsersInformationFragment extends Fragment{
                             }
                             rowArray = 0;
                             resUsersInfo = "";
-                            uia = new UsersInformationAdapter(getContext(),createList(listCount,dataList));
+                            uia = new UsersInformationAdapter(createList(listCount,dataList));
                             rv.setAdapter(uia);
                             pd.cancel();
                         }
@@ -357,10 +357,10 @@ public class UsersInformationFragment extends Fragment{
                             count = 0;
                             Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             if(sORn.equals("n")){
-                                uia = new UsersInformationAdapter(getContext(),createList(uia.getItemCount()-1,dataList));
+                                uia = new UsersInformationAdapter(createList(uia.getItemCount()-1,dataList));
                                 rv.setAdapter(uia);
                             }else if(sORn.equals("s")){
-                                uia = new UsersInformationAdapter(getContext(),createList(uia.getItemCount()-1,dataListSearch));
+                                uia = new UsersInformationAdapter(createList(uia.getItemCount()-1,dataListSearch));
                                 rv.setAdapter(uia);
                             }
                         }
