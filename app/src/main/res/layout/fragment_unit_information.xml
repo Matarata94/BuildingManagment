@@ -5,10 +5,59 @@ android:layout_height="match_parent"
 xmlns:fab="http://schemas.android.com/apk/res-auto"
 android:background="#e0e0e0">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:padding="5dp"
+        android:id="@+id/fragment_unitsInfo_searchFiled"
+        android:background="@color/colorPrimaryLight">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/fragment_unitsInfo_et_search"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="75dp"
+            android:hint="Search"
+            android:drawableLeft="@drawable/search"
+            android:background="#fff"
+            android:textColor="#000000"
+            android:textColorHint="#757575"
+            android:textSize="15sp" />
+
+        <com.andexert.library.RippleView
+            android:id="@+id/fragment_unitsInfo_rippleSearch"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            app:rv_rippleDuration="200"
+            rv_centered="true"
+            >
+
+            <Button
+                android:hint="جستجو"
+                android:id="@+id/fragment_unitsInfo_btn_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColorHint="#ffffff"
+                android:textSize="20sp"
+                android:background="#1E88E5"
+                android:gravity="center"
+                />
+
+        </com.andexert.library.RippleView>
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/unitsInfoFrag_rv"
+        android:layout_below="@+id/fragment_unitsInfo_searchFiled"
         />
 
     <com.github.clans.fab.FloatingActionMenu

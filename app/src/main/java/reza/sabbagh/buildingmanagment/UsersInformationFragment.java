@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,11 +22,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,7 +37,7 @@ public class UsersInformationFragment extends Fragment{
     private RecyclerView rv;
     private UsersInformationAdapter uia;
     public static String resUsersInfo="",resUsersInfoDelete="";
-    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000,selectedItemSearchPostion=10000,upDataList=0;
+    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
     private Timer tm;
     private ProgressDialog pd;
     private database db;
@@ -70,7 +65,7 @@ public class UsersInformationFragment extends Fragment{
                     @Override public void onItemClick(View view, int position) {
                     if(uia.getItemCount() != listCount){
                         //search position
-                        selectedItemSearchPostion = position;
+                        selectedItemSearchPosition = position;
                         completeProfileTitle = dataListSearch[position][0] + " " + dataListSearch[position][1];
                         completeProfile = "شماره همراه: " + dataListSearch[position][2] +"\n\n"+"شماره منزل: "+ dataListSearch[position][3] +"\n\n"+"ایمیل: "+ dataListSearch[position][4] +"\n\n"+
                                 "شماره ساختمان: "+ dataListSearch[position][5] +"\n\n"+"شماره واحد: "+ dataListSearch[position][6];
@@ -84,16 +79,16 @@ public class UsersInformationFragment extends Fragment{
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         Intent in = new Intent(getContext(),RegisterUserActivity.class);
                                         in.putExtra("key1","edit_user");
-                                        if(selectedItemSearchPostion != 10000){
+                                        if(selectedItemSearchPosition != 10000){
                                             String[] data = new String[7];
                                             for(int i=0;i < 7;i++){
-                                                data[i] = dataListSearch[selectedItemSearchPostion][i];
+                                                data[i] = dataListSearch[selectedItemSearchPosition][i];
                                             }
                                             bundle.putStringArray("keyData",data);
                                         }
                                         in.putExtras(bundle);
                                         startActivity(in);
-                                        selectedItemSearchPostion = 10000;
+                                        selectedItemSearchPosition = 10000;
                                     }
                                 })
                                 .negativeText("حذف")
@@ -101,7 +96,7 @@ public class UsersInformationFragment extends Fragment{
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         db.open();
-                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPostion][6],"s");
+                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
                                         db.close();
                                         upDataList = 1;
                                     }

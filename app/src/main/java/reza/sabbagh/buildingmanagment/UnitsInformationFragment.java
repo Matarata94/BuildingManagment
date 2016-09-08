@@ -6,28 +6,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class UnitsInformationFragment extends Fragment {
 
     private FloatingActionMenu fabmenu;
@@ -35,7 +36,7 @@ public class UnitsInformationFragment extends Fragment {
     private UnitsInformationAdapter uia;
     private database db;
     public static String resUnitsInfo = "";
-    private int count=0,listCount,stringIndexHolder[] = new int[12],rowArray=0,selectedItemPosition=10000,selectedItemSearchPostion=10000,upDataList=0;
+    private int count=0,listCount,stringIndexHolder[] = new int[12],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
     private Timer tm;
     private ProgressDialog pd;
     private RecyclerView rv;
@@ -44,6 +45,8 @@ public class UnitsInformationFragment extends Fragment {
     private Bundle bundle = new Bundle();
     private MaterialDialog dialog;
     private String link = FirstActivity.globalLink + "UnitsInfo.php",completeProfile="",completeProfileTitle="";
+    private EditText searchET;
+    private Button search_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +64,94 @@ public class UnitsInformationFragment extends Fragment {
         rv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-
+                        if(uia.getItemCount() != listCount){
+                            //search position
+                            selectedItemSearchPosition = position;
+                            completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataListSearch[selectedItemSearchPosition][1]
+                                    + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataListSearch[selectedItemSearchPosition][3]
+                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataListSearch[selectedItemSearchPosition][5]
+                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataListSearch[selectedItemSearchPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataListSearch[selectedItemSearchPosition][7]
+                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataListSearch[selectedItemSearchPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataListSearch[selectedItemSearchPosition][9]
+                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataListSearch[selectedItemSearchPosition][10];
+                            dialog = new MaterialDialog.Builder(getActivity())
+                                    .title(R.string.unitinfotitle)
+                                    .content(completeProfile)
+                                    .neutralText("تایید")
+                                    .positiveText("ویرایش")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                            in.putExtra("key1","edit_user");
+                                            if(selectedItemSearchPosition != 10000){
+                                                String[] data = new String[7];
+                                                for(int i=0;i < 7;i++){
+                                                    data[i] = dataListSearch[selectedItemSearchPosition][i];
+                                                }
+                                                bundle.putStringArray("keyData",data);
+                                            }
+                                            in.putExtras(bundle);
+                                            startActivity(in);
+                                            selectedItemSearchPosition = 10000;
+                                        }
+                                    })
+                                    .negativeText("حذف")
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            /*db.open();
+                                            serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
+                                            db.close();
+                                            upDataList = 1;*/
+                                        }
+                                    })
+                                    .typeface(iransans,iransans)
+                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                    .show();
+                        }else if(uia.getItemCount() == listCount){
+                            //normal position
+                            selectedItemPosition = position;
+                            completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataList[selectedItemPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataList[selectedItemPosition][1]
+                                    + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
+                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataList[selectedItemPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataList[selectedItemPosition][5]
+                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataList[selectedItemPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataList[selectedItemPosition][7]
+                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9]
+                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataList[selectedItemPosition][10];
+                            dialog = new MaterialDialog.Builder(getActivity())
+                                    .title(R.string.unitinfotitle)
+                                    .content(completeProfile)
+                                    .neutralText("تایید")
+                                    .positiveText("ویرایش")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                            in.putExtra("key1","edit_user");
+                                            if(selectedItemPosition != 10000){
+                                                String[] data = new String[7];
+                                                for(int i=0;i < 7;i++){
+                                                    data[i] = dataList[selectedItemPosition][i];
+                                                }
+                                                bundle.putStringArray("keyData",data);
+                                            }
+                                            in.putExtras(bundle);
+                                            startActivity(in);
+                                            selectedItemPosition = 10000;
+                                        }
+                                    })
+                                    .negativeText("حذف")
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            /*db.open();
+                                            serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataList[selectedItemPosition][6],"n");
+                                            db.close();*/
+                                        }
+                                    })
+                                    .typeface(iransans,iransans)
+                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                    .show();
+                        }
                     }
                 })
         );
@@ -69,6 +159,11 @@ public class UnitsInformationFragment extends Fragment {
         fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.unitsInfoFrag_fab_menu);
         subFabExit = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_exit);
         subFabAdd = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_add);
+        searchET = (EditText) rootView.findViewById(R.id.fragment_unitsInfo_et_search);
+        search_btn = (Button) rootView.findViewById(R.id.fragment_unitsInfo_btn_search);
+        iransans = Typeface.createFromAsset(getContext().getAssets(),"BHoma.ttf");
+        searchET.setTypeface(iransans);
+        search_btn.setTypeface(iransans);
         fabmenu.setClosedOnTouchOutside(true);
         subFabExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +187,45 @@ public class UnitsInformationFragment extends Fragment {
         subFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(UnitsInformationFragment.this).commit();
-                /*Intent in = new Intent(getContext(),RegisterUnitInfoActivity.class);
-                startActivity(in);*/
+                //getActivity().getSupportFragmentManager().beginTransaction().remove(UnitsInformationFragment.this).commit();
+                Intent in = new Intent(getContext(),RegisterUnitActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("key1","add_unit");
+                in.putExtras(bundle);
+                startActivity(in);
+            }
+        });
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(searchET.getText().length() == 0){
+
+                }else{
+                    String tempResidentName="",tempOwnerName="",tempUnitNum="",tempResidentDate="";
+                    int tempCounter=0;
+                    if(upDataList == 1){
+                        db.open();
+                        serverWorking(link,"query",db.queryInfo(2));
+                        db.close();
+                        searchET.setText("");
+                    }
+                    dataListSearch = new String[80][11];
+                    for(int i=0;i < listCount;i++){
+                        tempResidentName = dataList[i][3];
+                        tempUnitNum = dataList[i][0];
+                        tempResidentDate = dataList[i][6];
+                        tempOwnerName = dataList[i][2];
+                        if(tempResidentName.contains(searchET.getText().toString()) | tempUnitNum.contains(searchET.getText().toString())
+                                | tempResidentDate.contains(searchET.getText().toString()) | tempOwnerName.contains(searchET.getText().toString())){
+                            for (int j=0;j < 11;j++){
+                                dataListSearch[tempCounter][j] = dataList[i][j];
+                            }
+                            tempCounter++;
+                        }
+                    }
+                    uia = new UnitsInformationAdapter(createList(tempCounter,dataListSearch));
+                    rv.setAdapter(uia);
+                }
             }
         });
 

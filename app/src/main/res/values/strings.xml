@@ -3,4 +3,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="unitinfotitle">اطلاعات واحد</string>
+    <string name="unitnumbertitle">شماره واحد:</string>
+    <string name="buildingnumbertitle">شماره ساختمان:</string>
+    <string name="ownernametitle">نام مالک:</string>
+    <string name="residentnametitle">نام ساکن:</string>
+    <string name="floornumbertitle">شماره طبقه:</string>
+    <string name="areasizetitle">زیربنا:</string>
+    <string name="residencedatetitle">تاریخ سکونت:</string>
+    <string name="numberofresidenttitle">تعداد ساکنین:</string>
+    <string name="postalcodetitle">کدپستی:</string>
+    <string name="chargedefaultamounttitle">مبلغ پیشفرض شارژ:</string>
+    <string name="statechargetitle">شارژ ثابت:</string>
+
 </resources>

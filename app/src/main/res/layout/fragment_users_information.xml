@@ -12,7 +12,7 @@
         android:padding="5dp"
         android:id="@+id/fragment_usersInfo_searchFiled"
         android:background="@color/colorPrimaryLight">
-            >
+
 
             <EditText
                 android:layout_width="match_parent"
