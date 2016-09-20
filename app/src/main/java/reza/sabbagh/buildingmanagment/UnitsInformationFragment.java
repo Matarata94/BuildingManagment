@@ -68,11 +68,11 @@ public class UnitsInformationFragment extends Fragment {
                             //search position
                             selectedItemSearchPosition = position;
                             completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataListSearch[selectedItemSearchPosition][1]
-                                    + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataListSearch[selectedItemSearchPosition][3]
-                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataListSearch[selectedItemSearchPosition][5]
-                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataListSearch[selectedItemSearchPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataListSearch[selectedItemSearchPosition][7]
-                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataListSearch[selectedItemSearchPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataListSearch[selectedItemSearchPosition][9]
-                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataListSearch[selectedItemSearchPosition][10];
+                                + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataListSearch[selectedItemSearchPosition][3]
+                                + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataListSearch[selectedItemSearchPosition][5]
+                                + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataListSearch[selectedItemSearchPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataListSearch[selectedItemSearchPosition][7]
+                                + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataListSearch[selectedItemSearchPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataListSearch[selectedItemSearchPosition][9]
+                                + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataListSearch[selectedItemSearchPosition][10];
                             dialog = new MaterialDialog.Builder(getActivity())
                                     .title(R.string.unitinfotitle)
                                     .content(completeProfile)
@@ -81,28 +81,28 @@ public class UnitsInformationFragment extends Fragment {
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                            in.putExtra("key1","edit_user");
-                                            if(selectedItemSearchPosition != 10000){
-                                                String[] data = new String[7];
-                                                for(int i=0;i < 7;i++){
-                                                    data[i] = dataListSearch[selectedItemSearchPosition][i];
-                                                }
-                                                bundle.putStringArray("keyData",data);
+                                        Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                        in.putExtra("key1","edit_user");
+                                        if(selectedItemSearchPosition != 10000){
+                                            String[] data = new String[7];
+                                            for(int i=0;i < 7;i++){
+                                                data[i] = dataListSearch[selectedItemSearchPosition][i];
                                             }
-                                            in.putExtras(bundle);
-                                            startActivity(in);
-                                            selectedItemSearchPosition = 10000;
+                                            bundle.putStringArray("keyData",data);
+                                        }
+                                        in.putExtras(bundle);
+                                        startActivity(in);
+                                        selectedItemSearchPosition = 10000;
                                         }
                                     })
                                     .negativeText("حذف")
                                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            /*db.open();
-                                            serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
-                                            db.close();
-                                            upDataList = 1;*/
+                                        /*db.open();
+                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
+                                        db.close();
+                                        upDataList = 1;*/
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -112,11 +112,11 @@ public class UnitsInformationFragment extends Fragment {
                             //normal position
                             selectedItemPosition = position;
                             completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataList[selectedItemPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataList[selectedItemPosition][1]
-                                    + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
-                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataList[selectedItemPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataList[selectedItemPosition][5]
-                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataList[selectedItemPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataList[selectedItemPosition][7]
-                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9]
-                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataList[selectedItemPosition][10];
+                                + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
+                                + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataList[selectedItemPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataList[selectedItemPosition][5]
+                                + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataList[selectedItemPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataList[selectedItemPosition][7]
+                                + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9]
+                                + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataList[selectedItemPosition][10];
                             dialog = new MaterialDialog.Builder(getActivity())
                                     .title(R.string.unitinfotitle)
                                     .content(completeProfile)
@@ -125,18 +125,18 @@ public class UnitsInformationFragment extends Fragment {
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                            in.putExtra("key1","edit_user");
-                                            if(selectedItemPosition != 10000){
-                                                String[] data = new String[7];
-                                                for(int i=0;i < 7;i++){
-                                                    data[i] = dataList[selectedItemPosition][i];
-                                                }
-                                                bundle.putStringArray("keyData",data);
+                                        Intent in = new Intent(getContext(),RegisterUserActivity.class);
+                                        in.putExtra("key1","edit_user");
+                                        if(selectedItemPosition != 10000){
+                                            String[] data = new String[7];
+                                            for(int i=0;i < 7;i++){
+                                                data[i] = dataList[selectedItemPosition][i];
                                             }
-                                            in.putExtras(bundle);
-                                            startActivity(in);
-                                            selectedItemPosition = 10000;
+                                            bundle.putStringArray("keyData",data);
+                                        }
+                                        in.putExtras(bundle);
+                                        startActivity(in);
+                                        selectedItemPosition = 10000;
                                         }
                                     })
                                     .negativeText("حذف")
@@ -188,8 +188,7 @@ public class UnitsInformationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //getActivity().getSupportFragmentManager().beginTransaction().remove(UnitsInformationFragment.this).commit();
-                Intent in = new Intent(getContext(),RegisterUnitActivity.class);
-                Bundle bundle = new Bundle();
+                Intent in = new Intent(getActivity(),RegisterUnitActivity.class);
                 bundle.putString("key1","add_unit");
                 in.putExtras(bundle);
                 startActivity(in);

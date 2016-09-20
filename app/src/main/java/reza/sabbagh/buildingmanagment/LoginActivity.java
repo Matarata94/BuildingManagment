@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
-    private String link = FirstActivity.globalLink + "login.php";
+    private String link = FirstActivity.globalLink + "Login.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

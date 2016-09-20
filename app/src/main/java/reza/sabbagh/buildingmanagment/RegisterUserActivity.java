@@ -31,11 +31,11 @@ public class RegisterUserActivity extends AppCompatActivity {
     private TextView tv_registerTitle,tv_registerAs,tv_registerAsAdmin,tv_registerAsUser;
     private RadioButton rb_registerAsAdmin,rb_registerAsUser;
     private database db;
-    public static String resRegister ="";
+    public static String resRegisterUser ="";
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
-    private String link = FirstActivity.globalLink + "register.php",requestType,registerAs="admin",username,password,fname,lname,phonenumber,homenumber
+    private String link = FirstActivity.globalLink + "RegisterUser.php",requestType,registerAs="admin",username,password,fname,lname,phonenumber,homenumber
     ,email,buildingnumber,unitnumber,oldunitnumber,adminusername;
 
     @Override
@@ -75,7 +75,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         unitnumber = Text_NumberOfUnit.getText().toString();
                         oldunitnumber = "";
                         adminusername = text_adminUsername.getText().toString();
-                        Register(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
+                        serverWorking(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
                     }
                 }
                 else if(ButtonRegistration.getText().toString().equals("افزودن کاربر")) {
@@ -95,7 +95,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         db.open();
                         adminusername = db.queryInfo(2);
                         db.close();
-                        Register(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
+                        serverWorking(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
                     }
                 }else if(ButtonRegistration.getText().toString().equals("اعمال تغییرات")) {
                     if(checkIfAllFill("edit")){
@@ -113,7 +113,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         db.open();
                         adminusername = db.queryInfo(2);
                         db.close();
-                        Register(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
+                        serverWorking(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername);
                     }
                 }
             }
@@ -187,7 +187,6 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         if(getIntent().getExtras() != null){
             String stringRecieved = getIntent().getExtras().getString("key1");
-            String[] arrayReceived = getIntent().getExtras().getStringArray("keyData");
             if(stringRecieved.equals("add_user")){
                 ButtonRegistration.setText("افزودن کاربر");
                 Register_shtv_alreadyRegistered.setVisibility(View.INVISIBLE);
@@ -199,6 +198,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 rb_registerAsUser.setVisibility(View.GONE);
                 bottomView.setVisibility(View.GONE);
             }else if(stringRecieved.equals("edit_user")){
+                String[] arrayReceived = getIntent().getExtras().getStringArray("keyData");
                 ButtonRegistration.setText("اعمال تغییرات");
                 Register_shtv_alreadyRegistered.setVisibility(View.GONE);
                 tv_registerAs.setVisibility(View.GONE);
@@ -224,9 +224,9 @@ public class RegisterUserActivity extends AppCompatActivity {
         }
     }
 
-    private void Register(String link, String requestType, String registerAs, final String username, String password, String fname, String lname, String phonenumber,
-                          String homenumber, String email, String buildingnumber, String unitnumber, String oldunitnumber, final String adminusername){
-        new ServerConnectorRegister(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername).execute();
+    private void serverWorking(String link, String requestType, String registerAs, final String username, String password, String fname, String lname, String phonenumber,
+                               String homenumber, String email, String buildingnumber, String unitnumber, String oldunitnumber, final String adminusername){
+        new ServerConnectorRegisterUser(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername).execute();
         pd = new ProgressDialog(RegisterUserActivity.this);
         pd.setMessage("Registering...");
         pd.setCancelable(false);
@@ -244,30 +244,30 @@ public class RegisterUserActivity extends AppCompatActivity {
                             tm.cancel();
                             Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
                             count = 0;
-                        }else if(resRegister.contains("username founded")){
+                        }else if(resRegisterUser.contains("username founded")){
                             tm.cancel();
                             pd.cancel();
-                            resRegister = "";
+                            resRegisterUser = "";
                             Toast.makeText(getApplicationContext(),"این نام کاربری قبلا ثبت گردیده است!",Toast.LENGTH_LONG).show();
-                        }else if(resRegister.contains("email founded")){
+                        }else if(resRegisterUser.contains("email founded")){
                             tm.cancel();
                             pd.cancel();
-                            resRegister = "";
+                            resRegisterUser = "";
                             Toast.makeText(getApplicationContext(),"این ایمیل قبلا ثبت گردیده است!",Toast.LENGTH_LONG).show();
-                        }else if(resRegister.contains("adminUsername not founded")){
+                        }else if(resRegisterUser.contains("adminUsername not founded")){
                             tm.cancel();
                             pd.cancel();
-                            resRegister = "";
+                            resRegisterUser = "";
                             Toast.makeText(getApplicationContext(),"نام کاربری مدیر موجود نمی باشد!",Toast.LENGTH_LONG).show();
-                        }else if(resRegister.equals("register fail")){
+                        }else if(resRegisterUser.equals("register fail")){
                             tm.cancel();
                             pd.cancel();
-                            resRegister = "";
+                            resRegisterUser = "";
                             Toast.makeText(getApplicationContext(),"خطا در ثبت نام. لطفا زمان دیگری امتحان نمایید!",Toast.LENGTH_LONG).show();
-                        }else if(resRegister.equals("registered")){
+                        }else if(resRegisterUser.equals("registered")){
                             tm.cancel();
                             pd.cancel();
-                            resRegister = "";
+                            resRegisterUser = "";
                             if(ButtonRegistration.getText().toString().equals("ثبت")){
                                 db.open();
                                 db.updateInfo("Registered","yes");
@@ -279,15 +279,15 @@ public class RegisterUserActivity extends AppCompatActivity {
                             Intent in = new Intent(RegisterUserActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
-                        }else if(resRegister.equals("update fail")){
+                        }else if(resRegisterUser.equals("update fail")){
                             tm.cancel();
                             pd.cancel();
-                            resRegister = "";
+                            resRegisterUser = "";
                             Toast.makeText(getApplicationContext(),"خطا در ثبت اطلاعات. لطفا در زمان دیگری امتحان نمایید!",Toast.LENGTH_LONG).show();
-                        }else if(resRegister.equals("updated")){
+                        }else if(resRegisterUser.equals("updated")){
                             tm.cancel();
                             pd.cancel();
-                            resRegister = "";
+                            resRegisterUser = "";
                             Toast.makeText(getApplicationContext(),"انجام شد!",Toast.LENGTH_SHORT).show();
                             Intent in = new Intent(RegisterUserActivity.this,MainActivity.class);
                             startActivity(in);
@@ -335,19 +335,19 @@ public class RegisterUserActivity extends AppCompatActivity {
                     RepeatPass.getText().toString().equals("")){
                 Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(text_Fname.length() < 3){
+            }else if(text_Fname.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return  false;
-            }else if(text_Lname.length() < 3){
+            }else if(text_Lname.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام خانوادگی باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(text_namekarbari.length() < 3){
+            }else if(text_namekarbari.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام کاربری باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(Text_Mobile.length() < 11){
+            }else if(Text_Mobile.getText().length() < 11){
                 Toast.makeText(RegisterUserActivity.this,"شماره همراه اشتباه است!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(Text_Pass.length() < 5){
+            }else if(Text_Pass.getText().length() < 5){
                 Toast.makeText(RegisterUserActivity.this,"پسورد باید بیش از پنج حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
             }else if(!Text_Pass.getText().toString().equals(RepeatPass.getText().toString())){
@@ -372,19 +372,19 @@ public class RegisterUserActivity extends AppCompatActivity {
                     RepeatPass.getText().toString().equals("")){
                 Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(text_Fname.length() < 3){
+            }else if(text_Fname.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(text_Lname.length() < 3){
+            }else if(text_Lname.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام خانوادگی باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(text_namekarbari.length() < 3){
+            }else if(text_namekarbari.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام کاربری باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(Text_Mobile.length() < 11){
+            }else if(Text_Mobile.getText().length() < 11){
                 Toast.makeText(RegisterUserActivity.this,"شماره همراه اشتباه است!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(Text_Pass.length() < 5){
+            }else if(Text_Pass.getText().length() < 5){
                 Toast.makeText(RegisterUserActivity.this,"پسورد باید بیش از پنج حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
             }else if(!Text_Pass.getText().toString().equals(RepeatPass.getText().toString())){
@@ -403,13 +403,13 @@ public class RegisterUserActivity extends AppCompatActivity {
                     text_email.getText().toString().equals("")){
                 Toast.makeText(RegisterUserActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(text_Fname.length() < 3){
+            }else if(text_Fname.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(text_Lname.length() < 3){
+            }else if(text_Lname.getText().length() < 3){
                 Toast.makeText(RegisterUserActivity.this,"نام خانوادگی باید بیش از سه حرف باشد!", Toast.LENGTH_LONG).show();
                 return false;
-            }else if(Text_Mobile.length() < 11){
+            }else if(Text_Mobile.getText().length() < 11){
                 Toast.makeText(RegisterUserActivity.this,"شماره همراه اشتباه است!", Toast.LENGTH_LONG).show();
                 return false;
             }else{
