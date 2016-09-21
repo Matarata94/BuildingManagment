@@ -12,15 +12,16 @@ import java.net.URLEncoder;
 @SuppressWarnings("rawtypes")
 public class ServerConnectorRegisterUnit extends AsyncTask{
 
-	private String Link,RequestType,UnitNumber,BuildingNumber,OwnerName,ResidentName,FloorNumber,AreaSize,ResidenceDate,NumberOfResident
+	private String Link,RequestType,UnitNumber,OldUnitNumber,BuildingNumber,OwnerName,ResidentName,FloorNumber,AreaSize,ResidenceDate,NumberOfResident
 			,PostalCode,ChargeDefaultAmount,StaticChargeState,AdminUsername;
 
-	public ServerConnectorRegisterUnit(String link, String requesttype, String unitnumber, String buildingnumber, String ownername, String residentname
+	public ServerConnectorRegisterUnit(String link, String requesttype, String unitnumber,String oldunitnumber, String buildingnumber, String ownername, String residentname
 			, String floornumber, String areasize, String residencedate, String numberofresident, String postalcode, String chargeDefaultamount
 			, String staticchargestate, String adminusername){
 		Link = link;
 		RequestType = requesttype;
 		UnitNumber = unitnumber;
+		OldUnitNumber = oldunitnumber;
 		BuildingNumber = buildingnumber;
 		OwnerName = ownername;
 		ResidentName = residentname;
@@ -37,6 +38,7 @@ public class ServerConnectorRegisterUnit extends AsyncTask{
 		try{
 			String data = URLEncoder.encode("requesttype","UTF8") + "=" + URLEncoder.encode(RequestType,"UTF8");
 			data += "&" + URLEncoder.encode("unitnumber","UTF8") + "=" + URLEncoder.encode(UnitNumber,"UTF8");
+			data += "&" + URLEncoder.encode("oldunitnumber","UTF8") + "=" + URLEncoder.encode(OldUnitNumber,"UTF8");
 			data += "&" + URLEncoder.encode("buildingnumber","UTF8") + "=" + URLEncoder.encode(BuildingNumber,"UTF8");
 			data += "&" + URLEncoder.encode("ownername","UTF8") + "=" + URLEncoder.encode(OwnerName,"UTF8");
 			data += "&" + URLEncoder.encode("residentname","UTF8") + "=" + URLEncoder.encode(ResidentName,"UTF8");

@@ -81,14 +81,15 @@ public class UnitsInformationFragment extends Fragment {
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                        in.putExtra("key1","edit_user");
+                                        Intent in = new Intent(getContext(),RegisterUnitActivity.class);
+                                        //bundle.putString("key1","edit_unit");
                                         if(selectedItemSearchPosition != 10000){
-                                            String[] data = new String[7];
-                                            for(int i=0;i < 7;i++){
+                                            String[] data = new String[12];
+                                            for(int i=0;i < 11;i++){
                                                 data[i] = dataListSearch[selectedItemSearchPosition][i];
                                             }
-                                            bundle.putStringArray("keyData",data);
+                                            data[11] = "edit_unit";
+                                            bundle.putStringArray("key1",data);
                                         }
                                         in.putExtras(bundle);
                                         startActivity(in);
@@ -112,7 +113,7 @@ public class UnitsInformationFragment extends Fragment {
                             //normal position
                             selectedItemPosition = position;
                             completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataList[selectedItemPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataList[selectedItemPosition][1]
-                                + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
+                                + "\n\n" +"نام مالک:" + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
                                 + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataList[selectedItemPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataList[selectedItemPosition][5]
                                 + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataList[selectedItemPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataList[selectedItemPosition][7]
                                 + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9]
@@ -125,14 +126,15 @@ public class UnitsInformationFragment extends Fragment {
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                        in.putExtra("key1","edit_user");
+                                        Intent in = new Intent(getContext(),RegisterUnitActivity.class);
+                                        //bundle.putString("key1","edit_unit");
                                         if(selectedItemPosition != 10000){
-                                            String[] data = new String[7];
-                                            for(int i=0;i < 7;i++){
+                                            String[] data = new String[12];
+                                            for(int i=0;i < 11;i++){
                                                 data[i] = dataList[selectedItemPosition][i];
                                             }
-                                            bundle.putStringArray("keyData",data);
+                                            data[11] = "edit_unit";
+                                            bundle.putStringArray("key1",data);
                                         }
                                         in.putExtras(bundle);
                                         startActivity(in);

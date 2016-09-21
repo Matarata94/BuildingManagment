@@ -186,8 +186,8 @@ public class RegisterUserActivity extends AppCompatActivity {
         db = new database(this);
 
         if(getIntent().getExtras() != null){
-            String stringRecieved = getIntent().getExtras().getString("key1");
-            if(stringRecieved.equals("add_user")){
+            String[] arrayReceived = getIntent().getExtras().getStringArray("keyData");
+            if(arrayReceived[8].equals("add_user")){
                 ButtonRegistration.setText("افزودن کاربر");
                 Register_shtv_alreadyRegistered.setVisibility(View.INVISIBLE);
                 tv_registerAs.setVisibility(View.GONE);
@@ -197,8 +197,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 rb_registerAsAdmin.setVisibility(View.INVISIBLE);
                 rb_registerAsUser.setVisibility(View.GONE);
                 bottomView.setVisibility(View.GONE);
-            }else if(stringRecieved.equals("edit_user")){
-                String[] arrayReceived = getIntent().getExtras().getStringArray("keyData");
+            }else if(arrayReceived[8].equals("edit_user")){
                 ButtonRegistration.setText("اعمال تغییرات");
                 Register_shtv_alreadyRegistered.setVisibility(View.GONE);
                 tv_registerAs.setVisibility(View.GONE);

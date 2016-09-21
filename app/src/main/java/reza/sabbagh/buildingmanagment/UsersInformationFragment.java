@@ -78,12 +78,12 @@ public class UsersInformationFragment extends Fragment{
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                        in.putExtra("key1","edit_user");
                                         if(selectedItemSearchPosition != 10000){
-                                            String[] data = new String[7];
+                                            String[] data = new String[8];
                                             for(int i=0;i < 7;i++){
                                                 data[i] = dataListSearch[selectedItemSearchPosition][i];
                                             }
+                                            data[8] = "edit_user";
                                             bundle.putStringArray("keyData",data);
                                         }
                                         in.putExtras(bundle);
@@ -119,12 +119,12 @@ public class UsersInformationFragment extends Fragment{
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                                        in.putExtra("key1","edit_user");
                                         if(selectedItemPosition != 10000){
-                                            String[] data = new String[7];
+                                            String[] data = new String[8];
                                             for(int i=0;i < 7;i++){
                                                 data[i] = dataList[selectedItemPosition][i];
                                             }
+                                            data[8] = "edit_use";
                                             bundle.putStringArray("keyData",data);
                                         }
                                         in.putExtras(bundle);

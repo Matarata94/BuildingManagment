@@ -30,7 +30,7 @@ public class RegisterUnitActivity extends AppCompatActivity {
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
-    private String link = FirstActivity.globalLink + "RegisterUnit.php",requestType,unitnumber,buildingnumber,ownername,residentname,floornumber
+    private String link = FirstActivity.globalLink + "RegisterUnit.php",requestType,unitnumber,oldunitnumber,buildingnumber,ownername,residentname,floornumber
             ,areasize,residencedate,numberofresidence,postalcode,chargedefaultamount,staticchargestate,adminusername;
 
     @Override
@@ -59,6 +59,7 @@ public class RegisterUnitActivity extends AppCompatActivity {
                 if(btn_done.getText().toString().equals("ثبت")){
                     requestType = "insert";
                     unitnumber = et_unitNUmber.getText().toString();
+                    oldunitnumber = "";
                     buildingnumber = et_buildingNumber.getText().toString();
                     ownername = et_ownerName.getText().toString();
                     residentname = et_residentName.getText().toString();
@@ -76,7 +77,7 @@ public class RegisterUnitActivity extends AppCompatActivity {
                     db.open();
                     adminusername = db.queryInfo(2);
                     db.close();
-                    serverWorking(link,requestType,unitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate,numberofresidence
+                    serverWorking(link,requestType,unitnumber,oldunitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate,numberofresidence
                             ,postalcode,chargedefaultamount,staticchargestate,adminusername);
                 }
             }
@@ -121,13 +122,32 @@ public class RegisterUnitActivity extends AppCompatActivity {
         db = new database(this);
 
         if(getIntent().getExtras() != null){
-            String stringRecieved = getIntent().getExtras().getString("key1");
-            //String[] arrayReceived = getIntent().getExtras().getStringArray("keyData");
-            if(stringRecieved.equals("add_unit")){
+            String[] arrayReceived = getIntent().getExtras().getStringArray("key1");
+            if(arrayReceived[11].equals("add_unit")){
                 btn_done.setText("ثبت");
                 btn_done.setTextColor(Color.parseColor("#ffffff"));
-            }else if(stringRecieved.equals("edit_unit")){
-
+            }else if(arrayReceived[11].equals("edit_unit")){
+                btn_done.setText("ویرایش");
+                btn_done.setTextColor(Color.parseColor("#ffffff"));
+                et_unitNUmber.setText(arrayReceived[0]);
+                et_buildingNumber.setText(arrayReceived[1]);
+                et_ownerName.setText(arrayReceived[2]);
+                et_residentName.setText(arrayReceived[3]);
+                et_floorNumber.setText(arrayReceived[4]);
+                et_areaSize.setText(arrayReceived[5]);
+                et_residenceDate.setText(arrayReceived[6]);
+                et_residentCount.setText(arrayReceived[7]);
+                et_postalCode.setText(arrayReceived[8]);
+                et_defaultChargeAmount.setText(arrayReceived[9]);
+                if(arrayReceived[10].equals("yes")){
+                    rb_yes.setChecked(true);
+                    rb_no.setChecked(false);
+                }else if(arrayReceived[10].equals("no")){
+                    rb_yes.setChecked(false);
+                    rb_no.setChecked(true);
+                }
+                et_unitNUmber.requestFocus();
+                oldunitnumber = et_unitNUmber.getText().toString();
             }
         }
 
@@ -158,10 +178,10 @@ public class RegisterUnitActivity extends AppCompatActivity {
          }
      }
 
-    private void serverWorking(String link, String requestType, String unitnumber, String buildingnumber, String ownername, String residentname
+    private void serverWorking(String link, String requestType, String unitnumber,String oldunitnumber, String buildingnumber, String ownername, String residentname
             , String floornumber, String areasize, String residencedate, String numberofresidence, String postalcode, String chargedefaultamount
             , String staticchargestate, final String adminusername){
-        new ServerConnectorRegisterUnit(link,requestType,unitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate
+        new ServerConnectorRegisterUnit(link,requestType,unitnumber,oldunitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate
                 ,numberofresidence,postalcode,chargedefaultamount,staticchargestate,adminusername).execute();
         pd = new ProgressDialog(RegisterUnitActivity.this);
         pd.setMessage("Adding...");
