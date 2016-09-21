@@ -79,6 +79,28 @@ public class RegisterUnitActivity extends AppCompatActivity {
                     db.close();
                     serverWorking(link,requestType,unitnumber,oldunitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate,numberofresidence
                             ,postalcode,chargedefaultamount,staticchargestate,adminusername);
+                }else if(btn_done.getText().toString().equals("ویرایش")){
+                    requestType = "update";
+                    unitnumber = et_unitNUmber.getText().toString();
+                    buildingnumber = et_buildingNumber.getText().toString();
+                    ownername = et_ownerName.getText().toString();
+                    residentname = et_residentName.getText().toString();
+                    floornumber = et_floorNumber.getText().toString();
+                    areasize = et_areaSize.getText().toString();
+                    residencedate = et_residenceDate.getText().toString();
+                    numberofresidence = et_residentCount.getText().toString();
+                    postalcode = et_postalCode.getText().toString();
+                    chargedefaultamount = et_defaultChargeAmount.getText().toString();
+                    if(rb_yes.isChecked()){
+                        staticchargestate = "yes";
+                    }else if(rb_no.isChecked()){
+                        staticchargestate = "no";
+                    }
+                    db.open();
+                    adminusername = db.queryInfo(2);
+                    db.close();
+                    serverWorking(link,requestType,unitnumber,oldunitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate,numberofresidence
+                            ,postalcode,chargedefaultamount,staticchargestate,adminusername);
                 }
             }
             }
@@ -130,6 +152,7 @@ public class RegisterUnitActivity extends AppCompatActivity {
                 btn_done.setText("ویرایش");
                 btn_done.setTextColor(Color.parseColor("#ffffff"));
                 et_unitNUmber.setText(arrayReceived[0]);
+                oldunitnumber = arrayReceived[0];
                 et_buildingNumber.setText(arrayReceived[1]);
                 et_ownerName.setText(arrayReceived[2]);
                 et_residentName.setText(arrayReceived[3]);
@@ -147,7 +170,6 @@ public class RegisterUnitActivity extends AppCompatActivity {
                     rb_no.setChecked(true);
                 }
                 et_unitNUmber.requestFocus();
-                oldunitnumber = et_unitNUmber.getText().toString();
             }
         }
 
@@ -184,7 +206,7 @@ public class RegisterUnitActivity extends AppCompatActivity {
         new ServerConnectorRegisterUnit(link,requestType,unitnumber,oldunitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate
                 ,numberofresidence,postalcode,chargedefaultamount,staticchargestate,adminusername).execute();
         pd = new ProgressDialog(RegisterUnitActivity.this);
-        pd.setMessage("Adding...");
+        pd.setMessage("Loading...");
         pd.setCancelable(false);
         pd.show();
 
@@ -218,7 +240,7 @@ public class RegisterUnitActivity extends AppCompatActivity {
                             Intent in = new Intent(RegisterUnitActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
-                        }/*else if(resRegisterUnit.equals("update fail")){
+                        }else if(resRegisterUnit.equals("update fail")){
                             tm.cancel();
                             pd.cancel();
                             resRegisterUnit = "";
@@ -228,10 +250,10 @@ public class RegisterUnitActivity extends AppCompatActivity {
                             pd.cancel();
                             resRegisterUnit = "";
                             Toast.makeText(getApplicationContext(),"انجام شد!",Toast.LENGTH_SHORT).show();
-                            Intent in = new Intent(RegisterUserActivity.this,MainActivity.class);
+                            Intent in = new Intent(RegisterUnitActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
-                        }*/
+                        }
                     }
                 });
             }

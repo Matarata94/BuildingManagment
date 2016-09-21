@@ -35,7 +35,7 @@ public class UnitsInformationFragment extends Fragment {
     private FloatingActionButton subFabExit,subFabAdd;
     private UnitsInformationAdapter uia;
     private database db;
-    public static String resUnitsInfo = "";
+    public static String resUnitsInfo="",resUnitsInfoDelete="";
     private int count=0,listCount,stringIndexHolder[] = new int[12],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
     private Timer tm;
     private ProgressDialog pd;
@@ -82,7 +82,6 @@ public class UnitsInformationFragment extends Fragment {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         Intent in = new Intent(getContext(),RegisterUnitActivity.class);
-                                        //bundle.putString("key1","edit_unit");
                                         if(selectedItemSearchPosition != 10000){
                                             String[] data = new String[12];
                                             for(int i=0;i < 11;i++){
@@ -100,10 +99,10 @@ public class UnitsInformationFragment extends Fragment {
                                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        /*db.open();
-                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
+                                        db.open();
+                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][0],"s");
                                         db.close();
-                                        upDataList = 1;*/
+                                        upDataList = 1;
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -127,7 +126,6 @@ public class UnitsInformationFragment extends Fragment {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         Intent in = new Intent(getContext(),RegisterUnitActivity.class);
-                                        //bundle.putString("key1","edit_unit");
                                         if(selectedItemPosition != 10000){
                                             String[] data = new String[12];
                                             for(int i=0;i < 11;i++){
@@ -145,9 +143,9 @@ public class UnitsInformationFragment extends Fragment {
                                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            /*db.open();
-                                            serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataList[selectedItemPosition][6],"n");
-                                            db.close();*/
+                                            db.open();
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataList[selectedItemPosition][0],"n");
+                                            db.close();
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -351,5 +349,51 @@ public class UnitsInformationFragment extends Fragment {
         }, 1, 1000);
     }
 
+    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, final String sORn){
+        new ServerConnectorDeleteUnit(link,requesttype,adminusername,unitnumber).execute();
+        pd = new ProgressDialog(getContext());
+        pd.setMessage("Deleting...");
+        pd.setIndeterminate(true);
+        pd.setCancelable(false);
+        pd.show();
+
+        tm =new Timer();
+        tm.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        count++;
+                        if(count == 6){
+                            pd.cancel();
+                            tm.cancel();
+                            Toast.makeText(getContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
+                            count = 0;
+                            fabmenu.setVisibility(View.GONE);
+                        }else if(resUnitsInfoDelete.contains("delete fail")){
+                            tm.cancel();
+                            pd.cancel();
+                            resUnitsInfoDelete = "";
+                            count = 0;
+                            Toast.makeText(getContext(),"خطا در حذف اطلاعات. لطفا در زمان دیگری امتحان کنید!",Toast.LENGTH_LONG).show();
+                        }else if(resUnitsInfoDelete.contains("deleted")){
+                            tm.cancel();
+                            pd.cancel();
+                            resUnitsInfoDelete = "";
+                            count = 0;
+                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
+                            if(sORn.equals("n")){
+                                uia = new UnitsInformationAdapter(createList(uia.getItemCount()-1,dataList));
+                                rv.setAdapter(uia);
+                            }else if(sORn.equals("s")){
+                                uia = new UnitsInformationAdapter(createList(uia.getItemCount()-1,dataListSearch));
+                                rv.setAdapter(uia);
+                            }
+                        }
+                    }
+                });
+            }
+        }, 1, 1000);
+    }
 
 }

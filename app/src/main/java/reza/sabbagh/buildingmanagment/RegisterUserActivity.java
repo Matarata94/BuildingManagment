@@ -227,7 +227,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                                String homenumber, String email, String buildingnumber, String unitnumber, String oldunitnumber, final String adminusername){
         new ServerConnectorRegisterUser(link,requestType,registerAs,username,password,fname,lname,phonenumber,homenumber,email,buildingnumber,unitnumber,oldunitnumber,adminusername).execute();
         pd = new ProgressDialog(RegisterUserActivity.this);
-        pd.setMessage("Registering...");
+        pd.setMessage("Loading...");
         pd.setCancelable(false);
         pd.show();
 

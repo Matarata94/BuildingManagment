@@ -67,8 +67,9 @@ public class UsersInformationFragment extends Fragment{
                         //search position
                         selectedItemSearchPosition = position;
                         completeProfileTitle = dataListSearch[position][0] + " " + dataListSearch[position][1];
-                        completeProfile = "شماره همراه: " + dataListSearch[position][2] +"\n\n"+"شماره منزل: "+ dataListSearch[position][3] +"\n\n"+"ایمیل: "+ dataListSearch[position][4] +"\n\n"+
-                                "شماره ساختمان: "+ dataListSearch[position][5] +"\n\n"+"شماره واحد: "+ dataListSearch[position][6];
+                        completeProfile = "شماره همراه: " + dataListSearch[position][2] + "\n\n" + "شماره منزل: "+ dataListSearch[position][3]
+                                + "\n\n" + "ایمیل: "+ dataListSearch[position][4] + "\n\n"+ "شماره ساختمان: "+ dataListSearch[position][5]
+                                + "\n\n" + "شماره واحد: "+ dataListSearch[position][6];
                         dialog = new MaterialDialog.Builder(getActivity())
                                 .title(completeProfileTitle)
                                 .content(completeProfile)
@@ -96,7 +97,7 @@ public class UsersInformationFragment extends Fragment{
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         db.open();
-                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
+                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUser.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
                                         db.close();
                                         upDataList = 1;
                                     }
@@ -108,8 +109,9 @@ public class UsersInformationFragment extends Fragment{
                         //normal position
                         selectedItemPosition = position;
                         completeProfileTitle = dataList[position][0] + " " + dataList[position][1];
-                        completeProfile = "شماره همراه: " + dataList[position][2] +"\n\n"+"شماره منزل: "+ dataList[position][3] +"\n\n"+"ایمیل: "+ dataList[position][4] +"\n\n"+
-                                "شماره ساختمان: "+ dataList[position][5] +"\n\n"+"شماره واحد: "+ dataList[position][6];
+                        completeProfile = "شماره همراه: " + dataList[position][2] + "\n\n" + "شماره منزل: "+ dataList[position][3]
+                                + "\n\n" +"ایمیل: "+ dataList[position][4] + "\n\n" + "شماره ساختمان: "+ dataList[position][5]
+                                + "\n\n" +"شماره واحد: "+ dataList[position][6];
                         dialog = new MaterialDialog.Builder(getActivity())
                                 .title(completeProfileTitle)
                                 .content(completeProfile)
@@ -137,7 +139,7 @@ public class UsersInformationFragment extends Fragment{
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         db.open();
-                                        serverWorkingDelete(FirstActivity.globalLink + "register.php","delete",db.queryInfo(2),dataList[selectedItemPosition][6],"n");
+                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUser.php","delete",db.queryInfo(2),dataList[selectedItemPosition][6],"n");
                                         db.close();
                                     }
                                 })
@@ -321,7 +323,7 @@ public class UsersInformationFragment extends Fragment{
     private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, final String sORn){
         new ServerConnectorDeleteUser(link,requesttype,adminusername,unitnumber).execute();
         pd = new ProgressDialog(getContext());
-        pd.setMessage("Loading...");
+        pd.setMessage("Deleting...");
         pd.setIndeterminate(true);
         pd.setCancelable(false);
         pd.show();
