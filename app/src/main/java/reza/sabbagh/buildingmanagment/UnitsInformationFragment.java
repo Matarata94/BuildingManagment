@@ -187,9 +187,10 @@ public class UnitsInformationFragment extends Fragment {
         subFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //getActivity().getSupportFragmentManager().beginTransaction().remove(UnitsInformationFragment.this).commit();
                 Intent in = new Intent(getActivity(),RegisterUnitActivity.class);
-                bundle.putString("key1","add_unit");
+                String[] data = new String[12];
+                data[11] = "add_unit";
+                bundle.putStringArray("key1",data);
                 in.putExtras(bundle);
                 startActivity(in);
             }
@@ -381,13 +382,12 @@ public class UnitsInformationFragment extends Fragment {
                             pd.cancel();
                             resUnitsInfoDelete = "";
                             count = 0;
-                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             if(sORn.equals("n")){
-                                uia = new UnitsInformationAdapter(createList(uia.getItemCount()-1,dataList));
-                                rv.setAdapter(uia);
+                                getActivity().getSupportFragmentManager().beginTransaction().detach(UnitsInformationFragment.this).attach(UnitsInformationFragment.this).commit();
+                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             }else if(sORn.equals("s")){
-                                uia = new UnitsInformationAdapter(createList(uia.getItemCount()-1,dataListSearch));
-                                rv.setAdapter(uia);
+                                getActivity().getSupportFragmentManager().beginTransaction().detach(UnitsInformationFragment.this).attach(UnitsInformationFragment.this).commit();
+                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             }
                         }
                     }

@@ -183,8 +183,9 @@ public class UsersInformationFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(getContext(),RegisterUserActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("key1","add_user");
+                String[] data = new String[8];
+                data[7] = "add_user";
+                bundle.putStringArray("key1",data);
                 in.putExtras(bundle);
                 startActivity(in);
             }
@@ -352,13 +353,12 @@ public class UsersInformationFragment extends Fragment{
                             pd.cancel();
                             resUsersInfoDelete = "";
                             count = 0;
-                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             if(sORn.equals("n")){
-                                uia = new UsersInformationAdapter(createList(uia.getItemCount()-1,dataList));
-                                rv.setAdapter(uia);
+                                getActivity().getSupportFragmentManager().beginTransaction().detach(UsersInformationFragment.this).attach(UsersInformationFragment.this).commit();
+                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             }else if(sORn.equals("s")){
-                                uia = new UsersInformationAdapter(createList(uia.getItemCount()-1,dataListSearch));
-                                rv.setAdapter(uia);
+                                getActivity().getSupportFragmentManager().beginTransaction().detach(UsersInformationFragment.this).attach(UsersInformationFragment.this).commit();
+                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             }
                         }
                     }
