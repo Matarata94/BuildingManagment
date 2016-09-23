@@ -216,6 +216,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
             case 3:
                 addFragment(new UnitsInformationFragment(), true, R.id.container);
                 break;
+            case 4:addFragment(new ChargeInformationFragment(),true,R.id.container);
+                break;
         }
     }
 

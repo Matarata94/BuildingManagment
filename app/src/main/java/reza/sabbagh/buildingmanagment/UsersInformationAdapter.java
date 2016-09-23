@@ -37,11 +37,6 @@ public class UsersInformationAdapter extends RecyclerView.Adapter<UsersInformati
         usersViewHolder.vName.setTypeface(bhoma);
         usersViewHolder.vBuildingNumber.setTypeface(iransans);
         usersViewHolder.vPhoneNumber.setTypeface(iransans);
-        /*if(i%2 == 0){
-            usersViewHolder.vCardView.setCardBackgroundColor(Color.parseColor("#4db6ac"));
-        }else{
-            usersViewHolder.vCardView.setCardBackgroundColor(Color.parseColor("#ffffff"));
-        }*/
     }
 
     @Override

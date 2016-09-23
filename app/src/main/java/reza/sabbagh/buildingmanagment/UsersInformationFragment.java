@@ -193,7 +193,7 @@ public class UsersInformationFragment extends Fragment{
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(searchET.getText().length() == 0){
+                if(searchET.getText().toString().length() == 0){
 
                 }else{
                     String tempName="",tempUnitNum="";

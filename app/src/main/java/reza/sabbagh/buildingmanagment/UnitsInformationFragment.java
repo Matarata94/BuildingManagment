@@ -52,15 +52,8 @@ public class UnitsInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_unit_information, container, false);
 
-        rv = (RecyclerView)rootView.findViewById(R.id.unitsInfoFrag_rv);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(llm);
-        db = new database(getContext());
-        db.open();
-        serverWorking(link,"query",db.queryInfo(2));
-        db.close();
+        initiate(rootView);
+
         rv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
@@ -156,15 +149,6 @@ public class UnitsInformationFragment extends Fragment {
                 })
         );
 
-        fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.unitsInfoFrag_fab_menu);
-        subFabExit = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_exit);
-        subFabAdd = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_add);
-        searchET = (EditText) rootView.findViewById(R.id.fragment_unitsInfo_et_search);
-        search_btn = (Button) rootView.findViewById(R.id.fragment_unitsInfo_btn_search);
-        iransans = Typeface.createFromAsset(getContext().getAssets(),"BHoma.ttf");
-        searchET.setTypeface(iransans);
-        search_btn.setTypeface(iransans);
-        fabmenu.setClosedOnTouchOutside(true);
         subFabExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,7 +182,7 @@ public class UnitsInformationFragment extends Fragment {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(searchET.getText().length() == 0){
+                if(searchET.getText().toString().length() == 0){
 
                 }else{
                     String tempResidentName="",tempOwnerName="",tempUnitNum="",tempResidentDate="";
@@ -230,6 +214,27 @@ public class UnitsInformationFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void initiate(View rootView){
+        rv = (RecyclerView)rootView.findViewById(R.id.unitsInfoFrag_rv);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
+        db = new database(getContext());
+        db.open();
+        serverWorking(link,"query",db.queryInfo(2));
+        db.close();
+        fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.unitsInfoFrag_fab_menu);
+        subFabExit = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_exit);
+        subFabAdd = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_add);
+        searchET = (EditText) rootView.findViewById(R.id.fragment_unitsInfo_et_search);
+        search_btn = (Button) rootView.findViewById(R.id.fragment_unitsInfo_btn_search);
+        iransans = Typeface.createFromAsset(getContext().getAssets(),"BHoma.ttf");
+        searchET.setTypeface(iransans);
+        search_btn.setTypeface(iransans);
+        fabmenu.setClosedOnTouchOutside(true);
     }
 
     private List<UnitsInformationAdapterData> createList(int size,String data[][]) {

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:background="#e0e0e0">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:padding="5dp"
+        android:id="@+id/fragment_chargeInfo_searchFiled"
+        android:background="@color/colorPrimaryLight">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/fragment_chargeInfo_et_search"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="75dp"
+            android:hint="جستجو..."
+            android:drawableRight="@drawable/search"
+            android:gravity="center_vertical|right"
+            android:background="#fff"
+            android:textColor="#000000"
+            android:textColorHint="#757575"
+            android:textSize="15sp" />
+
+        <com.andexert.library.RippleView
+            android:id="@+id/fragment_chargeInfo_rippleSearch"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            app:rv_rippleDuration="200"
+            rv_centered="true"
+            >
+
+            <Button
+                android:hint="جستجو"
+                android:id="@+id/fragment_chargeInfo_btn_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColorHint="#ffffff"
+                android:textSize="20sp"
+                android:background="#1E88E5"
+                android:gravity="center"
+                />
+
+        </com.andexert.library.RippleView>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chargeInfoFrag_rv"
+        android:layout_below="@+id/fragment_chargeInfo_searchFiled"
+        />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/chargeInfoFrag_fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        app:menu_fab_size="normal"
+        android:elevation="6dp"
+        fab:menu_colorNormal="@color/colorAccent"
+        fab:menu_colorPressed="#9e9d24"
+        fab:menu_colorRipple="#90FFFFFF"
+        fab:menu_animationDelayPerItem="50"
+        fab:menu_icon="@drawable/fab_add"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:menu_labels_padding="8dp"
+        fab:menu_labels_textColor="#000000"
+        fab:menu_labels_textSize="14sp"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_colorNormal="#fff"
+        fab:menu_labels_colorPressed="#fff"
+        fab:menu_labels_colorRipple="#66FFFFFF"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="true"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_position="left"
+        fab:menu_openDirection="up"
+        fab:menu_backgroundColor="@android:color/transparent"
+        fab:menu_fab_show_animation="@anim/fab_slide_in_from_right"
+        fab:menu_fab_hide_animation="@anim/fab_slide_out_to_right">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/chargeInfoFrag_fab_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_to_app_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="خروج"
+            fab:fab_colorNormal="#00bcd4"
+            fab:fab_colorPressed="#0097a7"
+            fab:fab_colorRipple="#0097a7"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/chargeInfoFrag_fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="ثبت"
+            fab:fab_colorNormal="#2196f3"
+            fab:fab_colorPressed="#80deea"
+            fab:fab_colorRipple="#80deea"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>
+
