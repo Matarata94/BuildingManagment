@@ -85,12 +85,11 @@ public class ChargeInformationFragment extends Fragment {
         subFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ///should be fixed!
                 Intent in = new Intent(getActivity(),RegisterChargeActivity.class);
-                /*String[] data = new String[8];
-                data[7] = "add_bill";
-                bundle.putStringArray("key1",data);
-                in.putExtras(bundle);*/
+                String[] data = new String[7];
+                data[6] = "add_bill";
+                bundle.putStringArray("keyCharge",data);
+                in.putExtras(bundle);
                 startActivity(in);
             }
         });

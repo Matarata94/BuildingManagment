@@ -4,4 +4,6 @@
     <color name="colorPrimaryLight">#5c6bc0</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#e91e63</color>
+    <color name="mdtp_accent_color">#009688</color>
+    <color name="mdtp_accent_color_dark">#00796b</color>
 </resources>

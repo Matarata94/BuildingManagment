@@ -1,19 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
-
-    <item
-        jar="/Users/Matarata/ProgrammingStuffs/Projects/AndroidStudioProjects/BuildingManagment/app/build/intermediates/exploded-aar/com.mohamadamin/persianmaterialdatetimepicker/1.2.1/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="40db7bc029c1344cfe2e16200a009043f6561d75">
-        <dex dex="/Users/Matarata/ProgrammingStuffs/Projects/AndroidStudioProjects/BuildingManagment/app/build/intermediates/pre-dexed/debug/com.mohamadamin-persianmaterialdatetimepicker-1.2.1_3c691e195425cf7a4bd55647c896ff212e6ba756.jar" />
-    </item>
-    <item
-        jar="/Users/Matarata/ProgrammingStuffs/Projects/AndroidStudioProjects/BuildingManagment/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="ad9c0ee82b8ccecffa0f69c10a87eef563c8587d">
-        <dex dex="/Users/Matarata/ProgrammingStuffs/Projects/AndroidStudioProjects/BuildingManagment/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_e0844dcea01f645c7d2eaf2bf94075cee53cce22.jar" />
-    </item>
-
-</items>
+<items version="2" />
