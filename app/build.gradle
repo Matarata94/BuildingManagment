@@ -37,4 +37,5 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.afollestad.material-dialogs:core:0.9.0.1'
     compile 'com.github.florent37:materialtextfield:1.0.5'
+    compile 'com.mohamadamin:persianmaterialdatetimepicker:1.2.1'
 }

@@ -86,11 +86,11 @@ public class ChargeInformationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ///should be fixed!
-                Intent in = new Intent(getActivity(),RegisterUnitActivity.class);
-                String[] data = new String[12];
-                data[11] = "add_unit";
+                Intent in = new Intent(getActivity(),RegisterChargeActivity.class);
+                /*String[] data = new String[8];
+                data[7] = "add_bill";
                 bundle.putStringArray("key1",data);
-                in.putExtras(bundle);
+                in.putExtras(bundle);*/
                 startActivity(in);
             }
         });
