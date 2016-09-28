@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -36,7 +39,7 @@ public class ChargeInformationFragment extends Fragment {
     private ChargeInformationAdapter cia;
     private database db;
     public static String resChargeInfo="",resChargeInfoDelete="";
-    private int count=0,listCount,stringIndexHolder[] = new int[7],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
+    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
     private Timer tm;
     private ProgressDialog pd;
     private RecyclerView rv;
@@ -58,7 +61,94 @@ public class ChargeInformationFragment extends Fragment {
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-
+                        if(cia.getItemCount() != listCount){
+                            //search position
+                            selectedItemSearchPosition = position;
+                            completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataListSearch[selectedItemSearchPosition][1]
+                                    + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataListSearch[selectedItemSearchPosition][3]
+                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataListSearch[selectedItemSearchPosition][5]
+                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataListSearch[selectedItemSearchPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataListSearch[selectedItemSearchPosition][7]
+                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataListSearch[selectedItemSearchPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataListSearch[selectedItemSearchPosition][9]
+                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataListSearch[selectedItemSearchPosition][10];
+                            dialog = new MaterialDialog.Builder(getActivity())
+                                    .title(R.string.unitinfotitle)
+                                    .content(completeProfile)
+                                    .neutralText("تایید")
+                                    .positiveText("ویرایش")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Intent in = new Intent(getContext(),RegisterUnitActivity.class);
+                                            if(selectedItemSearchPosition != 10000){
+                                                String[] data = new String[12];
+                                                for(int i=0;i < 11;i++){
+                                                    data[i] = dataListSearch[selectedItemSearchPosition][i];
+                                                }
+                                                data[11] = "edit_unit";
+                                                bundle.putStringArray("key1",data);
+                                            }
+                                            in.putExtras(bundle);
+                                            startActivity(in);
+                                            selectedItemSearchPosition = 10000;
+                                        }
+                                    })
+                                    .negativeText("حذف")
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            /*db.open();
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][0],"s");
+                                            db.close();
+                                            upDataList = 1;*/
+                                        }
+                                    })
+                                    .typeface(iransans,iransans)
+                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                    .show();
+                        }else if(cia.getItemCount() == listCount){
+                            //normal position
+                            selectedItemPosition = position;
+                            completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataList[selectedItemPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataList[selectedItemPosition][1]
+                                    + "\n\n" +"نام مالک:" + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
+                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataList[selectedItemPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataList[selectedItemPosition][5]
+                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataList[selectedItemPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataList[selectedItemPosition][7]
+                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9]
+                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataList[selectedItemPosition][10];
+                            dialog = new MaterialDialog.Builder(getActivity())
+                                    .title(R.string.unitinfotitle)
+                                    .content(completeProfile)
+                                    .neutralText("تایید")
+                                    .positiveText("ویرایش")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Intent in = new Intent(getContext(),RegisterUnitActivity.class);
+                                            if(selectedItemPosition != 10000){
+                                                String[] data = new String[12];
+                                                for(int i=0;i < 11;i++){
+                                                    data[i] = dataList[selectedItemPosition][i];
+                                                }
+                                                data[11] = "edit_unit";
+                                                bundle.putStringArray("key1",data);
+                                            }
+                                            in.putExtras(bundle);
+                                            startActivity(in);
+                                            selectedItemPosition = 10000;
+                                        }
+                                    })
+                                    .negativeText("حذف")
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            /*db.open();
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataList[selectedItemPosition][0],"n");
+                                            db.close();*/
+                                        }
+                                    })
+                                    .typeface(iransans,iransans)
+                                    .icon(ContextCompat.getDrawable(getContext(),R.drawable.aboutus))
+                                    .show();
+                        }
                     }
                 })
         );
@@ -86,8 +176,8 @@ public class ChargeInformationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(getActivity(),RegisterChargeActivity.class);
-                String[] data = new String[7];
-                data[6] = "add_bill";
+                String[] data = new String[8];
+                data[7] = "add_bill";
                 bundle.putStringArray("keyCharge",data);
                 in.putExtras(bundle);
                 startActivity(in);
@@ -107,10 +197,10 @@ public class ChargeInformationFragment extends Fragment {
                         db.close();
                         searchET.setText("");
                     }
-                    dataListSearch = new String[80][6];
+                    dataListSearch = new String[80][7];
                     for(int i=0;i < listCount;i++){
-                        tempBillNumber = dataList[i][3];
-                        tempBillDate = dataList[i][4];
+                        tempBillNumber = dataList[i][6];
+                        tempBillDate = dataList[i][3];
                         if(tempBillNumber.contains(searchET.getText().toString()) | tempBillDate.contains(searchET.getText().toString())){
                             for (int j=0;j < 6;j++){
                                 dataListSearch[tempCounter][j] = dataList[i][j];
@@ -150,12 +240,11 @@ public class ChargeInformationFragment extends Fragment {
 
     private List<ChargeInformationAdapterData> createList(int size,String data[][]) {
         List<ChargeInformationAdapterData> result = new ArrayList<ChargeInformationAdapterData>();
-        //Toast.makeText(getContext(),data[2][5],Toast.LENGTH_LONG).show();
         for (int i = 0; i < size; i++) {
             ChargeInformationAdapterData ci = new ChargeInformationAdapterData();
-            ci.bill_number = ChargeInformationAdapterData.BILL_NUMBER_PREFIX + data[i][3];
-            ci.bill_amount = ChargeInformationAdapterData.BIL_AMOUNT_PREFIX + data[i][5];
-            ci.bill_date = ChargeInformationAdapterData.BILL_DATE_PREFIX + data[i][4];
+            ci.bill_number = ChargeInformationAdapterData.BILL_NUMBER_PREFIX + data[i][6];
+            ci.bill_amount = ChargeInformationAdapterData.BIL_AMOUNT_PREFIX + data[i][4];
+            ci.bill_date = ChargeInformationAdapterData.BILL_DATE_PREFIX + data[i][3];
             result.add(ci);
         }
         return result;
@@ -176,7 +265,7 @@ public class ChargeInformationFragment extends Fragment {
                     public void run() {
 
                         count++;
-                        if(count == 7){
+                        if(count == 6){
                             pd.cancel();
                             tm.cancel();
                             Toast.makeText(getContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
@@ -192,7 +281,7 @@ public class ChargeInformationFragment extends Fragment {
                             tm.cancel();
                             count = 0;
                             listCount = Integer.parseInt(resChargeInfo.substring(resChargeInfo.indexOf("~") + 1,resChargeInfo.indexOf("!")));
-                            dataList = new String[listCount][6];
+                            dataList = new String[listCount][7];
                             for(int i=0;i < resChargeInfo.length();i++){
                                 if(resChargeInfo.charAt(i) == '!'){
                                     stringIndexHolder[0] = i;
@@ -226,6 +315,11 @@ public class ChargeInformationFragment extends Fragment {
                                     stringIndexHolder[6] = i;
                                     if(!resChargeInfo.substring(stringIndexHolder[5]+1,stringIndexHolder[6]).equals(""))
                                         dataList[rowArray][5] = resChargeInfo.substring(stringIndexHolder[5]+1,stringIndexHolder[6]);
+                                }
+                                if(resChargeInfo.charAt(i) == '*'){
+                                    stringIndexHolder[7] = i;
+                                    if(!resChargeInfo.substring(stringIndexHolder[6]+1,stringIndexHolder[7]).equals(""))
+                                        dataList[rowArray][6] = resChargeInfo.substring(stringIndexHolder[6]+1,stringIndexHolder[7]);
                                     rowArray++;
                                 }
                             }
