@@ -12,18 +12,20 @@ import java.net.URLEncoder;
 @SuppressWarnings("rawtypes")
 public class ServerConnectorRegisterCharge extends AsyncTask{
 
-	private String Link,RequestType,UnitNumber,OldUnitNumber,BuildingNumber,BillType,BillDate,BillAmount,CalculateType,AdminUsername;
+	private String Link,RequestType,UnitNumber,OldUnitNumber,BuildingNumber,BillType,OldBillType,BillDate,BillAmount,OldbillAmount,CalculateType,AdminUsername;
 
 	public ServerConnectorRegisterCharge(String link, String requesttype, String unitnumber, String oldunitnumber, String buildingnumber, String billtype
-			, String billdate, String billamount, String calculatetype,String adminusername){
+			, String oldbilltype, String billdate, String billamount, String oldbillamount, String calculatetype,String adminusername){
 		Link = link;
 		RequestType = requesttype;
 		UnitNumber = unitnumber;
 		OldUnitNumber = oldunitnumber;
 		BuildingNumber = buildingnumber;
 		BillType = billtype;
+		OldBillType = oldbilltype;
 		BillDate = billdate;
 		BillAmount = billamount;
+		OldbillAmount = oldbillamount;
 		CalculateType = calculatetype;
 		AdminUsername = adminusername;
 	}
@@ -34,8 +36,10 @@ public class ServerConnectorRegisterCharge extends AsyncTask{
 			data += "&" + URLEncoder.encode("oldunitnumber","UTF8") + "=" + URLEncoder.encode(OldUnitNumber,"UTF8");
 			data += "&" + URLEncoder.encode("buildingnumber","UTF8") + "=" + URLEncoder.encode(BuildingNumber,"UTF8");
 			data += "&" + URLEncoder.encode("billtype","UTF8") + "=" + URLEncoder.encode(BillType,"UTF8");
+			data += "&" + URLEncoder.encode("oldbilltype","UTF8") + "=" + URLEncoder.encode(OldBillType,"UTF8");
 			data += "&" + URLEncoder.encode("billdate","UTF8") + "=" + URLEncoder.encode(BillDate,"UTF8");
 			data += "&" + URLEncoder.encode("billamount","UTF8") + "=" + URLEncoder.encode(BillAmount,"UTF8");
+			data += "&" + URLEncoder.encode("oldbillamount","UTF8") + "=" + URLEncoder.encode(OldbillAmount,"UTF8");
 			data += "&" + URLEncoder.encode("calculatetype","UTF8") + "=" + URLEncoder.encode(CalculateType,"UTF8");
 			data += "&" + URLEncoder.encode("adminusername","UTF8") + "=" + URLEncoder.encode(AdminUsername,"UTF8");
 			URL mylink = new URL(Link);

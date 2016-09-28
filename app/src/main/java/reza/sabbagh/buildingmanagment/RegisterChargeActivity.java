@@ -31,7 +31,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
-    private String link = FirstActivity.globalLink + "RegisterCharge.php",date="",requestType,unitnumber,oldunitnumber,buildingnumber,calculatetype,billtype,billdate,billamount,adminusername;
+    private String link = FirstActivity.globalLink + "RegisterCharge.php",date="",requestType,unitnumber,oldunitnumber,buildingnumber,calculatetype,billtype,oldbilltype,billdate,billamount,oldbillamount,adminusername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,31 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                     if (btn_done.getText().toString().equals("ثبت")) {
                         requestType = "insert";
                         unitnumber = met_unitnumber.getText().toString();
-                        oldunitnumber = "";
+                        oldunitnumber = "a";
+                        buildingnumber = met_buildingnumber.getText().toString();
+                        if (rb_water.isChecked()) {
+                            billtype = "water";
+                        } else if (rb_power.isChecked()) {
+                            billtype = "power";
+                        } else if (rb_gas.isChecked()) {
+                            billtype = "gas";
+                        }
+                        oldbilltype = "a";
+                        if (rb_nafari.isChecked()) {
+                            calculatetype = "nafari";
+                        } else if (rb_metrazhi.isChecked()) {
+                            calculatetype = "metrazhi";
+                        }
+                        billdate = tv_choosebilldate.getText().toString();
+                        billamount = met_billamount.getText().toString();
+                        oldbillamount = "a";
+                        db.open();
+                        adminusername = db.queryInfo(2);
+                        db.close();
+                        serverWorking(link, requestType, unitnumber, oldunitnumber, buildingnumber, billtype,oldbilltype, billdate, billamount,oldbillamount, calculatetype, adminusername);
+                    } else if (btn_done.getText().toString().equals("ویرایش")) {
+                        requestType = "update";
+                        unitnumber = met_unitnumber.getText().toString();
                         buildingnumber = met_buildingnumber.getText().toString();
                         if (rb_water.isChecked()) {
                             billtype = "water";
@@ -112,29 +136,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                         db.open();
                         adminusername = db.queryInfo(2);
                         db.close();
-                        serverWorking(link, requestType, unitnumber, oldunitnumber, buildingnumber, billtype, billdate, billamount, calculatetype, adminusername);
-                    } else if (btn_done.getText().toString().equals("ویرایش")) {
-                        /*requestType = "update";
-                        unitnumber = et_unitNUmber.getText().toString();
-                        buildingnumber = et_buildingNumber.getText().toString();
-                        ownername = et_ownerName.getText().toString();
-                        residentname = et_residentName.getText().toString();
-                        floornumber = et_floorNumber.getText().toString();
-                        areasize = et_areaSize.getText().toString();
-                        residencedate = et_residenceDate.getText().toString();
-                        numberofresidence = et_residentCount.getText().toString();
-                        postalcode = et_postalCode.getText().toString();
-                        chargedefaultamount = et_defaultChargeAmount.getText().toString();
-                        if(rb_yes.isChecked()){
-                            staticchargestate = "yes";
-                        }else if(rb_no.isChecked()){
-                            staticchargestate = "no";
-                        }
-                        db.open();
-                        adminusername = db.queryInfo(2);
-                        db.close();
-                        serverWorking(link,requestType,unitnumber,oldunitnumber,buildingnumber,ownername,residentname,floornumber,areasize,residencedate,numberofresidence
-                                ,postalcode,chargedefaultamount,staticchargestate,adminusername);*/
+                        serverWorking(link, requestType, unitnumber, oldunitnumber, buildingnumber, billtype,oldbilltype, billdate, billamount,oldbillamount, calculatetype, adminusername);
                     }
                 }
             }
@@ -181,24 +183,35 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
             } else if (arrayReceived[7].equals("edit_bill")) {
                 btn_done.setText("ویرایش");
                 btn_done.setTextColor(Color.parseColor("#ffffff"));
-                /*et_unitNUmber.setText(arrayReceived[0]);
-                oldunitnumber = arrayReceived[0];
-                et_buildingNumber.setText(arrayReceived[1]);
-                et_ownerName.setText(arrayReceived[2]);
-                et_residentName.setText(arrayReceived[3]);
-                et_floorNumber.setText(arrayReceived[4]);
-                et_areaSize.setText(arrayReceived[5]);
-                et_residenceDate.setText(arrayReceived[6]);
-                et_residentCount.setText(arrayReceived[7]);
-                et_postalCode.setText(arrayReceived[8]);
-                et_defaultChargeAmount.setText(arrayReceived[9]);
-                if(arrayReceived[10].equals("yes")){
-                    rb_yes.setChecked(true);
-                    rb_no.setChecked(false);
-                }else if(arrayReceived[10].equals("no")){
-                    rb_yes.setChecked(false);
-                    rb_no.setChecked(true);
-                }*/
+                met_unitnumber.setText(arrayReceived[1]);
+                oldunitnumber = arrayReceived[1];
+                met_buildingnumber.setText(arrayReceived[0]);
+                if(arrayReceived[2].equals("water")){
+                    rb_water.setChecked(true);
+                    rb_power.setChecked(false);
+                    rb_gas.setChecked(false);
+                    oldbilltype = "water";
+                }else if(arrayReceived[2].equals("power")){
+                    rb_water.setChecked(false);
+                    rb_power.setChecked(true);
+                    rb_gas.setChecked(false);
+                    oldbilltype = "power";
+                }else if(arrayReceived[2].equals("gas")){
+                    rb_water.setChecked(false);
+                    rb_power.setChecked(false);
+                    rb_gas.setChecked(true);
+                    oldbilltype = "gas";
+                }
+                met_billamount.setText(arrayReceived[4]);
+                oldbillamount = arrayReceived[4];
+                if(arrayReceived[5].equals("nafari")){
+                    rb_nafari.setChecked(true);
+                    rb_metrazhi.setChecked(false);
+                }else if(arrayReceived[5].equals("metrazhi")){
+                    rb_nafari.setChecked(false);
+                    rb_metrazhi.setChecked(true);
+                }
+                tv_choosebilldate.setText(arrayReceived[3]);
                 met_unitnumber.requestFocus();
             }
         }
@@ -223,8 +236,8 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
     }
 
     private void serverWorking(String link, String requestType, String unitnumber,String oldunitnumber, String buildingnumber, String billtype
-            , String billdate, String billamount, String calculatetype,final String adminusername){
-        new ServerConnectorRegisterCharge(link,requestType,unitnumber,oldunitnumber,buildingnumber,billtype,billdate,billamount,calculatetype,adminusername).execute();
+            , String oldbilltype, String billdate, String billamount, String oldbillamount, String calculatetype,final String adminusername){
+        new ServerConnectorRegisterCharge(link,requestType,unitnumber,oldunitnumber,buildingnumber,billtype,oldbilltype,billdate,billamount,oldbillamount,calculatetype,adminusername).execute();
         pd = new ProgressDialog(RegisterChargeActivity.this);
         pd.setMessage("Loading...");
         pd.setCancelable(false);
@@ -240,8 +253,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                         if(count == 6){
                             pd.cancel();
                             tm.cancel();
-                            Toast.makeText(getApplicationContext(), resRegisterCharge, Toast.LENGTH_SHORT).show();
-                            //Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
                             count = 0;
                         }else if(resRegisterCharge.contains("bill founded")) {
                             tm.cancel();
@@ -261,7 +273,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                             Intent in = new Intent(RegisterChargeActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
-                        }/*else if(resRegisterCharge.equals("update fail")){
+                        }else if(resRegisterCharge.equals("update fail")){
                             tm.cancel();
                             pd.cancel();
                             resRegisterCharge = "";
@@ -274,7 +286,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                             Intent in = new Intent(RegisterChargeActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
-                        }*/
+                        }
                     }
                 });
             }

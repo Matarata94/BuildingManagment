@@ -64,28 +64,26 @@ public class ChargeInformationFragment extends Fragment {
                         if(cia.getItemCount() != listCount){
                             //search position
                             selectedItemSearchPosition = position;
-                            completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataListSearch[selectedItemSearchPosition][1]
-                                    + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataListSearch[selectedItemSearchPosition][3]
-                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataListSearch[selectedItemSearchPosition][5]
-                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataListSearch[selectedItemSearchPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataListSearch[selectedItemSearchPosition][7]
-                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataListSearch[selectedItemSearchPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataListSearch[selectedItemSearchPosition][9]
-                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataListSearch[selectedItemSearchPosition][10];
+                            completeProfileTitle = "شماره قبض: " + dataListSearch[selectedItemSearchPosition][6];
+                            completeProfile = "شماره واحد:" + "  " + dataListSearch[selectedItemSearchPosition][1] + "\n\n" + "شماره ساختمان:" + "  " +  dataListSearch[selectedItemSearchPosition][0]
+                                    + "\n\n" + "نوع قبض:" + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + "تاریخ قبض" + "  " + dataListSearch[selectedItemSearchPosition][3]
+                                    + "\n\n" + "مقدار قبض:" + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + "نوع محاسبه:" + "  " + dataListSearch[selectedItemSearchPosition][5];
                             dialog = new MaterialDialog.Builder(getActivity())
-                                    .title(R.string.unitinfotitle)
+                                    .title(completeProfileTitle)
                                     .content(completeProfile)
                                     .neutralText("تایید")
                                     .positiveText("ویرایش")
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterUnitActivity.class);
+                                            Intent in = new Intent(getContext(),RegisterChargeActivity.class);
                                             if(selectedItemSearchPosition != 10000){
-                                                String[] data = new String[12];
-                                                for(int i=0;i < 11;i++){
+                                                String[] data = new String[8];
+                                                for(int i=0;i < 7;i++){
                                                     data[i] = dataListSearch[selectedItemSearchPosition][i];
                                                 }
-                                                data[11] = "edit_unit";
-                                                bundle.putStringArray("key1",data);
+                                                data[7] = "edit_bill";
+                                                bundle.putStringArray("keyCharge",data);
                                             }
                                             in.putExtras(bundle);
                                             startActivity(in);
@@ -108,28 +106,26 @@ public class ChargeInformationFragment extends Fragment {
                         }else if(cia.getItemCount() == listCount){
                             //normal position
                             selectedItemPosition = position;
-                            completeProfile = getResources().getString(R.string.unitnumbertitle) + "  " + dataList[selectedItemPosition][0] + "\n\n" + getResources().getString(R.string.buildingnumbertitle) + "  " +  dataList[selectedItemPosition][1]
-                                    + "\n\n" +"نام مالک:" + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
-                                    + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataList[selectedItemPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataList[selectedItemPosition][5]
-                                    + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataList[selectedItemPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataList[selectedItemPosition][7]
-                                    + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9]
-                                    + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataList[selectedItemPosition][10];
+                            completeProfileTitle = "شماره قبض: " + dataList[selectedItemPosition][6];
+                            completeProfile = "شماره واحد:" + "  " + dataList[selectedItemPosition][1] + "\n\n" + "شماره ساختمان:" + "  " +  dataList[selectedItemPosition][0]
+                                    + "\n\n" + "نوع قبض:" + "  " + dataList[selectedItemPosition][2] + "\n\n" + "تاریخ قبض" + "  " + dataList[selectedItemPosition][3]
+                                    + "\n\n" + "مقدار قبض:" + "  " + dataList[selectedItemPosition][4] + "\n\n" + "نوع محاسبه:" + "  " + dataList[selectedItemPosition][5];
                             dialog = new MaterialDialog.Builder(getActivity())
-                                    .title(R.string.unitinfotitle)
+                                    .title(completeProfileTitle)
                                     .content(completeProfile)
                                     .neutralText("تایید")
                                     .positiveText("ویرایش")
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterUnitActivity.class);
+                                            Intent in = new Intent(getContext(),RegisterChargeActivity.class);
                                             if(selectedItemPosition != 10000){
-                                                String[] data = new String[12];
-                                                for(int i=0;i < 11;i++){
+                                                String[] data = new String[8];
+                                                for(int i=0;i < 7;i++){
                                                     data[i] = dataList[selectedItemPosition][i];
                                                 }
-                                                data[11] = "edit_unit";
-                                                bundle.putStringArray("key1",data);
+                                                data[7] = "edit_bill";
+                                                bundle.putStringArray("keyCharge",data);
                                             }
                                             in.putExtras(bundle);
                                             startActivity(in);

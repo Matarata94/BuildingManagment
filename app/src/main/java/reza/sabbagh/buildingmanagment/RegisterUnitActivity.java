@@ -59,7 +59,7 @@ public class RegisterUnitActivity extends AppCompatActivity {
                 if(btn_done.getText().toString().equals("ثبت")){
                     requestType = "insert";
                     unitnumber = et_unitNUmber.getText().toString();
-                    oldunitnumber = "";
+                    oldunitnumber = "a";
                     buildingnumber = et_buildingNumber.getText().toString();
                     ownername = et_ownerName.getText().toString();
                     residentname = et_residentName.getText().toString();
