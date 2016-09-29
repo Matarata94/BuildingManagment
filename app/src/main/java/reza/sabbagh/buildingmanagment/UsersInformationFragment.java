@@ -84,8 +84,8 @@ public class UsersInformationFragment extends Fragment{
                                             for(int i=0;i < 7;i++){
                                                 data[i] = dataListSearch[selectedItemSearchPosition][i];
                                             }
-                                            data[8] = "edit_user";
-                                            bundle.putStringArray("keyData",data);
+                                            data[7] = "edit_user";
+                                            bundle.putStringArray("keyUser",data);
                                         }
                                         in.putExtras(bundle);
                                         startActivity(in);
@@ -97,7 +97,7 @@ public class UsersInformationFragment extends Fragment{
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         db.open();
-                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUser.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6],"s");
+                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUser.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6]);
                                         db.close();
                                         upDataList = 1;
                                     }
@@ -126,8 +126,8 @@ public class UsersInformationFragment extends Fragment{
                                             for(int i=0;i < 7;i++){
                                                 data[i] = dataList[selectedItemPosition][i];
                                             }
-                                            data[8] = "edit_use";
-                                            bundle.putStringArray("keyData",data);
+                                            data[7] = "edit_user";
+                                            bundle.putStringArray("keyUser",data);
                                         }
                                         in.putExtras(bundle);
                                         startActivity(in);
@@ -139,7 +139,7 @@ public class UsersInformationFragment extends Fragment{
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         db.open();
-                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUser.php","delete",db.queryInfo(2),dataList[selectedItemPosition][6],"n");
+                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUser.php","delete",db.queryInfo(2),dataList[selectedItemPosition][6]);
                                         db.close();
                                     }
                                 })
@@ -185,7 +185,7 @@ public class UsersInformationFragment extends Fragment{
                 Intent in = new Intent(getContext(),RegisterUserActivity.class);
                 String[] data = new String[8];
                 data[7] = "add_user";
-                bundle.putStringArray("key1",data);
+                bundle.putStringArray("keyUser",data);
                 in.putExtras(bundle);
                 startActivity(in);
             }
@@ -321,7 +321,7 @@ public class UsersInformationFragment extends Fragment{
         }, 1, 1000);
     }
 
-    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, final String sORn){
+    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber){
         new ServerConnectorDeleteUser(link,requesttype,adminusername,unitnumber).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Deleting...");
@@ -353,13 +353,9 @@ public class UsersInformationFragment extends Fragment{
                             pd.cancel();
                             resUsersInfoDelete = "";
                             count = 0;
-                            if(sORn.equals("n")){
-                                getActivity().getSupportFragmentManager().beginTransaction().detach(UsersInformationFragment.this).attach(UsersInformationFragment.this).commit();
-                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
-                            }else if(sORn.equals("s")){
-                                getActivity().getSupportFragmentManager().beginTransaction().detach(UsersInformationFragment.this).attach(UsersInformationFragment.this).commit();
-                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
-                            }
+                            getActivity().getSupportFragmentManager().beginTransaction().detach(UsersInformationFragment.this).attach(UsersInformationFragment.this).commit();
+                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
+                            searchET.setText("");
                         }
                     }
                 });

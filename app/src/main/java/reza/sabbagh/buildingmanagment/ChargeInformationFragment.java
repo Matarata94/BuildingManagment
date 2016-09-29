@@ -47,7 +47,7 @@ public class ChargeInformationFragment extends Fragment {
     private Typeface iransans;
     private Bundle bundle = new Bundle();
     private MaterialDialog dialog;
-    private String link = FirstActivity.globalLink + "ChargeInfo.php",completeProfile="",completeProfileTitle="";
+    private String link = FirstActivity.globalLink + "ChargeInfo.php",completeProfile="",completeProfileTitle="",AdminUsername,UnitNumber,BillType,BillAmount;
     private EditText searchET;
     private Button search_btn;
 
@@ -94,10 +94,14 @@ public class ChargeInformationFragment extends Fragment {
                                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            /*db.open();
-                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][0],"s");
+                                            db.open();
+                                            AdminUsername = db.queryInfo(2);
                                             db.close();
-                                            upDataList = 1;*/
+                                            UnitNumber = dataListSearch[selectedItemSearchPosition][1];
+                                            BillType = dataListSearch[selectedItemSearchPosition][2];
+                                            BillAmount = dataListSearch[selectedItemSearchPosition][4];
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterCharge.php","delete",AdminUsername,UnitNumber,BillType,BillAmount);
+                                            //upDataList = 1;
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -136,9 +140,13 @@ public class ChargeInformationFragment extends Fragment {
                                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            /*db.open();
-                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataList[selectedItemPosition][0],"n");
-                                            db.close();*/
+                                            db.open();
+                                            AdminUsername = db.queryInfo(2);
+                                            db.close();
+                                            UnitNumber = dataList[selectedItemPosition][1];
+                                            BillType = dataList[selectedItemPosition][2];
+                                            BillAmount = dataList[selectedItemPosition][4];
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterCharge.php","delete",AdminUsername,UnitNumber,BillType,BillAmount);
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -187,18 +195,18 @@ public class ChargeInformationFragment extends Fragment {
                 }else{
                     String tempBillNumber="",tempBillDate="";
                     int tempCounter=0;
-                    if(upDataList == 1){
+                    /*if(upDataList == 1){
                         db.open();
                         serverWorking(link,"query",db.queryInfo(2));
                         db.close();
                         searchET.setText("");
-                    }
+                    }*/
                     dataListSearch = new String[80][7];
                     for(int i=0;i < listCount;i++){
                         tempBillNumber = dataList[i][6];
                         tempBillDate = dataList[i][3];
                         if(tempBillNumber.contains(searchET.getText().toString()) | tempBillDate.contains(searchET.getText().toString())){
-                            for (int j=0;j < 6;j++){
+                            for (int j=0;j < 7;j++){
                                 dataListSearch[tempCounter][j] = dataList[i][j];
                             }
                             tempCounter++;
@@ -330,5 +338,47 @@ public class ChargeInformationFragment extends Fragment {
             }
         }, 1, 1000);
     }
-    
+
+    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, String billtype, String billamount){
+        new ServerConnectorDeleteCharge(link,requesttype,adminusername,unitnumber,billtype,billamount).execute();
+        pd = new ProgressDialog(getContext());
+        pd.setMessage("Deleting...");
+        pd.setIndeterminate(true);
+        pd.setCancelable(false);
+        pd.show();
+
+        tm =new Timer();
+        tm.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        count++;
+                        if(count == 6){
+                            pd.cancel();
+                            tm.cancel();
+                            Toast.makeText(getContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
+                            count = 0;
+                            fabmenu.setVisibility(View.GONE);
+                        }else if(resChargeInfoDelete.contains("delete fail")){
+                            tm.cancel();
+                            pd.cancel();
+                            resChargeInfoDelete = "";
+                            count = 0;
+                            Toast.makeText(getContext(),"خطا در حذف اطلاعات. لطفا در زمان دیگری امتحان کنید!",Toast.LENGTH_LONG).show();
+                        }else if(resChargeInfoDelete.contains("deleted")){
+                            tm.cancel();
+                            pd.cancel();
+                            resChargeInfoDelete = "";
+                            count = 0;
+                            getActivity().getSupportFragmentManager().beginTransaction().detach(ChargeInformationFragment.this).attach(ChargeInformationFragment.this).commit();
+                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
+                            searchET.setText("");
+                        }
+                    }
+                });
+            }
+        }, 1, 1000);
+    }
+
 }

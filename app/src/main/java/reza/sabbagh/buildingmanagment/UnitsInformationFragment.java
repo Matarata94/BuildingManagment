@@ -93,7 +93,7 @@ public class UnitsInformationFragment extends Fragment {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         db.open();
-                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][0],"s");
+                                        serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][0]);
                                         db.close();
                                         upDataList = 1;
                                         }
@@ -137,7 +137,7 @@ public class UnitsInformationFragment extends Fragment {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                             db.open();
-                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataList[selectedItemPosition][0],"n");
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataList[selectedItemPosition][0]);
                                             db.close();
                                         }
                                     })
@@ -355,7 +355,7 @@ public class UnitsInformationFragment extends Fragment {
         }, 1, 1000);
     }
 
-    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, final String sORn){
+    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber){
         new ServerConnectorDeleteUnit(link,requesttype,adminusername,unitnumber).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Deleting...");
@@ -387,13 +387,9 @@ public class UnitsInformationFragment extends Fragment {
                             pd.cancel();
                             resUnitsInfoDelete = "";
                             count = 0;
-                            if(sORn.equals("n")){
-                                getActivity().getSupportFragmentManager().beginTransaction().detach(UnitsInformationFragment.this).attach(UnitsInformationFragment.this).commit();
-                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
-                            }else if(sORn.equals("s")){
-                                getActivity().getSupportFragmentManager().beginTransaction().detach(UnitsInformationFragment.this).attach(UnitsInformationFragment.this).commit();
-                                Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
-                            }
+                            getActivity().getSupportFragmentManager().beginTransaction().detach(UnitsInformationFragment.this).attach(UnitsInformationFragment.this).commit();
+                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
+                            searchET.setText("");
                         }
                     }
                 });

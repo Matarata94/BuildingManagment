@@ -186,8 +186,8 @@ public class RegisterUserActivity extends AppCompatActivity {
         db = new database(this);
 
         if(getIntent().getExtras() != null){
-            String[] arrayReceived = getIntent().getExtras().getStringArray("keyData");
-            if(arrayReceived[8].equals("add_user")){
+            String[] arrayReceived = getIntent().getExtras().getStringArray("keyUser");
+            if(arrayReceived[7].equals("add_user")){
                 ButtonRegistration.setText("افزودن کاربر");
                 Register_shtv_alreadyRegistered.setVisibility(View.INVISIBLE);
                 tv_registerAs.setVisibility(View.GONE);
@@ -197,7 +197,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 rb_registerAsAdmin.setVisibility(View.INVISIBLE);
                 rb_registerAsUser.setVisibility(View.GONE);
                 bottomView.setVisibility(View.GONE);
-            }else if(arrayReceived[8].equals("edit_user")){
+            }else if(arrayReceived[7].equals("edit_user")){
                 ButtonRegistration.setText("اعمال تغییرات");
                 Register_shtv_alreadyRegistered.setVisibility(View.GONE);
                 tv_registerAs.setVisibility(View.GONE);
@@ -418,15 +418,4 @@ public class RegisterUserActivity extends AppCompatActivity {
         return false;
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-        System.exit(0);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
 }
