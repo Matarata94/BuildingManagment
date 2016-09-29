@@ -19,7 +19,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RegisterChargeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class RegisterBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     TextView tv_registertitle,tv_billtype,tv_billcalctype,tv_billdate,tv_choosebilldate;
     MaterialEditText met_unitnumber,met_buildingnumber,met_billamount;
@@ -78,7 +78,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
             public void onClick(View view) {
                 PersianCalendar persianCalendar = new PersianCalendar();
                 DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
-                        RegisterChargeActivity.this,
+                        RegisterBillActivity.this,
                         persianCalendar.getPersianYear(),
                         persianCalendar.getPersianMonth(),
                         persianCalendar.getPersianDay()
@@ -228,7 +228,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                 met_buildingnumber.getText().equals("") |
                 met_billamount.getText().equals("") |
                 date.equals("")){
-            Toast.makeText(RegisterChargeActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterBillActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
             return false;
         }else{
             return true;
@@ -237,8 +237,8 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
 
     private void serverWorking(String link, String requestType, String unitnumber,String oldunitnumber, String buildingnumber, String billtype
             , String oldbilltype, String billdate, String billamount, String oldbillamount, String calculatetype,final String adminusername){
-        new ServerConnectorRegisterCharge(link,requestType,unitnumber,oldunitnumber,buildingnumber,billtype,oldbilltype,billdate,billamount,oldbillamount,calculatetype,adminusername).execute();
-        pd = new ProgressDialog(RegisterChargeActivity.this);
+        new ServerConnectorRegisterBill(link,requestType,unitnumber,oldunitnumber,buildingnumber,billtype,oldbilltype,billdate,billamount,oldbillamount,calculatetype,adminusername).execute();
+        pd = new ProgressDialog(RegisterBillActivity.this);
         pd.setMessage("Loading...");
         pd.setCancelable(false);
         pd.show();
@@ -270,7 +270,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                             pd.cancel();
                             resRegisterCharge = "";
                             Toast.makeText(getApplicationContext(),"انجام شد!",Toast.LENGTH_SHORT).show();
-                            Intent in = new Intent(RegisterChargeActivity.this,MainActivity.class);
+                            Intent in = new Intent(RegisterBillActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
                         }else if(resRegisterCharge.equals("update fail")){
@@ -283,7 +283,7 @@ public class RegisterChargeActivity extends AppCompatActivity implements DatePic
                             pd.cancel();
                             resRegisterCharge = "";
                             Toast.makeText(getApplicationContext(),"انجام شد!",Toast.LENGTH_SHORT).show();
-                            Intent in = new Intent(RegisterChargeActivity.this,MainActivity.class);
+                            Intent in = new Intent(RegisterBillActivity.this,MainActivity.class);
                             startActivity(in);
                             finish();
                         }

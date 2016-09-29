@@ -10,12 +10,12 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 @SuppressWarnings("rawtypes")
-public class ServerConnectorRegisterCharge extends AsyncTask{
+public class ServerConnectorRegisterBill extends AsyncTask{
 
 	private String Link,RequestType,UnitNumber,OldUnitNumber,BuildingNumber,BillType,OldBillType,BillDate,BillAmount,OldbillAmount,CalculateType,AdminUsername;
 
-	public ServerConnectorRegisterCharge(String link, String requesttype, String unitnumber, String oldunitnumber, String buildingnumber, String billtype
-			, String oldbilltype, String billdate, String billamount, String oldbillamount, String calculatetype,String adminusername){
+	public ServerConnectorRegisterBill(String link, String requesttype, String unitnumber, String oldunitnumber, String buildingnumber, String billtype
+			, String oldbilltype, String billdate, String billamount, String oldbillamount, String calculatetype, String adminusername){
 		Link = link;
 		RequestType = requesttype;
 		UnitNumber = unitnumber;
@@ -54,7 +54,7 @@ public class ServerConnectorRegisterCharge extends AsyncTask{
 			while((line=reader.readLine()) != null){
 				sb.append(line);
 			}
-			RegisterChargeActivity.resRegisterCharge = sb.toString();
+			RegisterBillActivity.resRegisterCharge = sb.toString();
 		}catch(Exception e){
 			
 		}

@@ -10,11 +10,11 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 @SuppressWarnings("rawtypes")
-public class ServerConnectorDeleteCharge extends AsyncTask{
+public class ServerConnectorDeleteBill extends AsyncTask{
 
 	private String Link,RequestType,AdminUsername,UnitNumber,BillType,BillAmount;
 
-	public ServerConnectorDeleteCharge(String link, String requesttype, String adminusername, String unitnumber, String billtype, String billamount){
+	public ServerConnectorDeleteBill(String link, String requesttype, String adminusername, String unitnumber, String billtype, String billamount){
 		Link = link;
 		RequestType = requesttype;
 		AdminUsername = adminusername;
@@ -41,7 +41,7 @@ public class ServerConnectorDeleteCharge extends AsyncTask{
 			while((line=reader.readLine()) != null){
 				sb.append(line);
 			}
-			ChargeInformationFragment.resChargeInfoDelete = sb.toString();
+			BillsInformationFragment.resChargeInfoDelete = sb.toString();
 		}catch(Exception e){
 			
 		}

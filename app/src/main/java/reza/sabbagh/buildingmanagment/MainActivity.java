@@ -1,10 +1,7 @@
 package reza.sabbagh.buildingmanagment;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,13 +12,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.romainpiel.shimmer.Shimmer;
-import com.romainpiel.shimmer.ShimmerTextView;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.MenuParams;
@@ -105,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         units_info.setDividerColor(Color.parseColor("#673ab7"));
         units_info.setScaleType(ImageView.ScaleType.CENTER);
 
-        MenuObject charge_info = new MenuObject("اطلاعات شارژ ماهیانه");
+        MenuObject charge_info = new MenuObject("قبوض و هزینه ها");
         charge_info.setResource(R.drawable.charge_info);
         charge_info.setBgResource(android.R.color.transparent);
         charge_info.setDividerColor(Color.parseColor("#009688"));
@@ -123,11 +116,11 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         charge_list.setDividerColor(Color.parseColor("#cddc39"));
         charge_list.setScaleType(ImageView.ScaleType.CENTER);
 
-        MenuObject meetings = new MenuObject("جلسات");
+        /*MenuObject meetings = new MenuObject("جلسات");
         meetings.setResource(R.drawable.meetings);
         meetings.setBgResource(android.R.color.transparent);
         meetings.setDividerColor(Color.parseColor("#8bc34a"));
-        meetings.setScaleType(ImageView.ScaleType.CENTER);
+        meetings.setScaleType(ImageView.ScaleType.CENTER);*/
 
         MenuObject about_us = new MenuObject("درباره ما");
         about_us.setResource(R.drawable.aboutus);
@@ -142,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         menuObjects.add(charge_info);
         menuObjects.add(charge_calculate);
         menuObjects.add(charge_list);
-        menuObjects.add(meetings);
+        //menuObjects.add(meetings);
         menuObjects.add(about_us);
         return menuObjects;
     }
@@ -216,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
             case 3:
                 addFragment(new UnitsInformationFragment(), true, R.id.container);
                 break;
-            case 4:addFragment(new ChargeInformationFragment(),true,R.id.container);
+            case 4:addFragment(new BillsInformationFragment(),true,R.id.container);
                 break;
         }
     }

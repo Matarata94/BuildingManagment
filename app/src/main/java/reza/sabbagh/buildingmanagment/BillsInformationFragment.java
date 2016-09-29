@@ -32,11 +32,11 @@ import java.util.TimerTask;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChargeInformationFragment extends Fragment {
+public class BillsInformationFragment extends Fragment {
 
     private FloatingActionMenu fabmenu;
     private FloatingActionButton subFabExit, subFabAdd;
-    private ChargeInformationAdapter cia;
+    private BillsInformationAdapter cia;
     private database db;
     public static String resChargeInfo="",resChargeInfoDelete="";
     private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
@@ -76,7 +76,7 @@ public class ChargeInformationFragment extends Fragment {
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterChargeActivity.class);
+                                            Intent in = new Intent(getContext(),RegisterBillActivity.class);
                                             if(selectedItemSearchPosition != 10000){
                                                 String[] data = new String[8];
                                                 for(int i=0;i < 7;i++){
@@ -122,7 +122,7 @@ public class ChargeInformationFragment extends Fragment {
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Intent in = new Intent(getContext(),RegisterChargeActivity.class);
+                                            Intent in = new Intent(getContext(),RegisterBillActivity.class);
                                             if(selectedItemPosition != 10000){
                                                 String[] data = new String[8];
                                                 for(int i=0;i < 7;i++){
@@ -179,7 +179,7 @@ public class ChargeInformationFragment extends Fragment {
         subFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(),RegisterChargeActivity.class);
+                Intent in = new Intent(getActivity(),RegisterBillActivity.class);
                 String[] data = new String[8];
                 data[7] = "add_bill";
                 bundle.putStringArray("keyCharge",data);
@@ -212,7 +212,7 @@ public class ChargeInformationFragment extends Fragment {
                             tempCounter++;
                         }
                     }
-                    cia = new ChargeInformationAdapter(createList(tempCounter,dataListSearch));
+                    cia = new BillsInformationAdapter(createList(tempCounter,dataListSearch));
                     rv.setAdapter(cia);
                 }
             }
@@ -242,20 +242,20 @@ public class ChargeInformationFragment extends Fragment {
         fabmenu.setClosedOnTouchOutside(true);
     }
 
-    private List<ChargeInformationAdapterData> createList(int size,String data[][]) {
-        List<ChargeInformationAdapterData> result = new ArrayList<ChargeInformationAdapterData>();
+    private List<BillsInformationAdapterData> createList(int size, String data[][]) {
+        List<BillsInformationAdapterData> result = new ArrayList<BillsInformationAdapterData>();
         for (int i = 0; i < size; i++) {
-            ChargeInformationAdapterData ci = new ChargeInformationAdapterData();
-            ci.bill_number = ChargeInformationAdapterData.BILL_NUMBER_PREFIX + data[i][6];
-            ci.bill_amount = ChargeInformationAdapterData.BIL_AMOUNT_PREFIX + data[i][4];
-            ci.bill_date = ChargeInformationAdapterData.BILL_DATE_PREFIX + data[i][3];
+            BillsInformationAdapterData ci = new BillsInformationAdapterData();
+            ci.bill_number = BillsInformationAdapterData.BILL_NUMBER_PREFIX + data[i][6];
+            ci.bill_amount = BillsInformationAdapterData.BIL_AMOUNT_PREFIX + data[i][4];
+            ci.bill_date = BillsInformationAdapterData.BILL_DATE_PREFIX + data[i][3];
             result.add(ci);
         }
         return result;
     }
 
     private void serverWorking(String link, String requesttype, String adminusername){
-        new ServerConnectorChargeInfo(link,requesttype,adminusername).execute();
+        new ServerConnectorBillsInfo(link,requesttype,adminusername).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Loading...");
         pd.setIndeterminate(true);
@@ -329,7 +329,7 @@ public class ChargeInformationFragment extends Fragment {
                             }
                             rowArray = 0;
                             resChargeInfo = "";
-                            cia = new ChargeInformationAdapter(createList(listCount,dataList));
+                            cia = new BillsInformationAdapter(createList(listCount,dataList));
                             rv.setAdapter(cia);
                             pd.cancel();
                         }
@@ -340,7 +340,7 @@ public class ChargeInformationFragment extends Fragment {
     }
 
     private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, String billtype, String billamount){
-        new ServerConnectorDeleteCharge(link,requesttype,adminusername,unitnumber,billtype,billamount).execute();
+        new ServerConnectorDeleteBill(link,requesttype,adminusername,unitnumber,billtype,billamount).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Deleting...");
         pd.setIndeterminate(true);
@@ -371,7 +371,7 @@ public class ChargeInformationFragment extends Fragment {
                             pd.cancel();
                             resChargeInfoDelete = "";
                             count = 0;
-                            getActivity().getSupportFragmentManager().beginTransaction().detach(ChargeInformationFragment.this).attach(ChargeInformationFragment.this).commit();
+                            getActivity().getSupportFragmentManager().beginTransaction().detach(BillsInformationFragment.this).attach(BillsInformationFragment.this).commit();
                             Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
                             searchET.setText("");
                         }

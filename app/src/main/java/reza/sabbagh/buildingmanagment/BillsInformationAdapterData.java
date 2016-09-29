@@ -3,7 +3,7 @@ package reza.sabbagh.buildingmanagment;
 /**
  * Created by jamseGosling on 11/8/2016.
  */
-public class ChargeInformationAdapterData {
+public class BillsInformationAdapterData {
     protected String bill_number;
     protected String bill_amount;
     protected String bill_date;

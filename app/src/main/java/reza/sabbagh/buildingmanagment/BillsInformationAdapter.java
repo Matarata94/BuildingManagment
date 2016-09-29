@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ChargeInformationAdapter extends RecyclerView.Adapter<ChargeInformationAdapter.ChargeViewHolder> {
+public class BillsInformationAdapter extends RecyclerView.Adapter<BillsInformationAdapter.ChargeViewHolder> {
 
-    private List<ChargeInformationAdapterData> chargeInfoData;
+    private List<BillsInformationAdapterData> chargeInfoData;
     private Typeface iransans,bhoma;
 
-    public ChargeInformationAdapter(List<ChargeInformationAdapterData> chargeInfoData) {
+    public BillsInformationAdapter(List<BillsInformationAdapterData> chargeInfoData) {
         this.chargeInfoData = chargeInfoData;
     }
 
@@ -26,7 +26,7 @@ public class ChargeInformationAdapter extends RecyclerView.Adapter<ChargeInforma
 
     @Override
     public void onBindViewHolder(ChargeViewHolder chargeViewHolder, int i) {
-        ChargeInformationAdapterData ci = chargeInfoData.get(i);
+        BillsInformationAdapterData ci = chargeInfoData.get(i);
         chargeViewHolder.vBillNumber.setText(ci.bill_number);
         chargeViewHolder.vBillAmount.setText(ci.bill_amount);
         chargeViewHolder.vBillDate.setText(ci.bill_date);

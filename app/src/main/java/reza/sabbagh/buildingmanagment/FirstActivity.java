@@ -17,7 +17,7 @@ public class FirstActivity extends AppCompatActivity {
     private ConnectivityManager connectivityManager;
     private NetworkInfo activeNetworkInfo;
     private database db;
-    public static String globalLink="http://192.168.1.3/";
+    public static String globalLink="http://192.168.43.69/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
