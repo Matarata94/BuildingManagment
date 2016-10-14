@@ -203,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/RegisterUnitActivity_Text_defaultChargeAmount"
-                android:hint="مقدار شارژ پیشفرض"
+                android:hint="مقدار شارژ (اختیاری)"
                 android:inputType="number"
                 app:met_floatingLabel="highlight"
                 android:textSize="16dp"
@@ -217,68 +217,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_below="@+id/RegisterUnitActivity_Text_Postalcode"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/RegisterUnitActivity_tv_staticChargeState"
-                android:text="شارژ ثابت :"
-                android:textSize="16dp"
-                android:gravity="right"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_below="@+id/RegisterUnitActivity_Text_defaultChargeAmount"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/RegisterUnitActivity_rb_yes"
-                android:text=""
-                android:checked="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/RegisterUnitActivity_tv_staticChargeState"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/RegisterUnitActivity_tv_yes"
-                android:text="بله"
-                android:textSize="16dp"
-                android:layout_marginRight="3dp"
-                android:layout_toLeftOf="@+id/RegisterUnitActivity_rb_yes"
-                android:layout_below="@+id/RegisterUnitActivity_tv_staticChargeState"
-                />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/RegisterUnitActivity_rb_no"
-                android:text=""
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/RegisterUnitActivity_rb_yes"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/RegisterUnitActivity_tv_no"
-                android:text="خیر"
-                android:textSize="16dp"
-                android:layout_marginRight="3dp"
-                android:layout_toLeftOf="@+id/RegisterUnitActivity_rb_no"
-                android:layout_below="@+id/RegisterUnitActivity_tv_yes"
-                android:layout_marginTop="5dp"/>
-
             <com.andexert.library.RippleView
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 app:rv_rippleDuration="200"
                 android:layout_marginTop="18dp"
-                android:layout_below="@+id/RegisterUnitActivity_rb_no"
+                android:layout_below="@+id/RegisterUnitActivity_Text_defaultChargeAmount"
                 rv_centered="true"
                 android:layout_centerHorizontal="true">
 

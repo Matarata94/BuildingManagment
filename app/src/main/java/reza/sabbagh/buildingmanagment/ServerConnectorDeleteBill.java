@@ -12,13 +12,13 @@ import java.net.URLEncoder;
 @SuppressWarnings("rawtypes")
 public class ServerConnectorDeleteBill extends AsyncTask{
 
-	private String Link,RequestType,AdminUsername,UnitNumber,BillType,BillAmount;
+	private String Link,RequestType,AdminUsername,BillId,BillType,BillAmount;
 
-	public ServerConnectorDeleteBill(String link, String requesttype, String adminusername, String unitnumber, String billtype, String billamount){
+	public ServerConnectorDeleteBill(String link, String requesttype, String billId, String adminusername, String billtype, String billamount){
 		Link = link;
 		RequestType = requesttype;
 		AdminUsername = adminusername;
-		UnitNumber = unitnumber;
+		BillId = billId;
 		BillType = billtype;
 		BillAmount = billamount;
 	}
@@ -26,7 +26,7 @@ public class ServerConnectorDeleteBill extends AsyncTask{
 		try{
 			String data = URLEncoder.encode("requesttype","UTF8") + "=" + URLEncoder.encode(RequestType,"UTF8");
 			data += "&" + URLEncoder.encode("adminusername","UTF8") + "=" + URLEncoder.encode(AdminUsername,"UTF8");
-			data += "&" + URLEncoder.encode("unitnumber","UTF8") + "=" + URLEncoder.encode(UnitNumber,"UTF8");
+			data += "&" + URLEncoder.encode("billid","UTF8") + "=" + URLEncoder.encode(BillId,"UTF8");
 			data += "&" + URLEncoder.encode("billtype","UTF8") + "=" + URLEncoder.encode(BillType,"UTF8");
 			data += "&" + URLEncoder.encode("billamount","UTF8") + "=" + URLEncoder.encode(BillAmount,"UTF8");
 			URL mylink = new URL(Link);
@@ -41,7 +41,7 @@ public class ServerConnectorDeleteBill extends AsyncTask{
 			while((line=reader.readLine()) != null){
 				sb.append(line);
 			}
-			BillsInformationFragment.resChargeInfoDelete = sb.toString();
+			BillsInformationFragment.resBillInfoDelete = sb.toString();
 		}catch(Exception e){
 			
 		}

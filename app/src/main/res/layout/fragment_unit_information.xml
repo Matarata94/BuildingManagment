@@ -104,8 +104,19 @@ android:background="#e0e0e0">
             fab:fab_size="mini"
             fab:fab_label="خروج"
             fab:fab_colorNormal="#00bcd4"
-            fab:fab_colorPressed="#0097a7"
-            fab:fab_colorRipple="#0097a7"/>
+            fab:fab_colorPressed="#80deea"
+            fab:fab_colorRipple="#80deea"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/unitsInfoFrag_fab_staticCharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="اعمال شارژ ثابت"
+            fab:fab_colorNormal="#2196f3"
+            fab:fab_colorPressed="#80deea"
+            fab:fab_colorRipple="#80deea"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/unitsInfoFrag_fab_add"
@@ -114,7 +125,7 @@ android:background="#e0e0e0">
             android:src="@drawable/ic_add_white_24dp"
             fab:fab_size="mini"
             fab:fab_label="ثبت"
-            fab:fab_colorNormal="#2196f3"
+            fab:fab_colorNormal="#1565c0"
             fab:fab_colorPressed="#80deea"
             fab:fab_colorRipple="#80deea"/>
 

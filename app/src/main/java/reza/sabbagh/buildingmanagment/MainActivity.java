@@ -104,17 +104,17 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         charge_info.setDividerColor(Color.parseColor("#009688"));
         charge_info.setScaleType(ImageView.ScaleType.CENTER);
 
-        MenuObject charge_calculate = new MenuObject("محاسبه شارژ");
-        charge_calculate.setResource(R.drawable.calculator);
-        charge_calculate.setBgResource(android.R.color.transparent);
-        charge_calculate.setDividerColor(Color.parseColor("#00bcd4"));
-        charge_calculate.setScaleType(ImageView.ScaleType.CENTER);
-
         MenuObject charge_list = new MenuObject("لیست شارژ");
         charge_list.setResource(R.drawable.charge_list);
         charge_list.setBgResource(android.R.color.transparent);
         charge_list.setDividerColor(Color.parseColor("#cddc39"));
         charge_list.setScaleType(ImageView.ScaleType.CENTER);
+
+        MenuObject charge_calculate = new MenuObject("محاسبه شارژ");
+        charge_calculate.setResource(R.drawable.calculator);
+        charge_calculate.setBgResource(android.R.color.transparent);
+        charge_calculate.setDividerColor(Color.parseColor("#00bcd4"));
+        charge_calculate.setScaleType(ImageView.ScaleType.CENTER);
 
         /*MenuObject meetings = new MenuObject("جلسات");
         meetings.setResource(R.drawable.meetings);
@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         menuObjects.add(users_info);
         menuObjects.add(units_info);
         menuObjects.add(charge_info);
-        menuObjects.add(charge_calculate);
         menuObjects.add(charge_list);
+        menuObjects.add(charge_calculate);
         //menuObjects.add(meetings);
         menuObjects.add(about_us);
         return menuObjects;

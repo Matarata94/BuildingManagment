@@ -38,8 +38,8 @@ public class BillsInformationFragment extends Fragment {
     private FloatingActionButton subFabExit, subFabAdd;
     private BillsInformationAdapter cia;
     private database db;
-    public static String resChargeInfo="",resChargeInfoDelete="";
-    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
+    public static String resBillInfo ="", resBillInfoDelete ="";
+    private int count=0,listCount,stringIndexHolder[] = new int[6],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000;
     private Timer tm;
     private ProgressDialog pd;
     private RecyclerView rv;
@@ -47,7 +47,7 @@ public class BillsInformationFragment extends Fragment {
     private Typeface iransans;
     private Bundle bundle = new Bundle();
     private MaterialDialog dialog;
-    private String link = FirstActivity.globalLink + "ChargeInfo.php",completeProfile="",completeProfileTitle="",AdminUsername,UnitNumber,BillType,BillAmount;
+    private String link = FirstActivity.globalLink + "BillInfo.php",completeProfile="",completeProfileTitle="",AdminUsername,BillId,BillType,BillAmount;
     private EditText searchET;
     private Button search_btn;
 
@@ -64,10 +64,9 @@ public class BillsInformationFragment extends Fragment {
                         if(cia.getItemCount() != listCount){
                             //search position
                             selectedItemSearchPosition = position;
-                            completeProfileTitle = "شماره قبض: " + dataListSearch[selectedItemSearchPosition][6];
-                            completeProfile = "شماره واحد:" + "  " + dataListSearch[selectedItemSearchPosition][1] + "\n\n" + "شماره ساختمان:" + "  " +  dataListSearch[selectedItemSearchPosition][0]
-                                    + "\n\n" + "نوع قبض:" + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + "تاریخ قبض" + "  " + dataListSearch[selectedItemSearchPosition][3]
-                                    + "\n\n" + "مقدار قبض:" + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + "نوع محاسبه:" + "  " + dataListSearch[selectedItemSearchPosition][5];
+                            completeProfileTitle = "شماره قبض: " + dataListSearch[selectedItemSearchPosition][4];
+                            completeProfile = "نوع قبض:" + "  " + dataListSearch[selectedItemSearchPosition][0] + "\n\n" + "تاریخ قبض:" + "  " + dataListSearch[selectedItemSearchPosition][1]
+                                    + "\n\n" + "مقدار قبض:" + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + "نوع محاسبه:" + "  " + dataListSearch[selectedItemSearchPosition][3];
                             dialog = new MaterialDialog.Builder(getActivity())
                                     .title(completeProfileTitle)
                                     .content(completeProfile)
@@ -78,11 +77,11 @@ public class BillsInformationFragment extends Fragment {
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                             Intent in = new Intent(getContext(),RegisterBillActivity.class);
                                             if(selectedItemSearchPosition != 10000){
-                                                String[] data = new String[8];
-                                                for(int i=0;i < 7;i++){
+                                                String[] data = new String[6];
+                                                for(int i=0;i < 5;i++){
                                                     data[i] = dataListSearch[selectedItemSearchPosition][i];
                                                 }
-                                                data[7] = "edit_bill";
+                                                data[5] = "edit_bill";
                                                 bundle.putStringArray("keyCharge",data);
                                             }
                                             in.putExtras(bundle);
@@ -97,11 +96,10 @@ public class BillsInformationFragment extends Fragment {
                                             db.open();
                                             AdminUsername = db.queryInfo(2);
                                             db.close();
-                                            UnitNumber = dataListSearch[selectedItemSearchPosition][1];
-                                            BillType = dataListSearch[selectedItemSearchPosition][2];
-                                            BillAmount = dataListSearch[selectedItemSearchPosition][4];
-                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterCharge.php","delete",AdminUsername,UnitNumber,BillType,BillAmount);
-                                            //upDataList = 1;
+                                            BillId = dataListSearch[selectedItemSearchPosition][4];
+                                            BillType = dataListSearch[selectedItemSearchPosition][0];
+                                            BillAmount = dataListSearch[selectedItemSearchPosition][2];
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterBill.php","delete",BillId,AdminUsername,BillType,BillAmount);
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -110,10 +108,9 @@ public class BillsInformationFragment extends Fragment {
                         }else if(cia.getItemCount() == listCount){
                             //normal position
                             selectedItemPosition = position;
-                            completeProfileTitle = "شماره قبض: " + dataList[selectedItemPosition][6];
-                            completeProfile = "شماره واحد:" + "  " + dataList[selectedItemPosition][1] + "\n\n" + "شماره ساختمان:" + "  " +  dataList[selectedItemPosition][0]
-                                    + "\n\n" + "نوع قبض:" + "  " + dataList[selectedItemPosition][2] + "\n\n" + "تاریخ قبض" + "  " + dataList[selectedItemPosition][3]
-                                    + "\n\n" + "مقدار قبض:" + "  " + dataList[selectedItemPosition][4] + "\n\n" + "نوع محاسبه:" + "  " + dataList[selectedItemPosition][5];
+                            completeProfileTitle = "شماره قبض: " + dataList[selectedItemPosition][4];
+                            completeProfile = "نوع قبض:" + "  " + dataList[selectedItemPosition][0] + "\n\n" + "تاریخ قبض:" + "  " + dataList[selectedItemPosition][1]
+                                    + "\n\n" + "مقدار قبض:" + "  " + dataList[selectedItemPosition][2] + "\n\n" + "نوع محاسبه:" + "  " + dataList[selectedItemPosition][3];
                             dialog = new MaterialDialog.Builder(getActivity())
                                     .title(completeProfileTitle)
                                     .content(completeProfile)
@@ -124,11 +121,11 @@ public class BillsInformationFragment extends Fragment {
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                             Intent in = new Intent(getContext(),RegisterBillActivity.class);
                                             if(selectedItemPosition != 10000){
-                                                String[] data = new String[8];
-                                                for(int i=0;i < 7;i++){
+                                                String[] data = new String[6];
+                                                for(int i=0;i < 5;i++){
                                                     data[i] = dataList[selectedItemPosition][i];
                                                 }
-                                                data[7] = "edit_bill";
+                                                data[5] = "edit_bill";
                                                 bundle.putStringArray("keyCharge",data);
                                             }
                                             in.putExtras(bundle);
@@ -143,10 +140,10 @@ public class BillsInformationFragment extends Fragment {
                                             db.open();
                                             AdminUsername = db.queryInfo(2);
                                             db.close();
-                                            UnitNumber = dataList[selectedItemPosition][1];
+                                            BillId = dataList[selectedItemPosition][4];
                                             BillType = dataList[selectedItemPosition][2];
                                             BillAmount = dataList[selectedItemPosition][4];
-                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterCharge.php","delete",AdminUsername,UnitNumber,BillType,BillAmount);
+                                            serverWorkingDelete(FirstActivity.globalLink + "RegisterBill.php","delete",BillId,AdminUsername,BillType,BillAmount);
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -180,8 +177,8 @@ public class BillsInformationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(getActivity(),RegisterBillActivity.class);
-                String[] data = new String[8];
-                data[7] = "add_bill";
+                String[] data = new String[6];
+                data[5] = "add_bill";
                 bundle.putStringArray("keyCharge",data);
                 in.putExtras(bundle);
                 startActivity(in);
@@ -195,18 +192,12 @@ public class BillsInformationFragment extends Fragment {
                 }else{
                     String tempBillNumber="",tempBillDate="";
                     int tempCounter=0;
-                    /*if(upDataList == 1){
-                        db.open();
-                        serverWorking(link,"query",db.queryInfo(2));
-                        db.close();
-                        searchET.setText("");
-                    }*/
-                    dataListSearch = new String[80][7];
+                    dataListSearch = new String[80][5];
                     for(int i=0;i < listCount;i++){
-                        tempBillNumber = dataList[i][6];
-                        tempBillDate = dataList[i][3];
+                        tempBillNumber = dataList[i][4];
+                        tempBillDate = dataList[i][1];
                         if(tempBillNumber.contains(searchET.getText().toString()) | tempBillDate.contains(searchET.getText().toString())){
-                            for (int j=0;j < 7;j++){
+                            for (int j=0;j < 5;j++){
                                 dataListSearch[tempCounter][j] = dataList[i][j];
                             }
                             tempCounter++;
@@ -246,9 +237,9 @@ public class BillsInformationFragment extends Fragment {
         List<BillsInformationAdapterData> result = new ArrayList<BillsInformationAdapterData>();
         for (int i = 0; i < size; i++) {
             BillsInformationAdapterData ci = new BillsInformationAdapterData();
-            ci.bill_number = BillsInformationAdapterData.BILL_NUMBER_PREFIX + data[i][6];
-            ci.bill_amount = BillsInformationAdapterData.BIL_AMOUNT_PREFIX + data[i][4];
-            ci.bill_date = BillsInformationAdapterData.BILL_DATE_PREFIX + data[i][3];
+            ci.bill_number = BillsInformationAdapterData.BILL_NUMBER_PREFIX + data[i][4];
+            ci.bill_amount = BillsInformationAdapterData.BIL_AMOUNT_PREFIX + data[i][2];
+            ci.bill_date = BillsInformationAdapterData.BILL_DATE_PREFIX + data[i][1];
             result.add(ci);
         }
         return result;
@@ -275,60 +266,50 @@ public class BillsInformationFragment extends Fragment {
                             Toast.makeText(getContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
                             count = 0;
                             fabmenu.setVisibility(View.GONE);
-                        }else if(resChargeInfo.contains("no information")){
+                        }else if(resBillInfo.contains("no information")){
                             tm.cancel();
                             pd.cancel();
-                            resChargeInfo = "";
+                            resBillInfo = "";
                             count = 0;
                             Toast.makeText(getContext(),"اطلاعاتی یافت نشد!",Toast.LENGTH_LONG).show();
-                        }else if(resChargeInfo.contains("founded")){
+                        }else if(resBillInfo.contains("founded")){
                             tm.cancel();
                             count = 0;
-                            listCount = Integer.parseInt(resChargeInfo.substring(resChargeInfo.indexOf("~") + 1,resChargeInfo.indexOf("!")));
-                            dataList = new String[listCount][7];
-                            for(int i=0;i < resChargeInfo.length();i++){
-                                if(resChargeInfo.charAt(i) == '!'){
+                            listCount = Integer.parseInt(resBillInfo.substring(resBillInfo.indexOf("~") + 1, resBillInfo.indexOf("!")));
+                            dataList = new String[listCount][5];
+                            for(int i = 0; i < resBillInfo.length(); i++){
+                                if(resBillInfo.charAt(i) == '!'){
                                     stringIndexHolder[0] = i;
                                 }
-                                if(resChargeInfo.charAt(i) == '@'){
+                                if(resBillInfo.charAt(i) == '@'){
                                     stringIndexHolder[1] = i;
-                                    if(!resChargeInfo.substring(stringIndexHolder[0]+1,stringIndexHolder[1]).equals(""))
-                                        dataList[rowArray][0] = resChargeInfo.substring(stringIndexHolder[0]+1,stringIndexHolder[1]);
+                                    if(!resBillInfo.substring(stringIndexHolder[0]+1,stringIndexHolder[1]).equals(""))
+                                        dataList[rowArray][0] = resBillInfo.substring(stringIndexHolder[0]+1,stringIndexHolder[1]);
                                 }
-                                if(resChargeInfo.charAt(i) == '#'){
+                                if(resBillInfo.charAt(i) == '#'){
                                     stringIndexHolder[2] = i;
-                                    if(!resChargeInfo.substring(stringIndexHolder[1]+1,stringIndexHolder[2]).equals(""))
-                                        dataList[rowArray][1] = resChargeInfo.substring(stringIndexHolder[1]+1,stringIndexHolder[2]);
+                                    if(!resBillInfo.substring(stringIndexHolder[1]+1,stringIndexHolder[2]).equals(""))
+                                        dataList[rowArray][1] = resBillInfo.substring(stringIndexHolder[1]+1,stringIndexHolder[2]);
                                 }
-                                if(resChargeInfo.charAt(i) == '$'){
+                                if(resBillInfo.charAt(i) == '$'){
                                     stringIndexHolder[3] = i;
-                                    if(!resChargeInfo.substring(stringIndexHolder[2]+1,stringIndexHolder[3]).equals(""))
-                                        dataList[rowArray][2] = resChargeInfo.substring(stringIndexHolder[2]+1,stringIndexHolder[3]);
+                                    if(!resBillInfo.substring(stringIndexHolder[2]+1,stringIndexHolder[3]).equals(""))
+                                        dataList[rowArray][2] = resBillInfo.substring(stringIndexHolder[2]+1,stringIndexHolder[3]);
                                 }
-                                if(resChargeInfo.charAt(i) == '%'){
+                                if(resBillInfo.charAt(i) == '%'){
                                     stringIndexHolder[4] = i;
-                                    if(!resChargeInfo.substring(stringIndexHolder[3]+1,stringIndexHolder[4]).equals(""))
-                                        dataList[rowArray][3] = resChargeInfo.substring(stringIndexHolder[3]+1,stringIndexHolder[4]);
+                                    if(!resBillInfo.substring(stringIndexHolder[3]+1,stringIndexHolder[4]).equals(""))
+                                        dataList[rowArray][3] = resBillInfo.substring(stringIndexHolder[3]+1,stringIndexHolder[4]);
                                 }
-                                if(resChargeInfo.charAt(i) == '^'){
+                                if(resBillInfo.charAt(i) == '^'){
                                     stringIndexHolder[5] = i;
-                                    if(!resChargeInfo.substring(stringIndexHolder[4]+1,stringIndexHolder[5]).equals(""))
-                                        dataList[rowArray][4] = resChargeInfo.substring(stringIndexHolder[4]+1,stringIndexHolder[5]);
-                                }
-                                if(resChargeInfo.charAt(i) == '&'){
-                                    stringIndexHolder[6] = i;
-                                    if(!resChargeInfo.substring(stringIndexHolder[5]+1,stringIndexHolder[6]).equals(""))
-                                        dataList[rowArray][5] = resChargeInfo.substring(stringIndexHolder[5]+1,stringIndexHolder[6]);
-                                }
-                                if(resChargeInfo.charAt(i) == '*'){
-                                    stringIndexHolder[7] = i;
-                                    if(!resChargeInfo.substring(stringIndexHolder[6]+1,stringIndexHolder[7]).equals(""))
-                                        dataList[rowArray][6] = resChargeInfo.substring(stringIndexHolder[6]+1,stringIndexHolder[7]);
+                                    if(!resBillInfo.substring(stringIndexHolder[4]+1,stringIndexHolder[5]).equals(""))
+                                        dataList[rowArray][4] = resBillInfo.substring(stringIndexHolder[4]+1,stringIndexHolder[5]);
                                     rowArray++;
                                 }
                             }
                             rowArray = 0;
-                            resChargeInfo = "";
+                            resBillInfo = "";
                             cia = new BillsInformationAdapter(createList(listCount,dataList));
                             rv.setAdapter(cia);
                             pd.cancel();
@@ -339,8 +320,8 @@ public class BillsInformationFragment extends Fragment {
         }, 1, 1000);
     }
 
-    private void serverWorkingDelete(String link, String requesttype, String adminusername, String unitnumber, String billtype, String billamount){
-        new ServerConnectorDeleteBill(link,requesttype,adminusername,unitnumber,billtype,billamount).execute();
+    private void serverWorkingDelete(String link, String requesttype,String billid, String adminusername, String billtype, String billamount){
+        new ServerConnectorDeleteBill(link,requesttype,billid,adminusername,billtype,billamount).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Deleting...");
         pd.setIndeterminate(true);
@@ -358,21 +339,23 @@ public class BillsInformationFragment extends Fragment {
                             pd.cancel();
                             tm.cancel();
                             Toast.makeText(getContext(),"برنامه قادر به برقراری ارتباط با سرور نیست. لطفا مجددا تلاش نمایید.",Toast.LENGTH_LONG).show();
+                            resBillInfoDelete = "";
                             count = 0;
                             fabmenu.setVisibility(View.GONE);
-                        }else if(resChargeInfoDelete.contains("delete fail")){
+                        }else if(resBillInfoDelete.contains("delete fail")){
                             tm.cancel();
                             pd.cancel();
-                            resChargeInfoDelete = "";
+                            resBillInfoDelete = "";
                             count = 0;
                             Toast.makeText(getContext(),"خطا در حذف اطلاعات. لطفا در زمان دیگری امتحان کنید!",Toast.LENGTH_LONG).show();
-                        }else if(resChargeInfoDelete.contains("deleted")){
+                        }else if(resBillInfoDelete.contains("deleted")){
                             tm.cancel();
                             pd.cancel();
-                            resChargeInfoDelete = "";
+                            Toast.makeText(getContext(), resBillInfoDelete,Toast.LENGTH_LONG).show();
+                            resBillInfoDelete = "";
                             count = 0;
-                            getActivity().getSupportFragmentManager().beginTransaction().detach(BillsInformationFragment.this).attach(BillsInformationFragment.this).commit();
-                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();
+                            /*getActivity().getSupportFragmentManager().beginTransaction().detach(BillsInformationFragment.this).attach(BillsInformationFragment.this).commit();
+                            Toast.makeText(getContext(),"با موفقیت حذف گردید!",Toast.LENGTH_LONG).show();*/
                             searchET.setText("");
                         }
                     }

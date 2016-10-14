@@ -37,7 +37,7 @@ public class UsersInformationFragment extends Fragment{
     private RecyclerView rv;
     private UsersInformationAdapter uia;
     public static String resUsersInfo="",resUsersInfoDelete="";
-    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
+    private int count=0,listCount,stringIndexHolder[] = new int[8],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000;
     private Timer tm;
     private ProgressDialog pd;
     private database db;
@@ -99,7 +99,6 @@ public class UsersInformationFragment extends Fragment{
                                         db.open();
                                         serverWorkingDelete(FirstActivity.globalLink + "RegisterUser.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][6]);
                                         db.close();
-                                        upDataList = 1;
                                     }
                                 })
                                 .typeface(iransans,iransans)
@@ -198,12 +197,6 @@ public class UsersInformationFragment extends Fragment{
                 }else{
                     String tempName="",tempUnitNum="";
                     int tempCounter=0;
-                    if(upDataList == 1){
-                        db.open();
-                        serverWorking(link,"query",db.queryInfo(2));
-                        db.close();
-                        searchET.setText("");
-                    }
                     dataListSearch = new String[80][7];
                     for(int i=0;i < listCount;i++){
                         tempName = dataList[i][0] + " "+ dataList[i][1];

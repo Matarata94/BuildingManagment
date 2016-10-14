@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,11 @@ import java.util.TimerTask;
 public class UnitsInformationFragment extends Fragment {
 
     private FloatingActionMenu fabmenu;
-    private FloatingActionButton subFabExit,subFabAdd;
+    private FloatingActionButton subFabExit,subFabAdd,subFabStaticCharge;
     private UnitsInformationAdapter uia;
     private database db;
     public static String resUnitsInfo="",resUnitsInfoDelete="";
-    private int count=0,listCount,stringIndexHolder[] = new int[12],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000,upDataList=0;
+    private int count=0,listCount,stringIndexHolder[] = new int[12],rowArray=0,selectedItemPosition=10000, selectedItemSearchPosition =10000;
     private Timer tm;
     private ProgressDialog pd;
     private RecyclerView rv;
@@ -64,8 +65,7 @@ public class UnitsInformationFragment extends Fragment {
                                 + "\n\n" + getResources().getString(R.string.ownernametitle) + "  " + dataListSearch[selectedItemSearchPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataListSearch[selectedItemSearchPosition][3]
                                 + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataListSearch[selectedItemSearchPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataListSearch[selectedItemSearchPosition][5]
                                 + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataListSearch[selectedItemSearchPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataListSearch[selectedItemSearchPosition][7]
-                                + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataListSearch[selectedItemSearchPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataListSearch[selectedItemSearchPosition][9]
-                                + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataListSearch[selectedItemSearchPosition][10];
+                                + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataListSearch[selectedItemSearchPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataListSearch[selectedItemSearchPosition][9];
                             dialog = new MaterialDialog.Builder(getActivity())
                                     .title(R.string.unitinfotitle)
                                     .content(completeProfile)
@@ -95,7 +95,6 @@ public class UnitsInformationFragment extends Fragment {
                                         db.open();
                                         serverWorkingDelete(FirstActivity.globalLink + "RegisterUnit.php","delete",db.queryInfo(2),dataListSearch[selectedItemSearchPosition][0]);
                                         db.close();
-                                        upDataList = 1;
                                         }
                                     })
                                     .typeface(iransans,iransans)
@@ -108,8 +107,7 @@ public class UnitsInformationFragment extends Fragment {
                                 + "\n\n" +"نام مالک:" + "  " + dataList[selectedItemPosition][2] + "\n\n" + getResources().getString(R.string.residentnametitle) + "  " + dataList[selectedItemPosition][3]
                                 + "\n\n" + getResources().getString(R.string.floornumbertitle) + "  " + dataList[selectedItemPosition][4] + "\n\n" + getResources().getString(R.string.areasizetitle) + "  " + dataList[selectedItemPosition][5]
                                 + "\n\n" + getResources().getString(R.string.residencedatetitle) + "  " + dataList[selectedItemPosition][6] + "\n\n" + getResources().getString(R.string.numberofresidenttitle) + "  " + dataList[selectedItemPosition][7]
-                                + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9]
-                                + "\n\n" + getResources().getString(R.string.statechargetitle) + "  " + dataList[selectedItemPosition][10];
+                                + "\n\n" + getResources().getString(R.string.postalcodetitle) + "  " + dataList[selectedItemPosition][8] + "\n\n" + getResources().getString(R.string.chargedefaultamounttitle) + "  " + dataList[selectedItemPosition][9];
                             dialog = new MaterialDialog.Builder(getActivity())
                                     .title(R.string.unitinfotitle)
                                     .content(completeProfile)
@@ -168,6 +166,23 @@ public class UnitsInformationFragment extends Fragment {
                         .show();
             }
         });
+        subFabStaticCharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder(getContext())
+                        .title("شارژ ثابت")
+                        .content("مقدار شارژ ثابت را وارد نمایید؟")
+                        .inputType(InputType.TYPE_CLASS_NUMBER)
+                        .input("", "", new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(MaterialDialog dialog, CharSequence input) {
+                                db.open();
+                                serverWorking(link,"update",db.queryInfo(2),input.toString());
+                                db.close();
+                            }
+                        }).show();
+            }
+        });
         subFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,12 +202,6 @@ public class UnitsInformationFragment extends Fragment {
                 }else{
                     String tempResidentName="",tempOwnerName="",tempUnitNum="",tempResidentDate="";
                     int tempCounter=0;
-                    if(upDataList == 1){
-                        db.open();
-                        serverWorking(link,"query",db.queryInfo(2));
-                        db.close();
-                        searchET.setText("");
-                    }
                     dataListSearch = new String[80][11];
                     for(int i=0;i < listCount;i++){
                         tempResidentName = dataList[i][3];
@@ -224,11 +233,12 @@ public class UnitsInformationFragment extends Fragment {
         rv.setLayoutManager(llm);
         db = new database(getContext());
         db.open();
-        serverWorking(link,"query",db.queryInfo(2));
+        serverWorking(link,"query",db.queryInfo(2),"a");
         db.close();
         fabmenu = (FloatingActionMenu) rootView.findViewById(R.id.unitsInfoFrag_fab_menu);
         subFabExit = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_exit);
         subFabAdd = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_add);
+        subFabStaticCharge = (FloatingActionButton) rootView.findViewById(R.id.unitsInfoFrag_fab_staticCharge);
         searchET = (EditText) rootView.findViewById(R.id.fragment_unitsInfo_et_search);
         search_btn = (Button) rootView.findViewById(R.id.fragment_unitsInfo_btn_search);
         iransans = Typeface.createFromAsset(getContext().getAssets(),"BHoma.ttf");
@@ -249,8 +259,8 @@ public class UnitsInformationFragment extends Fragment {
         return result;
     }
 
-    private void serverWorking(String link, String requesttype, String adminusername){
-        new ServerConnectorUnitsInfo(link,requesttype,adminusername).execute();
+    private void serverWorking(String link, String requesttype, String adminusername,String staticcharge){
+        new ServerConnectorUnitsInfo(link,requesttype,adminusername,staticcharge).execute();
         pd = new ProgressDialog(getContext());
         pd.setMessage("Loading...");
         pd.setIndeterminate(true);
@@ -348,6 +358,16 @@ public class UnitsInformationFragment extends Fragment {
                             uia = new UnitsInformationAdapter(createList(listCount,dataList));
                             rv.setAdapter(uia);
                             pd.cancel();
+                        }else if(resUnitsInfo.equals("updated")){
+                            tm.cancel();
+                            pd.cancel();
+                            count = 0;
+                            resUnitsInfo = "";
+                            getActivity().getSupportFragmentManager().beginTransaction().detach(UnitsInformationFragment.this).attach(UnitsInformationFragment.this).commit();
+                            Toast.makeText(getContext(),"انجام شد!",Toast.LENGTH_SHORT).show();
+                            searchET.setText("");
+                        }else if(resUnitsInfo.equals("update fail")){
+
                         }
                     }
                 });

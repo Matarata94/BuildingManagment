@@ -12,15 +12,13 @@ import java.net.URLEncoder;
 @SuppressWarnings("rawtypes")
 public class ServerConnectorRegisterBill extends AsyncTask{
 
-	private String Link,RequestType,UnitNumber,OldUnitNumber,BuildingNumber,BillType,OldBillType,BillDate,BillAmount,OldbillAmount,CalculateType,AdminUsername;
+	private String Link,RequestType,BillId,BillType,OldBillType,BillDate,BillAmount,OldbillAmount,CalculateType,AdminUsername;
 
-	public ServerConnectorRegisterBill(String link, String requesttype, String unitnumber, String oldunitnumber, String buildingnumber, String billtype
-			, String oldbilltype, String billdate, String billamount, String oldbillamount, String calculatetype, String adminusername){
+	public ServerConnectorRegisterBill(String link, String requesttype, String billid, String billtype, String oldbilltype, String billdate
+			, String billamount, String oldbillamount, String calculatetype, String adminusername){
 		Link = link;
 		RequestType = requesttype;
-		UnitNumber = unitnumber;
-		OldUnitNumber = oldunitnumber;
-		BuildingNumber = buildingnumber;
+		BillId = billid;
 		BillType = billtype;
 		OldBillType = oldbilltype;
 		BillDate = billdate;
@@ -32,9 +30,7 @@ public class ServerConnectorRegisterBill extends AsyncTask{
 	protected String doInBackground(Object... params) {
 		try{
 			String data = URLEncoder.encode("requesttype","UTF8") + "=" + URLEncoder.encode(RequestType,"UTF8");
-			data += "&" + URLEncoder.encode("unitnumber","UTF8") + "=" + URLEncoder.encode(UnitNumber,"UTF8");
-			data += "&" + URLEncoder.encode("oldunitnumber","UTF8") + "=" + URLEncoder.encode(OldUnitNumber,"UTF8");
-			data += "&" + URLEncoder.encode("buildingnumber","UTF8") + "=" + URLEncoder.encode(BuildingNumber,"UTF8");
+			data += "&" + URLEncoder.encode("billid","UTF8") + "=" + URLEncoder.encode(BillId,"UTF8");
 			data += "&" + URLEncoder.encode("billtype","UTF8") + "=" + URLEncoder.encode(BillType,"UTF8");
 			data += "&" + URLEncoder.encode("oldbilltype","UTF8") + "=" + URLEncoder.encode(OldBillType,"UTF8");
 			data += "&" + URLEncoder.encode("billdate","UTF8") + "=" + URLEncoder.encode(BillDate,"UTF8");

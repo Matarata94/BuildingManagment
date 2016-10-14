@@ -23,8 +23,8 @@ public class ServerConnectorLogin extends AsyncTask{
 		try{
 			String data = URLEncoder.encode("username","UTF8") + "=" + URLEncoder.encode(Username,"UTF8");
 			data += "&" + URLEncoder.encode("password","UTF8") + "=" + URLEncoder.encode(Password,"UTF8");
-			URL mylink = new URL(Link);
-			URLConnection connect = mylink.openConnection();
+			URL ur = new URL(Link);
+			URLConnection connect = ur.openConnection();
 			connect.setDoOutput(true);
 			OutputStreamWriter wr = new OutputStreamWriter(connect.getOutputStream());
 			wr.write(data);

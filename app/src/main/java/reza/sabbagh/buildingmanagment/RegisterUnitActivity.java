@@ -40,18 +40,6 @@ public class RegisterUnitActivity extends AppCompatActivity {
 
         initiate();
 
-        rb_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rb_no.setChecked(false);
-            }
-        });
-        rb_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rb_yes.setChecked(false);
-            }
-        });
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,9 +57,9 @@ public class RegisterUnitActivity extends AppCompatActivity {
                     numberofresidence = et_residentCount.getText().toString();
                     postalcode = et_postalCode.getText().toString();
                     chargedefaultamount = et_defaultChargeAmount.getText().toString();
-                    if(rb_yes.isChecked()){
+                    if(!et_defaultChargeAmount.getText().toString().equals("")){
                         staticchargestate = "yes";
-                    }else if(rb_no.isChecked()){
+                    }else if(et_defaultChargeAmount.getText().toString().equals("")){
                         staticchargestate = "no";
                     }
                     db.open();
@@ -91,9 +79,9 @@ public class RegisterUnitActivity extends AppCompatActivity {
                     numberofresidence = et_residentCount.getText().toString();
                     postalcode = et_postalCode.getText().toString();
                     chargedefaultamount = et_defaultChargeAmount.getText().toString();
-                    if(rb_yes.isChecked()){
+                    if(!et_defaultChargeAmount.getText().toString().equals("")){
                         staticchargestate = "yes";
-                    }else if(rb_no.isChecked()){
+                    }else if(et_defaultChargeAmount.getText().toString().equals("")){
                         staticchargestate = "no";
                     }
                     db.open();
@@ -109,9 +97,6 @@ public class RegisterUnitActivity extends AppCompatActivity {
 
     private void initiate(){
         tv_registerTitle = (TextView) findViewById(R.id.RegisterUnitActivity_tv_registerTitle);
-        tv_staticChargeState = (TextView) findViewById(R.id.RegisterUnitActivity_tv_staticChargeState);
-        tv_yes = (TextView) findViewById(R.id.RegisterUnitActivity_tv_yes);
-        tv_no = (TextView) findViewById(R.id.RegisterUnitActivity_tv_no);
         et_unitNUmber = (MaterialEditText) findViewById(R.id.RegisterUnitActivity_Text_UnitNumber);
         et_buildingNumber = (MaterialEditText) findViewById(R.id.RegisterUnitActivity_Text_BuildingNumber);
         et_ownerName = (MaterialEditText) findViewById(R.id.RegisterUnitActivity_Text_Ownername);
@@ -122,14 +107,9 @@ public class RegisterUnitActivity extends AppCompatActivity {
         et_residentCount = (MaterialEditText) findViewById(R.id.RegisterUnitActivity_Text_numberOfResident);
         et_postalCode = (MaterialEditText) findViewById(R.id.RegisterUnitActivity_Text_Postalcode);
         et_defaultChargeAmount = (MaterialEditText) findViewById(R.id.RegisterUnitActivity_Text_defaultChargeAmount);
-        rb_yes = (RadioButton) findViewById(R.id.RegisterUnitActivity_rb_yes);
-        rb_no = (RadioButton) findViewById(R.id.RegisterUnitActivity_rb_no);
         btn_done = (Button) findViewById(R.id.RegisterUnitActivity_Button_done);
         bhomaFont = Typeface.createFromAsset(getAssets(),"BHoma.ttf");
         tv_registerTitle.setTypeface(bhomaFont);
-        tv_staticChargeState.setTypeface(bhomaFont);
-        tv_yes.setTypeface(bhomaFont);
-        tv_no.setTypeface(bhomaFont);
         et_unitNUmber.setTypeface(bhomaFont);
         et_buildingNumber.setTypeface(bhomaFont);
         et_ownerName.setTypeface(bhomaFont);
@@ -162,13 +142,6 @@ public class RegisterUnitActivity extends AppCompatActivity {
                 et_residentCount.setText(arrayReceived[7]);
                 et_postalCode.setText(arrayReceived[8]);
                 et_defaultChargeAmount.setText(arrayReceived[9]);
-                if(arrayReceived[10].equals("yes")){
-                    rb_yes.setChecked(true);
-                    rb_no.setChecked(false);
-                }else if(arrayReceived[10].equals("no")){
-                    rb_yes.setChecked(false);
-                    rb_no.setChecked(true);
-                }
                 et_unitNUmber.requestFocus();
             }
         }

@@ -28,7 +28,7 @@ public class FirstActivity extends AppCompatActivity {
         db.databasecreate();
 
         if(isNetworkAvailable()){
-            new CountDownTimer(100,1000){
+            new CountDownTimer(3000,1000){
                 @Override
                 public void onTick(long l) {
                 }

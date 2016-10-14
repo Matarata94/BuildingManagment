@@ -35,7 +35,7 @@ public class ServerConnectorBillsInfo extends AsyncTask{
 			while((line=reader.readLine()) != null){
 				sb.append(line);
 			}
-			BillsInformationFragment.resChargeInfo = sb.toString();
+			BillsInformationFragment.resBillInfo = sb.toString();
 		}catch(Exception e){
 			
 		}

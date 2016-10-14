@@ -22,7 +22,7 @@ import java.util.TimerTask;
 public class RegisterBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     TextView tv_registertitle,tv_billtype,tv_billcalctype,tv_billdate,tv_choosebilldate;
-    MaterialEditText met_unitnumber,met_buildingnumber,met_billamount;
+    MaterialEditText met_billamount;
     RadioButton rb_water,rb_power,rb_gas,rb_nafari,rb_metrazhi;
     Button btn_done;
     private Typeface bhomaFont;
@@ -31,12 +31,12 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
     private int count=0;
     private Timer tm;
     private ProgressDialog pd;
-    private String link = FirstActivity.globalLink + "RegisterCharge.php",date="",requestType,unitnumber,oldunitnumber,buildingnumber,calculatetype,billtype,oldbilltype,billdate,billamount,oldbillamount,adminusername;
+    private String link = FirstActivity.globalLink + "RegisterBill.php",date="",requestType,billId,calculatetype,billtype,oldbilltype,billdate,billamount,oldbillamount,adminusername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_charge_register);
+        setContentView(R.layout.activity_bill_register);
 
         initiate();
 
@@ -92,9 +92,7 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
                 if (checkIfAllFill()) {
                     if (btn_done.getText().toString().equals("ثبت")) {
                         requestType = "insert";
-                        unitnumber = met_unitnumber.getText().toString();
-                        oldunitnumber = "a";
-                        buildingnumber = met_buildingnumber.getText().toString();
+                        billId = "a";
                         if (rb_water.isChecked()) {
                             billtype = "water";
                         } else if (rb_power.isChecked()) {
@@ -114,11 +112,9 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
                         db.open();
                         adminusername = db.queryInfo(2);
                         db.close();
-                        serverWorking(link, requestType, unitnumber, oldunitnumber, buildingnumber, billtype,oldbilltype, billdate, billamount,oldbillamount, calculatetype, adminusername);
+                        serverWorking(link, requestType, billId, billtype,oldbilltype, billdate, billamount,oldbillamount, calculatetype, adminusername);
                     } else if (btn_done.getText().toString().equals("ویرایش")) {
                         requestType = "update";
-                        unitnumber = met_unitnumber.getText().toString();
-                        buildingnumber = met_buildingnumber.getText().toString();
                         if (rb_water.isChecked()) {
                             billtype = "water";
                         } else if (rb_power.isChecked()) {
@@ -136,7 +132,7 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
                         db.open();
                         adminusername = db.queryInfo(2);
                         db.close();
-                        serverWorking(link, requestType, unitnumber, oldunitnumber, buildingnumber, billtype,oldbilltype, billdate, billamount,oldbillamount, calculatetype, adminusername);
+                        serverWorking(link, requestType, billId, billtype,oldbilltype, billdate, billamount,oldbillamount, calculatetype, adminusername);
                     }
                 }
             }
@@ -149,8 +145,6 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
         tv_billcalctype = (TextView) findViewById(R.id.RegisterChargeActivity_tv_‌BillCalcType);
         tv_billdate = (TextView) findViewById(R.id.RegisterChargeActivity_tv_‌BillDate);
         tv_choosebilldate = (TextView) findViewById(R.id.RegisterChargeActivity_tv_‌ChooseBillDate);
-        met_unitnumber = (MaterialEditText) findViewById(R.id.RegisterChargeActivity_Text_UnitNumber);
-        met_buildingnumber = (MaterialEditText) findViewById(R.id.RegisterChargeActivity_Text_BuildingNumber);
         met_billamount = (MaterialEditText) findViewById(R.id.RegisterChargeActivity_Text_BillAmount);
         rb_water = (RadioButton) findViewById(R.id.RegisterChargeActivity_rb_water);
         rb_power = (RadioButton) findViewById(R.id.RegisterChargeActivity_rb_power);
@@ -164,8 +158,6 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
         tv_billcalctype.setTypeface(bhomaFont);
         tv_billdate.setTypeface(bhomaFont);
         tv_choosebilldate.setTypeface(bhomaFont);
-        met_unitnumber.setTypeface(bhomaFont);
-        met_buildingnumber.setTypeface(bhomaFont);
         met_billamount.setTypeface(bhomaFont);
         rb_water.setTypeface(bhomaFont);
         rb_power.setTypeface(bhomaFont);
@@ -177,42 +169,39 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
 
         if(getIntent().getExtras() != null) {
             String[] arrayReceived = getIntent().getExtras().getStringArray("keyCharge");
-            if (arrayReceived[7].equals("add_bill")) {
+            if (arrayReceived[5].equals("add_bill")) {
                 btn_done.setText("ثبت");
                 btn_done.setTextColor(Color.parseColor("#ffffff"));
-            } else if (arrayReceived[7].equals("edit_bill")) {
+            } else if (arrayReceived[5].equals("edit_bill")) {
                 btn_done.setText("ویرایش");
                 btn_done.setTextColor(Color.parseColor("#ffffff"));
-                met_unitnumber.setText(arrayReceived[1]);
-                oldunitnumber = arrayReceived[1];
-                met_buildingnumber.setText(arrayReceived[0]);
-                if(arrayReceived[2].equals("water")){
+                billId = arrayReceived[4];
+                if(arrayReceived[0].equals("water")){
                     rb_water.setChecked(true);
                     rb_power.setChecked(false);
                     rb_gas.setChecked(false);
                     oldbilltype = "water";
-                }else if(arrayReceived[2].equals("power")){
+                }else if(arrayReceived[0].equals("power")){
                     rb_water.setChecked(false);
                     rb_power.setChecked(true);
                     rb_gas.setChecked(false);
                     oldbilltype = "power";
-                }else if(arrayReceived[2].equals("gas")){
+                }else if(arrayReceived[0].equals("gas")){
                     rb_water.setChecked(false);
                     rb_power.setChecked(false);
                     rb_gas.setChecked(true);
                     oldbilltype = "gas";
                 }
-                met_billamount.setText(arrayReceived[4]);
-                oldbillamount = arrayReceived[4];
-                if(arrayReceived[5].equals("nafari")){
+                met_billamount.setText(arrayReceived[2]);
+                oldbillamount = arrayReceived[2];
+                if(arrayReceived[3].equals("nafari")){
                     rb_nafari.setChecked(true);
                     rb_metrazhi.setChecked(false);
-                }else if(arrayReceived[5].equals("metrazhi")){
+                }else if(arrayReceived[3].equals("metrazhi")){
                     rb_nafari.setChecked(false);
                     rb_metrazhi.setChecked(true);
                 }
-                tv_choosebilldate.setText(arrayReceived[3]);
-                met_unitnumber.requestFocus();
+                tv_choosebilldate.setText(arrayReceived[1]);
             }
         }
     }
@@ -224,10 +213,7 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
     }
 
     private boolean checkIfAllFill(){
-        if(met_unitnumber.getText().toString().equals("") |
-                met_buildingnumber.getText().equals("") |
-                met_billamount.getText().equals("") |
-                date.equals("")){
+        if(met_billamount.getText().equals("") | date.equals("")){
             Toast.makeText(RegisterBillActivity.this, "لطفا تمام کادرها را پر نمایید!", Toast.LENGTH_LONG).show();
             return false;
         }else{
@@ -235,9 +221,9 @@ public class RegisterBillActivity extends AppCompatActivity implements DatePicke
         }
     }
 
-    private void serverWorking(String link, String requestType, String unitnumber,String oldunitnumber, String buildingnumber, String billtype
-            , String oldbilltype, String billdate, String billamount, String oldbillamount, String calculatetype,final String adminusername){
-        new ServerConnectorRegisterBill(link,requestType,unitnumber,oldunitnumber,buildingnumber,billtype,oldbilltype,billdate,billamount,oldbillamount,calculatetype,adminusername).execute();
+    private void serverWorking(String link, String requestType, String billid, String billtype, String oldbilltype, String billdate, String billamount, String oldbillamount
+            , String calculatetype,final String adminusername){
+        new ServerConnectorRegisterBill(link,requestType,billid,billtype,oldbilltype,billdate,billamount,oldbillamount,calculatetype,adminusername).execute();
         pd = new ProgressDialog(RegisterBillActivity.this);
         pd.setMessage("Loading...");
         pd.setCancelable(false);
